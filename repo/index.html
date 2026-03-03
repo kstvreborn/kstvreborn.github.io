@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KSTV Repo - kodispaintv</title>
+    <title>KSTV Repo - KSTVReborn</title>
     <!-- Tailwind CSS para diseño rápido y moderno -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Iconos de Font Awesome -->
@@ -53,20 +53,24 @@
     <main class="flex-grow max-w-4xl mx-auto px-4 py-10 w-full">
         
         <!-- Caja Principal de Información -->
-        <div class="glass-card rounded-3xl p-8 mb-8 relative overflow-hidden">
-            <div class="absolute top-0 right-0 p-4 opacity-10">
+        <div class="glass-card rounded-3xl p-8 mb-8 relative overflow-hidden shadow-2xl">
+            <!-- Icono de Python de fondo muy sutil -->
+            <div class="absolute top-0 right-0 p-4 opacity-5">
                 <i class="fas fa-brands fa-python text-9xl"></i>
             </div>
             
-            <h2 class="text-3xl font-black text-white mb-2 uppercase">kodispaintv</h2>
-            <p class="text-kstv-gold font-medium mb-6 flex items-center">
-                <i class="fas fa-check-circle mr-2"></i> Repositorio oficial activo
+            <!-- Título de alto impacto -->
+            <h2 class="text-4xl md:text-5xl font-black mb-2 uppercase tracking-tighter text-white">
+                KSTV<span class="text-kstv-red">Reborn</span>
+            </h2>
+            <p class="text-gray-400 font-medium mb-6 flex items-center text-sm">
+                <i class="fas fa-check-circle mr-2 text-green-500"></i> Repositorio oficial de <span class="text-white ml-1 font-bold">@joheos11</span>
             </p>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
                 <!-- Sección de Instrucciones -->
                 <div class="space-y-6">
-                    <h3 class="text-sm font-bold text-gray-500 uppercase tracking-[0.2em] mb-4">Guía de Instalación</h3>
+                    <h3 class="text-xs font-bold text-gray-500 uppercase tracking-[0.2em] mb-4">Guía de Instalación</h3>
                     
                     <div class="flex items-start space-x-4">
                         <div class="step-number w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center text-black font-bold text-sm shadow-lg">1</div>
@@ -95,9 +99,9 @@
                 </div>
 
                 <!-- Listado de Archivos ZIP (Automático) -->
-                <div class="bg-black/40 rounded-2xl p-6 border border-white/5">
+                <div class="bg-black/40 rounded-2xl p-6 border border-white/5 shadow-inner">
                     <h3 class="text-sm font-bold text-white uppercase tracking-widest mb-4 flex items-center">
-                        <i class="fas fa-folder-download mr-2 text-kstv-red"></i> Descargas ZIP
+                        <i class="fas fa-folder-download mr-2 text-kstv-red"></i> Descargas Directas
                     </h3>
                     
                     <div id="zip-list" class="space-y-3">
@@ -107,10 +111,6 @@
                             <p class="text-[10px] text-gray-500 mt-2 uppercase tracking-widest">Leyendo servidor...</p>
                         </div>
                     </div>
-
-                    <p class="mt-6 text-[10px] text-gray-500 italic leading-tight text-center">
-                        Sube tus archivos .zip a la carpeta /repo para que aparezcan aquí automáticamente.
-                    </p>
                 </div>
             </div>
         </div>
@@ -126,19 +126,16 @@
             const zipList = document.getElementById('zip-list');
             const loader = document.getElementById('loader');
             
-            // Datos del repositorio
             const user = 'kstvreborn';
             const repo = 'kstvreborn.github.io';
             const folder = 'repo';
 
             try {
-                // Llamada a la API de GitHub para leer la carpeta /repo
                 const response = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${folder}`);
                 
                 if (!response.ok) throw new Error('Error al conectar');
                 
                 const files = await response.json();
-                // Filtramos solo los archivos que terminen en .zip
                 const zips = files.filter(file => file.name.toLowerCase().endsWith('.zip'));
 
                 loader.style.display = 'none';
@@ -147,17 +144,16 @@
                     zipList.innerHTML = `
                         <div class="text-center py-6 border border-dashed border-gray-800 rounded-xl">
                             <i class="fas fa-clock text-gray-800 text-2xl mb-2"></i>
-                            <p class="text-[11px] text-gray-600 uppercase font-bold">Próximamente archivos</p>
+                            <p class="text-[11px] text-gray-600 uppercase font-bold">Esperando lanzamientos</p>
                         </div>
                     `;
                     return;
                 }
 
-                // Generar un botón por cada ZIP encontrado
                 zips.forEach(file => {
                     const item = document.createElement('a');
                     item.href = file.download_url;
-                    item.className = 'flex items-center justify-between p-4 bg-gray-800/40 hover:bg-kstv-red/20 border border-white/5 rounded-xl transition-all group hover:scale-[1.02]';
+                    item.className = 'flex items-center justify-between p-4 bg-gray-800/40 hover:bg-kstv-red/20 border border-white/5 rounded-xl transition-all group hover:scale-[1.02] shadow-sm';
                     item.innerHTML = `
                         <div class="flex items-center space-x-3 overflow-hidden">
                             <i class="fas fa-file-archive text-kstv-gold group-hover:animate-bounce"></i>
