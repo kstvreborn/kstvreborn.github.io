@@ -61,58 +61,64 @@
     <!-- Main Content -->
     <main class="flex-grow max-w-6xl mx-auto px-4 py-10 w-full">
         
-        <!-- Accesos Directos Destacados -->
-        <section class="mb-12">
-            <h2 class="text-2xl font-bold text-white mb-8 border-l-4 border-kstv-red pl-4 flex items-center">
-                <i class="fas fa-star text-kstv-gold mr-2"></i> Canales Principales
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Repo Card -->
-                <a href="/repo" class="glass-card rounded-2xl p-8 hover:border-kstv-red transition-all duration-500 group relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-24 h-24 bg-kstv-red/10 rounded-bl-full -mr-10 -mt-10 group-hover:bg-kstv-red/20 transition-all"></div>
-                    <div class="flex items-center space-x-5 relative z-10">
-                        <div class="p-4 bg-kstv-red rounded-xl shadow-lg shadow-kstv-red/20 group-hover:scale-110 transition-transform">
-                            <i class="fas fa-download text-3xl text-white"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-2xl font-bold text-white group-hover:text-kstv-red transition">Repo Kodi</h3>
-                            <p class="text-gray-400 mt-1">Instala el repositorio para la ROM <span class="text-kstv-gold font-semibold">kodispaintv renacido</span>.</p>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- WebApp Card -->
-                <a href="/webapp" class="glass-card rounded-2xl p-8 hover:border-kstv-gold transition-all duration-500 group relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-24 h-24 bg-kstv-gold/10 rounded-bl-full -mr-10 -mt-10 group-hover:bg-kstv-gold/20 transition-all"></div>
-                    <div class="flex items-center space-x-5 relative z-10">
-                        <div class="p-4 bg-kstv-gold rounded-xl shadow-lg shadow-kstv-gold/20 group-hover:scale-110 transition-transform">
-                            <i class="fas fa-rocket text-3xl text-black"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-2xl font-bold text-white group-hover:text-kstv-gold transition">WebApps</h3>
-                            <p class="text-gray-400 mt-1">Herramientas online y utilidades exclusivas.</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </section>
-
-        <!-- Directorio Automatizado -->
-        <section>
-            <h2 class="text-2xl font-bold text-white mb-6 border-l-4 border-kstv-gold pl-4 flex items-center justify-between">
-                <span>Contenido Extra</span>
-                <span id="loading-spinner" class="text-xs text-kstv-gold animate-pulse font-mono">
-                    [ BUSCANDO CONTENIDO... ]
-                </span>
-            </h2>
+        <!-- Contenedor principal dividido en 2 columnas -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
             
-            <div id="dynamic-menu" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <!-- Generación automática -->
-            </div>
-            <div id="error-message" class="hidden mt-4 p-4 bg-red-900/20 border border-kstv-red/50 rounded-lg text-red-200 text-sm">
-            </div>
-        </section>
+            <!-- Accesos Directos Destacados -->
+            <section>
+                <h2 class="text-2xl font-bold text-white mb-8 border-l-4 border-kstv-red pl-4 flex items-center">
+                    <i class="fas fa-star text-kstv-gold mr-2"></i> Contenido Principal
+                </h2>
+                <div class="grid grid-cols-1 gap-8">
+                    <!-- Repo Card -->
+                    <a href="/repo" class="glass-card rounded-2xl p-8 hover:border-kstv-red transition-all duration-500 group relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-kstv-red/10 rounded-bl-full -mr-10 -mt-10 group-hover:bg-kstv-red/20 transition-all"></div>
+                        <div class="flex items-center space-x-5 relative z-10">
+                            <div class="p-4 bg-kstv-red rounded-xl shadow-lg shadow-kstv-red/20 group-hover:scale-110 transition-transform">
+                                <i class="fas fa-download text-3xl text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-white group-hover:text-kstv-red transition">Repo Kodi</h3>
+                                <p class="text-gray-400 mt-1">Instala el repositorio para la ROM <span class="text-kstv-gold font-semibold">kodispaintv renacido</span>.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </section>
 
+            <!-- Directorio Automatizado -->
+            <section>
+                <h2 class="text-2xl font-bold text-white mb-8 border-l-4 border-kstv-gold pl-4 flex items-center justify-between">
+                    <span>Contenido Extra</span>
+                    <span id="loading-spinner" class="text-xs text-kstv-gold animate-pulse font-mono mt-1 lg:mt-0 block">
+                        [ BUSCANDO... ]
+                    </span>
+                </h2>
+
+                <!-- WebApp Card movida a Contenido Extra -->
+                <div class="grid grid-cols-1 gap-8 mb-8">
+                    <a href="/webapp" class="glass-card rounded-2xl p-8 hover:border-kstv-gold transition-all duration-500 group relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-kstv-gold/10 rounded-bl-full -mr-10 -mt-10 group-hover:bg-kstv-gold/20 transition-all"></div>
+                        <div class="flex items-center space-x-5 relative z-10">
+                            <div class="p-4 bg-kstv-gold rounded-xl shadow-lg shadow-kstv-gold/20 group-hover:scale-110 transition-transform">
+                                <i class="fas fa-rocket text-3xl text-black"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-white group-hover:text-kstv-gold transition">WebApps</h3>
+                                <p class="text-gray-400 mt-1">Herramientas online y utilidades exclusivas.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                
+                <div id="dynamic-menu" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Generación automática -->
+                </div>
+                <div id="error-message" class="hidden mt-4 p-4 bg-red-900/20 border border-kstv-red/50 rounded-lg text-red-200 text-sm">
+                </div>
+            </section>
+            
+        </div>
     </main>
 
     <!-- Footer -->
@@ -156,7 +162,7 @@
                     const folders = data.filter(item => item.type === 'dir' && !ignoreList.includes(item.name));
 
                     if (folders.length === 0) {
-                        menuContainer.innerHTML = '<p class="text-gray-500 italic text-sm col-span-full">No hay más secciones disponibles de momento.</p>';
+                        menuContainer.innerHTML = '';
                         return;
                     }
 
