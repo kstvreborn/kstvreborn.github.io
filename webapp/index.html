@@ -3,104 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebApp KSTV Pro</title>
+    <title>WebApp KSTV Pro - kodispaintv renacido</title>
+    <!-- Tailwind CSS para diseño moderno y responsive -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: { 'kstv-red': '#AA151B', 'kstv-gold': '#F1BF00', dark: '#0d1117' }
+                    colors: {
+                        'kstv-red': '#AA151B',   // Rojo Bandera
+                        'kstv-gold': '#F1BF00',  // Amarillo/Gualda Bandera
+                        dark: '#0d1117'
+                    }
                 }
             }
         }
     </script>
     <style>
-        body { background-color: #0b0e14; color: #c9d1d9; }
-        .glass-panel { background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(241, 191, 0, 0.2); backdrop-filter: blur(8px); }
-        .app-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; }
+        body { background-color: #0d1117; color: #c9d1d9; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col font-sans">
+<body class="min-h-screen flex flex-col font-sans antialiased">
 
-    <!-- Navbar de la App -->
-    <nav class="bg-black border-b border-kstv-gold/30 px-4 py-3 flex items-center justify-between sticky top-0 z-50">
-        <a href="/" class="text-kstv-red text-xl"><i class="fas fa-home"></i></a>
-        <div class="text-center">
-            <h1 class="text-xs font-black tracking-[0.3em] uppercase text-kstv-gold">WebApp Pro</h1>
-            <p class="text-[10px] text-gray-500 uppercase">Panel de Control</p>
+    <!-- Header idéntico al index principal con colores nacionales -->
+    <header class="bg-gray-900 border-b-2 border-kstv-red py-8 relative overflow-hidden">
+        <!-- Decoración de la bandera de España en la parte superior -->
+        <div class="absolute top-0 left-0 w-full h-1 bg-kstv-red"></div>
+        <div class="absolute top-1 left-0 w-full h-1 bg-kstv-gold"></div>
+        <div class="absolute top-2 left-0 w-full h-1 bg-kstv-red"></div>
+
+        <div class="max-w-6xl mx-auto px-4 flex flex-col items-center justify-center text-center relative z-10">
+            <div class="mb-4 relative">
+                <i class="fas fa-rocket text-6xl text-kstv-gold"></i>
+            </div>
+            <h1 class="text-4xl md:text-6xl font-black text-white tracking-tighter uppercase">
+                KSTV <span class="text-kstv-red">WEB</span><span class="text-kstv-gold">APP</span>
+            </h1>
+            <p class="mt-2 text-gray-400 text-lg italic">Panel de herramientas para la ROM <strong class="text-kstv-gold">kodispaintv renacido</strong></p>
+            <div class="mt-4 flex space-x-2">
+                <a href="../" class="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white text-xs font-bold rounded-full uppercase tracking-widest transition-colors shadow-lg border border-white/10">
+                    <i class="fas fa-arrow-left mr-2"></i> Volver al Inicio
+                </a>
+            </div>
         </div>
-        <div class="w-6 h-6 rounded-full bg-kstv-red shadow-[0_0_10px_#AA151B] animate-pulse"></div>
-    </nav>
+    </header>
 
-    <main class="flex-grow p-4">
+    <!-- Main Content -->
+    <main class="flex-grow max-w-6xl mx-auto px-4 py-10 w-full">
         
-        <!-- Status Bar -->
-        <div class="glass-panel rounded-xl p-4 mb-6 flex justify-around text-center">
-            <div>
-                <p class="text-[10px] uppercase text-gray-500 mb-1">Servidor</p>
-                <p class="text-xs font-bold text-green-500 flex items-center justify-center">
-                    <span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-ping"></span> ONLINE
-                </p>
-            </div>
-            <div class="border-x border-white/10 px-6">
-                <p class="text-[10px] uppercase text-gray-500 mb-1">Versión</p>
-                <p class="text-xs font-bold text-white">v2.0 Beta</p>
-            </div>
-            <div>
-                <p class="text-[10px] uppercase text-gray-500 mb-1">País</p>
-                <p class="text-xs font-bold text-white"><i class="fas fa-flag text-kstv-red"></i> ES</p>
-            </div>
-        </div>
-
-        <!-- Herramientas -->
-        <h2 class="text-sm font-bold text-white/50 uppercase tracking-widest mb-4 px-2">Herramientas Pro</h2>
-        <div class="app-grid">
+        <!-- Sección 1: Herramientas KSTV -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-white mb-6 border-l-4 border-kstv-red pl-4 flex items-center">
+                <i class="fas fa-toolbox text-kstv-red mr-3"></i> Herramientas KSTV
+            </h2>
             
-            <!-- Tool 1 -->
-            <button class="glass-panel rounded-2xl p-6 flex flex-col items-center group active:scale-95 transition">
-                <div class="w-12 h-12 bg-kstv-red/20 rounded-full flex items-center justify-center mb-3 group-hover:bg-kstv-red/40 transition">
-                    <i class="fas fa-list-ul text-kstv-red text-xl"></i>
+            <div id="kstv-tools" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Loader -->
+                <div class="col-span-full py-8 text-center text-gray-600">
+                    <i class="fas fa-circle-notch fa-spin text-2xl mb-2"></i>
+                    <p class="text-xs font-bold tracking-widest uppercase">Cargando...</p>
                 </div>
-                <span class="text-[11px] font-bold text-white uppercase tracking-tighter">Listas IPTV</span>
-            </button>
+            </div>
+        </section>
 
-            <!-- Tool 2 -->
-            <button class="glass-panel rounded-2xl p-6 flex flex-col items-center group active:scale-95 transition">
-                <div class="w-12 h-12 bg-kstv-gold/20 rounded-full flex items-center justify-center mb-3 group-hover:bg-kstv-gold/40 transition">
-                    <i class="fas fa-search text-kstv-gold text-xl"></i>
+        <!-- Sección 2: Laboratorio IA -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-white mb-6 border-l-4 border-kstv-gold pl-4 flex items-center">
+                <i class="fas fa-brain text-kstv-gold mr-3"></i> Laboratorio IA
+            </h2>
+            
+            <div id="ai-tools" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Loader -->
+                <div class="col-span-full py-8 text-center text-gray-600">
+                    <i class="fas fa-circle-notch fa-spin text-2xl mb-2"></i>
+                    <p class="text-xs font-bold tracking-widest uppercase">Cargando...</p>
                 </div>
-                <span class="text-[11px] font-bold text-white uppercase tracking-tighter">Buscador</span>
-            </button>
-
-            <!-- Tool 3 -->
-            <button class="glass-panel rounded-2xl p-6 flex flex-col items-center group active:scale-95 transition text-gray-600">
-                <div class="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center mb-3 italic">
-                    <i class="fas fa-lock text-sm"></i>
-                </div>
-                <span class="text-[11px] font-bold uppercase tracking-tighter">VIP Zone</span>
-            </button>
-
-            <!-- Tool 4 -->
-            <button class="glass-panel rounded-2xl p-6 flex flex-col items-center group active:scale-95 transition">
-                <div class="w-12 h-12 bg-kstv-red/20 rounded-full flex items-center justify-center mb-3 group-hover:bg-kstv-red/40 transition">
-                    <i class="fas fa-tools text-kstv-red text-xl"></i>
-                </div>
-                <span class="text-[11px] font-bold text-white uppercase tracking-tighter">Ajustes</span>
-            </button>
-
-        </div>
-
-        <!-- Info Card -->
-        <div class="mt-8 p-4 border border-dashed border-kstv-gold/30 rounded-xl text-center">
-            <p class="text-[11px] text-gray-500">Módulo WebApp sincronizado con el repositorio oficial de GitHub. Pulsa en las herramientas para comenzar.</p>
-        </div>
+            </div>
+        </section>
 
     </main>
 
-    <footer class="p-4 text-center">
-        <p class="text-[10px] text-gray-600 uppercase tracking-widest font-bold">KSTV <span class="text-kstv-red">RE</span><span class="text-kstv-gold">BORN</span> PROJECT</p>
+    <!-- Footer idéntico al index principal -->
+    <footer class="bg-black border-t-4 border-kstv-gold py-8 text-center">
+        <div class="max-w-6xl mx-auto px-4">
+            <p class="text-gray-300 font-bold tracking-widest uppercase mb-2">KSTV REBORN</p>
+            <p class="text-gray-500 text-xs tracking-tighter">
+                &copy; 2026 | Desarrollado para la comunidad de Kodi | <span class="text-kstv-red">Made with</span> <i class="fas fa-heart text-kstv-red animate-pulse"></i> <span class="text-kstv-gold">in Spain</span>
+            </p>
+        </div>
     </footer>
 
+    <!-- Script de Automatización GitHub API adaptado al nuevo diseño -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const username = 'kstvreborn';
+            const repo = 'kstvreborn.github.io';
+            const folder = 'webapp';
+            const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/${folder}`;
+
+            const kstvContainer = document.getElementById('kstv-tools');
+            const aiContainer = document.getElementById('ai-tools');
+
+            // Palabras clave para separar la IA
+            const aiKeywords = ['ia', 'ai', 'prompt', 'gpt', 'bot', 'laboratorio'];
+
+            function getIconForFolder(name, isAI) {
+                if (isAI) return 'fa-robot text-kstv-gold';
+                if (name.includes('iptv') || name.includes('lista')) return 'fa-list text-blue-400';
+                if (name.includes('ajuste') || name.includes('tool')) return 'fa-tools text-gray-400';
+                return 'fa-folder-open text-kstv-red';
+            }
+
+            async function fetchRepoStructure() {
+                try {
+                    const response = await fetch(apiUrl);
+                    if (!response.ok) throw new Error(`Error ${response.status}`);
+                    const items = await response.json();
+                    
+                    const apps = items.filter(item => item.type === 'dir');
+
+                    kstvContainer.innerHTML = '';
+                    aiContainer.innerHTML = '';
+
+                    let kstvCount = 0;
+                    let aiCount = 0;
+
+                    apps.forEach(app => {
+                        const nameLower = app.name.toLowerCase();
+                        const isAI = aiKeywords.some(keyword => nameLower.includes(keyword));
+                        const iconClass = getIconForFolder(nameLower, isAI);
+                        const displayName = app.name.replace(/-/g, ' ').toUpperCase();
+
+                        // Colores condicionales según si es IA o herramienta KSTV
+                        const borderColor = isAI ? 'border-kstv-gold' : 'border-kstv-red';
+                        const hoverTextColor = isAI ? 'group-hover:text-kstv-gold' : 'group-hover:text-kstv-red';
+
+                        // Estructura de tarjeta EXACTA a la del index principal
+                        const card = document.createElement('a');
+                        card.href = `/${folder}/${app.name}`;
+                        card.className = `glass-card border-l-2 ${borderColor} rounded-lg p-4 hover:bg-white/5 transition flex items-center space-x-4 group`;
+                        card.innerHTML = `
+                            <div class="w-12 h-12 rounded bg-gray-800 flex items-center justify-center group-hover:rotate-12 transition-transform shadow-inner">
+                                <i class="fas ${iconClass} text-xl"></i>
+                            </div>
+                            <span class="font-bold text-sm tracking-wide text-gray-200 ${hoverTextColor} transition">${displayName}</span>
+                        `;
+
+                        if (isAI) {
+                            aiContainer.appendChild(card);
+                            aiCount++;
+                        } else {
+                            kstvContainer.appendChild(card);
+                            kstvCount++;
+                        }
+                    });
+
+                    if (kstvCount === 0) {
+                        kstvContainer.innerHTML = '<p class="text-gray-500 italic text-sm col-span-full">En construcción.</p>';
+                    }
+                    if (aiCount === 0) {
+                        aiContainer.innerHTML = '<p class="text-gray-500 italic text-sm col-span-full">En construcción.</p>';
+                    }
+
+                } catch (error) {
+                    kstvContainer.innerHTML = `<p class="text-red-500 text-sm col-span-full"><i class="fas fa-exclamation-circle mr-2"></i> Error al conectar con el servidor.</p>`;
+                    aiContainer.innerHTML = `<p class="text-red-500 text-sm col-span-full"><i class="fas fa-exclamation-circle mr-2"></i> Error al conectar con el servidor.</p>`;
+                }
+            }
+            
+            fetchRepoStructure();
+        });
+    </script>
 </body>
 </html>
