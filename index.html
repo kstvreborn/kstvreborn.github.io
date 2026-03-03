@@ -3,18 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KSTVReborn - Sitio Oficial</title>
+    <title>KSTV Reborn - kodispaintv renacido</title>
+    <!-- Tailwind CSS para un diseño moderno y responsive -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'kstv-red': '#AA151B',   // Rojo Bandera
+                        'kstv-gold': '#F1BF00',  // Amarillo/Gualda Bandera
+                        dark: '#0d1117'
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body { font-family: sans-serif; text-align: center; padding: 50px; background-color: #f4f4f4; }
-        h1 { color: #2c3e50; }
-        p { color: #7f8c8d; font-size: 1.2em; }
-        .logo { font-size: 3em; font-weight: bold; color: #e74c3c; }
+        body { background-color: #0d1117; color: #c9d1d9; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .text-gradient {
+            background: linear-gradient(to right, #AA151B, #F1BF00, #AA151B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     </style>
 </head>
-<body>
-    <div class="logo">KSTVReborn</div>
-    <h1>El renacimiento ha comenzado</h1>
-    <p>Bienvenidos a la nueva casa oficial de mi comunidad. Aquí encontrarás el addon renovado y toda la información tecnológica.</p>
-    <p><i>Web de joheos11 para sus más de 30,000 seguidores.</i></p>
+<body class="min-h-screen flex flex-col font-sans antialiased">
+
+    <!-- Header con los colores nacionales -->
+    <header class="bg-gray-900 border-b-2 border-kstv-red py-8 relative overflow-hidden">
+        <!-- Decoración sutil de fondo -->
+        <div class="absolute top-0 left-0 w-full h-1 bg-kstv-red"></div>
+        <div class="absolute top-1 left-0 w-full h-1 bg-kstv-gold"></div>
+        <div class="absolute top-2 left-0 w-full h-1 bg-kstv-red"></div>
+
+        <div class="max-w-6xl mx-auto px-4 flex flex-col items-center justify-center text-center relative z-10">
+            <div class="mb-4 relative">
+                <i class="fas fa-tv text-6xl text-kstv-gold"></i>
+                <i class="fas fa-play text-xl text-kstv-red absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></i>
+            </div>
+            <h1 class="text-4xl md:text-6xl font-black text-white tracking-tighter uppercase">
+                KSTV <span class="text-kstv-red">RE</span><span class="text-kstv-gold">BORN</span>
+            </h1>
+            <p class="mt-2 text-gray-400 text-lg italic">El renacer de <strong class="text-kstv-gold">kodispaintv</strong></p>
+            <div class="mt-4 flex space-x-2">
+                <span class="px-3 py-1 bg-kstv-red text-white text-xs font-bold rounded-full uppercase tracking-widest">Abril 2026</span>
+                <span class="px-3 py-1 bg-kstv-gold text-black text-xs font-bold rounded-full uppercase tracking-widest">Oficial</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-6xl mx-auto px-4 py-10 w-full">
+        
+        <!-- Accesos Directos Destacados -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-white mb-8 border-l-4 border-kstv-red pl-4 flex items-center">
+                <i class="fas fa-star text-kstv-gold mr-2"></i> Canales Principales
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Repo Card -->
+                <a href="/repo" class="glass-card rounded-2xl p-8 hover:border-kstv-red transition-all duration-500 group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-kstv-red/10 rounded-bl-full -mr-10 -mt-10 group-hover:bg-kstv-red/20 transition-all"></div>
+                    <div class="flex items-center space-x-5 relative z-10">
+                        <div class="p-4 bg-kstv-red rounded-xl shadow-lg shadow-kstv-red/20 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-download text-3xl text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-white group-hover:text-kstv-red transition">Repo Kodi</h3>
+                            <p class="text-gray-400 mt-1">Instala el repositorio para el addon <span class="text-kstv-gold font-semibold">kodispaintv renacido</span>.</p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- WebApp Card -->
+                <a href="/webapp" class="glass-card rounded-2xl p-8 hover:border-kstv-gold transition-all duration-500 group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-kstv-gold/10 rounded-bl-full -mr-10 -mt-10 group-hover:bg-kstv-gold/20 transition-all"></div>
+                    <div class="flex items-center space-x-5 relative z-10">
+                        <div class="p-4 bg-kstv-gold rounded-xl shadow-lg shadow-kstv-gold/20 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-rocket text-3xl text-black"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-white group-hover:text-kstv-gold transition">WebApp Pro</h3>
+                            <p class="text-gray-400 mt-1">Herramientas online y utilidades exclusivas de la comunidad.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Directorio Automatizado -->
+        <section>
+            <h2 class="text-2xl font-bold text-white mb-6 border-l-4 border-kstv-gold pl-4 flex items-center justify-between">
+                <span>Contenido Extra</span>
+                <span id="loading-spinner" class="text-xs text-kstv-gold animate-pulse font-mono">
+                    [ BUSCANDO CONTENIDO... ]
+                </span>
+            </h2>
+            
+            <div id="dynamic-menu" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Generación automática -->
+            </div>
+            <div id="error-message" class="hidden mt-4 p-4 bg-red-900/20 border border-kstv-red/50 rounded-lg text-red-200 text-sm">
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t-4 border-kstv-gold py-8 text-center">
+        <div class="max-w-6xl mx-auto px-4">
+            <p class="text-gray-300 font-bold tracking-widest uppercase mb-2">KSTV REBORN</p>
+            <p class="text-gray-500 text-xs tracking-tighter">
+                &copy; 2026 | Desarrollado para la comunidad de Kodi | <span class="text-kstv-red">Made with</span> <i class="fas fa-heart text-kstv-red animate-pulse"></i> <span class="text-kstv-gold">in Spain</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Script de Automatización GitHub API -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const username = 'kstvreborn';
+            const repo = 'kstvreborn.github.io';
+            const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/`;
+
+            const menuContainer = document.getElementById('dynamic-menu');
+            const loadingSpinner = document.getElementById('loading-spinner');
+            const errorMessage = document.getElementById('error-message');
+
+            const ignoreList = ['.git', '.github', 'assets', 'css', 'js', 'repo', 'webapp'];
+
+            function getIconForFolder(folderName) {
+                const name = folderName.toLowerCase();
+                if (name.includes('tutorial')) return 'fa-book text-kstv-gold';
+                if (name.includes('app')) return 'fa-mobile text-kstv-red';
+                if (name.includes('video')) return 'fa-play-circle text-kstv-gold';
+                return 'fa-folder-open text-kstv-red';
+            }
+
+            async function fetchRepoStructure() {
+                try {
+                    const response = await fetch(apiUrl);
+                    if (!response.ok) throw new Error(`Error ${response.status}`);
+                    const data = await response.json();
+                    
+                    loadingSpinner.style.display = 'none';
+                    const folders = data.filter(item => item.type === 'dir' && !ignoreList.includes(item.name));
+
+                    if (folders.length === 0) {
+                        menuContainer.innerHTML = '<p class="text-gray-500 italic text-sm">No hay más secciones disponibles de momento.</p>';
+                        return;
+                    }
+
+                    folders.forEach(folder => {
+                        const iconClass = getIconForFolder(folder.name);
+                        const displayName = folder.name.replace(/-/g, ' ').toUpperCase();
+
+                        const card = document.createElement('a');
+                        card.href = `/${folder.name}`;
+                        card.className = 'glass-card border-l-2 border-kstv-red rounded-lg p-4 hover:bg-white/5 transition flex items-center space-x-4 group';
+                        card.innerHTML = `
+                            <div class="w-12 h-12 rounded bg-gray-800 flex items-center justify-center group-hover:rotate-12 transition-transform shadow-inner">
+                                <i class="fas ${iconClass} text-xl"></i>
+                            </div>
+                            <span class="font-bold text-sm tracking-wide text-gray-200 group-hover:text-kstv-gold transition">${displayName}</span>
+                        `;
+                        menuContainer.appendChild(card);
+                    });
+
+                } catch (error) {
+                    loadingSpinner.style.display = 'none';
+                    errorMessage.classList.remove('hidden');
+                    errorMessage.innerHTML = `<i class="fas fa-exclamation-circle mr-2"></i> Error al conectar con el servidor de GitHub.`;
+                }
+            }
+            fetchRepoStructure();
+        });
+    </script>
 </body>
 </html>
