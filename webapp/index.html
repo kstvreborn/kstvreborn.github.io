@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebApp KSTV Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { 'kstv-red': '#AA151B', 'kstv-gold': '#F1BF00', dark: '#0d1117' }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #0b0e14; color: #c9d1d9; }
+        .glass-panel { background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(241, 191, 0, 0.2); backdrop-filter: blur(8px); }
+        .app-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans">
+
+    <!-- Navbar de la App -->
+    <nav class="bg-black border-b border-kstv-gold/30 px-4 py-3 flex items-center justify-between sticky top-0 z-50">
+        <a href="/" class="text-kstv-red text-xl"><i class="fas fa-home"></i></a>
+        <div class="text-center">
+            <h1 class="text-xs font-black tracking-[0.3em] uppercase text-kstv-gold">WebApp Pro</h1>
+            <p class="text-[10px] text-gray-500 uppercase">Panel de Control</p>
+        </div>
+        <div class="w-6 h-6 rounded-full bg-kstv-red shadow-[0_0_10px_#AA151B] animate-pulse"></div>
+    </nav>
+
+    <main class="flex-grow p-4">
+        
+        <!-- Status Bar -->
+        <div class="glass-panel rounded-xl p-4 mb-6 flex justify-around text-center">
+            <div>
+                <p class="text-[10px] uppercase text-gray-500 mb-1">Servidor</p>
+                <p class="text-xs font-bold text-green-500 flex items-center justify-center">
+                    <span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-ping"></span> ONLINE
+                </p>
+            </div>
+            <div class="border-x border-white/10 px-6">
+                <p class="text-[10px] uppercase text-gray-500 mb-1">Versión</p>
+                <p class="text-xs font-bold text-white">v2.0 Beta</p>
+            </div>
+            <div>
+                <p class="text-[10px] uppercase text-gray-500 mb-1">País</p>
+                <p class="text-xs font-bold text-white"><i class="fas fa-flag text-kstv-red"></i> ES</p>
+            </div>
+        </div>
+
+        <!-- Herramientas -->
+        <h2 class="text-sm font-bold text-white/50 uppercase tracking-widest mb-4 px-2">Herramientas Pro</h2>
+        <div class="app-grid">
+            
+            <!-- Tool 1 -->
+            <button class="glass-panel rounded-2xl p-6 flex flex-col items-center group active:scale-95 transition">
+                <div class="w-12 h-12 bg-kstv-red/20 rounded-full flex items-center justify-center mb-3 group-hover:bg-kstv-red/40 transition">
+                    <i class="fas fa-list-ul text-kstv-red text-xl"></i>
+                </div>
+                <span class="text-[11px] font-bold text-white uppercase tracking-tighter">Listas IPTV</span>
+            </button>
+
+            <!-- Tool 2 -->
+            <button class="glass-panel rounded-2xl p-6 flex flex-col items-center group active:scale-95 transition">
+                <div class="w-12 h-12 bg-kstv-gold/20 rounded-full flex items-center justify-center mb-3 group-hover:bg-kstv-gold/40 transition">
+                    <i class="fas fa-search text-kstv-gold text-xl"></i>
+                </div>
+                <span class="text-[11px] font-bold text-white uppercase tracking-tighter">Buscador</span>
+            </button>
+
+            <!-- Tool 3 -->
+            <button class="glass-panel rounded-2xl p-6 flex flex-col items-center group active:scale-95 transition text-gray-600">
+                <div class="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center mb-3 italic">
+                    <i class="fas fa-lock text-sm"></i>
+                </div>
+                <span class="text-[11px] font-bold uppercase tracking-tighter">VIP Zone</span>
+            </button>
+
+            <!-- Tool 4 -->
+            <button class="glass-panel rounded-2xl p-6 flex flex-col items-center group active:scale-95 transition">
+                <div class="w-12 h-12 bg-kstv-red/20 rounded-full flex items-center justify-center mb-3 group-hover:bg-kstv-red/40 transition">
+                    <i class="fas fa-tools text-kstv-red text-xl"></i>
+                </div>
+                <span class="text-[11px] font-bold text-white uppercase tracking-tighter">Ajustes</span>
+            </button>
+
+        </div>
+
+        <!-- Info Card -->
+        <div class="mt-8 p-4 border border-dashed border-kstv-gold/30 rounded-xl text-center">
+            <p class="text-[11px] text-gray-500">Módulo WebApp sincronizado con el repositorio oficial de GitHub. Pulsa en las herramientas para comenzar.</p>
+        </div>
+
+    </main>
+
+    <footer class="p-4 text-center">
+        <p class="text-[10px] text-gray-600 uppercase tracking-widest font-bold">KSTV <span class="text-kstv-red">RE</span><span class="text-kstv-gold">BORN</span> PROJECT</p>
+    </footer>
+
+</body>
+</html>
