@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KSTV Repo - KSTVReborn</title>
-    <!-- Tailwind CSS para diseño rápido y moderno -->
+    <title>KSTV Repo - kodispaintv renacido</title>
+    <!-- Tailwind CSS para diseño moderno y responsive -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Iconos de Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: { 
-                        'kstv-red': '#AA151B', 
-                        'kstv-gold': '#F1BF00', 
-                        dark: '#0d1117' 
+                    colors: {
+                        'kstv-red': '#AA151B',   // Rojo Bandera
+                        'kstv-gold': '#F1BF00',  // Amarillo/Gualda Bandera
+                        dark: '#0d1117'
                     }
                 }
             }
@@ -23,10 +22,10 @@
     </script>
     <style>
         body { background-color: #0d1117; color: #c9d1d9; }
-        .glass-card { 
-            background: rgba(255, 255, 255, 0.02); 
-            backdrop-filter: blur(12px); 
-            border: 1px solid rgba(255, 255, 255, 0.05); 
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .step-number {
             background: linear-gradient(135deg, #AA151B, #F1BF00);
@@ -35,43 +34,40 @@
 </head>
 <body class="min-h-screen flex flex-col font-sans antialiased">
 
-    <!-- Header con navegación de retorno -->
-    <header class="bg-gray-900 border-b-2 border-kstv-red py-6 shadow-2xl">
-        <div class="max-w-4xl mx-auto px-4 flex items-center justify-between">
-            <a href="../" class="flex items-center space-x-2 text-gray-400 hover:text-kstv-gold transition-all group">
-                <i class="fas fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
-                <span class="text-xs font-bold uppercase tracking-widest">Volver</span>
-            </a>
-            <div class="flex items-center space-x-3">
-                <i class="fas fa-database text-kstv-gold"></i>
-                <h1 class="text-xl font-black text-white uppercase tracking-tighter">KSTV <span class="text-kstv-red">REPO</span></h1>
+    <!-- Header idéntico al index principal con colores nacionales -->
+    <header class="bg-gray-900 border-b-2 border-kstv-red py-8 relative overflow-hidden">
+        <!-- Decoración de la bandera de España en la parte superior -->
+        <div class="absolute top-0 left-0 w-full h-1 bg-kstv-red"></div>
+        <div class="absolute top-1 left-0 w-full h-1 bg-kstv-gold"></div>
+        <div class="absolute top-2 left-0 w-full h-1 bg-kstv-red"></div>
+
+        <div class="max-w-6xl mx-auto px-4 flex flex-col items-center justify-center text-center relative z-10">
+            <div class="mb-4 relative">
+                <i class="fas fa-database text-6xl text-kstv-red"></i>
             </div>
-            <div class="w-10"></div> 
+            <h1 class="text-4xl md:text-6xl font-black text-white tracking-tighter uppercase">
+                KSTV <span class="text-kstv-red">RE</span><span class="text-kstv-gold">PO</span>
+            </h1>
+            <p class="mt-2 text-gray-400 text-lg italic">Repositorio oficial de <strong class="text-white">@joheos11</strong> para la ROM <strong class="text-kstv-gold">kodispaintv renacido</strong></p>
+            <div class="mt-4 flex space-x-2">
+                <a href="../" class="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white text-xs font-bold rounded-full uppercase tracking-widest transition-colors shadow-lg border border-white/10">
+                    <i class="fas fa-arrow-left mr-2"></i> Volver al Inicio
+                </a>
+            </div>
         </div>
     </header>
 
-    <main class="flex-grow max-w-4xl mx-auto px-4 py-10 w-full">
-        
-        <!-- Caja Principal de Información -->
-        <div class="glass-card rounded-3xl p-8 mb-8 relative overflow-hidden shadow-2xl">
-            <!-- Icono de Python de fondo muy sutil -->
-            <div class="absolute top-0 right-0 p-4 opacity-5">
-                <i class="fas fa-brands fa-python text-9xl"></i>
-            </div>
+    <!-- Main Content -->
+    <main class="flex-grow max-w-6xl mx-auto px-4 py-10 w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
             
-            <!-- Título de alto impacto -->
-            <h2 class="text-4xl md:text-5xl font-black mb-2 uppercase tracking-tighter text-white">
-                KSTV<span class="text-kstv-red">Reborn</span>
-            </h2>
-            <p class="text-gray-400 font-medium mb-6 flex items-center text-sm">
-                <i class="fas fa-check-circle mr-2 text-green-500"></i> Repositorio oficial de <span class="text-white ml-1 font-bold">@joheos11</span>
-            </p>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-                <!-- Sección de Instrucciones -->
-                <div class="space-y-6">
-                    <h3 class="text-xs font-bold text-gray-500 uppercase tracking-[0.2em] mb-4">Guía de Instalación</h3>
-                    
+            <!-- Sección 1: Guía de Instalación -->
+            <section>
+                <h2 class="text-2xl font-bold text-white mb-6 border-l-4 border-kstv-red pl-4 flex items-center">
+                    <i class="fas fa-book-open text-kstv-red mr-3"></i> Guía de Instalación
+                </h2>
+                
+                <div class="glass-card rounded-xl p-6 space-y-6">
                     <div class="flex items-start space-x-4">
                         <div class="step-number w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center text-black font-bold text-sm shadow-lg">1</div>
                         <p class="text-sm text-gray-300">En Kodi: <strong>Ajustes > Explorador de archivos > Añadir fuente</strong>.</p>
@@ -97,79 +93,85 @@
                         <p class="text-sm text-gray-300">Ve a <strong>Add-ons > Instalar desde ZIP</strong> y selecciona el repositorio.</p>
                     </div>
                 </div>
+            </section>
 
-                <!-- Listado de Archivos ZIP (Automático) -->
-                <div class="bg-black/40 rounded-2xl p-6 border border-white/5 shadow-inner">
-                    <h3 class="text-sm font-bold text-white uppercase tracking-widest mb-4 flex items-center">
-                        <i class="fas fa-folder-download mr-2 text-kstv-red"></i> Descargas Directas
-                    </h3>
-                    
-                    <div id="zip-list" class="space-y-3">
-                        <!-- Spinner de carga -->
-                        <div id="loader" class="py-10 text-center">
-                            <i class="fas fa-spinner fa-spin text-kstv-gold text-2xl"></i>
-                            <p class="text-[10px] text-gray-500 mt-2 uppercase tracking-widest">Leyendo servidor...</p>
-                        </div>
+            <!-- Sección 2: Descargas Directas -->
+            <section>
+                <h2 class="text-2xl font-bold text-white mb-6 border-l-4 border-kstv-gold pl-4 flex items-center">
+                    <i class="fas fa-folder-download text-kstv-gold mr-3"></i> Descargas Directas
+                </h2>
+                
+                <div id="zip-list" class="space-y-4">
+                    <!-- Loader -->
+                    <div class="py-8 text-center text-gray-600 glass-card rounded-xl">
+                        <i class="fas fa-circle-notch fa-spin text-2xl mb-2"></i>
+                        <p class="text-xs font-bold tracking-widest uppercase">Buscando archivos...</p>
                     </div>
                 </div>
-            </div>
+            </section>
+
         </div>
     </main>
 
-    <footer class="py-8 text-center bg-gray-900 border-t border-white/5">
-        <p class="text-[10px] text-gray-600 uppercase tracking-[0.4em]">KSTV <span class="text-kstv-red">RE</span><span class="text-kstv-gold">BORN</span> PROJECT</p>
+    <!-- Footer idéntico al index principal -->
+    <footer class="bg-black border-t-4 border-kstv-gold py-8 text-center">
+        <div class="max-w-6xl mx-auto px-4">
+            <p class="text-gray-300 font-bold tracking-widest uppercase mb-2">KSTV REBORN</p>
+            <p class="text-gray-500 text-xs tracking-tighter">
+                &copy; 2026 | Desarrollado para la comunidad de Kodi | <span class="text-kstv-red">Made with</span> <i class="fas fa-heart text-kstv-red animate-pulse"></i> <span class="text-kstv-gold">in Spain</span>
+            </p>
+        </div>
     </footer>
 
-    <!-- Script de Sincronización con GitHub API -->
+    <!-- Script de Sincronización Automática adaptado al nuevo diseño -->
     <script>
-        async function loadRepositoryFiles() {
-            const zipList = document.getElementById('zip-list');
-            const loader = document.getElementById('loader');
-            
-            const user = 'kstvreborn';
+        document.addEventListener('DOMContentLoaded', () => {
+            const username = 'kstvreborn';
             const repo = 'kstvreborn.github.io';
             const folder = 'repo';
+            const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/${folder}`;
 
-            try {
-                const response = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${folder}`);
-                
-                if (!response.ok) throw new Error('Error al conectar');
-                
-                const files = await response.json();
-                const zips = files.filter(file => file.name.toLowerCase().endsWith('.zip'));
+            const zipList = document.getElementById('zip-list');
 
-                loader.style.display = 'none';
+            async function loadRepositoryFiles() {
+                try {
+                    const response = await fetch(apiUrl);
+                    if (!response.ok) throw new Error('Error de conexión');
+                    
+                    const files = await response.json();
+                    const zips = files.filter(file => file.name.toLowerCase().endsWith('.zip'));
 
-                if (zips.length === 0) {
-                    zipList.innerHTML = `
-                        <div class="text-center py-6 border border-dashed border-gray-800 rounded-xl">
-                            <i class="fas fa-clock text-gray-800 text-2xl mb-2"></i>
-                            <p class="text-[11px] text-gray-600 uppercase font-bold">Esperando lanzamientos</p>
-                        </div>
-                    `;
-                    return;
+                    zipList.innerHTML = '';
+
+                    if (zips.length === 0) {
+                        zipList.innerHTML = '<p class="text-gray-500 italic text-sm p-8 glass-card rounded-xl text-center">En construcción.</p>';
+                        return;
+                    }
+
+                    zips.forEach(file => {
+                        const card = document.createElement('a');
+                        card.href = file.download_url;
+                        // Estructura de tarjeta EXACTA a la del index principal
+                        card.className = 'glass-card border-l-2 border-kstv-red rounded-lg p-4 hover:bg-white/5 transition flex items-center justify-between group';
+                        card.innerHTML = `
+                            <div class="flex items-center space-x-4 overflow-hidden">
+                                <div class="w-12 h-12 rounded bg-gray-800 flex items-center justify-center group-hover:rotate-12 transition-transform shadow-inner flex-shrink-0">
+                                    <i class="fas fa-file-archive text-kstv-gold text-xl"></i>
+                                </div>
+                                <span class="font-bold text-sm tracking-wide text-gray-200 group-hover:text-kstv-red transition truncate">${file.name}</span>
+                            </div>
+                            <i class="fas fa-download text-gray-600 group-hover:text-kstv-red ml-4"></i>
+                        `;
+                        zipList.appendChild(card);
+                    });
+
+                } catch (error) {
+                    zipList.innerHTML = `<p class="text-red-500 text-sm p-8 glass-card rounded-xl text-center"><i class="fas fa-exclamation-circle mr-2"></i> Error al conectar con el servidor.</p>`;
                 }
-
-                zips.forEach(file => {
-                    const item = document.createElement('a');
-                    item.href = file.download_url;
-                    item.className = 'flex items-center justify-between p-4 bg-gray-800/40 hover:bg-kstv-red/20 border border-white/5 rounded-xl transition-all group hover:scale-[1.02] shadow-sm';
-                    item.innerHTML = `
-                        <div class="flex items-center space-x-3 overflow-hidden">
-                            <i class="fas fa-file-archive text-kstv-gold group-hover:animate-bounce"></i>
-                            <span class="text-xs font-mono text-gray-300 group-hover:text-white truncate">${file.name}</span>
-                        </div>
-                        <i class="fas fa-download text-[10px] text-gray-600 group-hover:text-kstv-gold"></i>
-                    `;
-                    zipList.appendChild(item);
-                });
-
-            } catch (error) {
-                loader.innerHTML = `<p class="text-[10px] text-red-500 uppercase font-bold">Error de conexión con GitHub</p>`;
             }
-        }
-
-        document.addEventListener('DOMContentLoaded', loadRepositoryFiles);
+            
+            loadRepositoryFiles();
+        });
     </script>
 </body>
 </html>
