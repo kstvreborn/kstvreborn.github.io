@@ -48,14 +48,13 @@
                 <i class="fas fa-tv text-6xl text-kstv-gold"></i>
                 <i class="fas fa-play text-xl text-kstv-red absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></i>
             </div>
-            <h1 class="text-4xl md:text-6xl font-black text-white tracking-tighter uppercase">
-                KSTV <span class="text-kstv-red">RE</span><span class="text-kstv-gold">BORN</span>
+            <h1 class="text-4xl md:text-6xl font-black tracking-tighter uppercase">
+                <span class="text-kstv-red">KSTV</span> <span class="text-kstv-gold">RE</span><span class="text-kstv-red">BORN</span>
             </h1>
-            <p class="mt-2 text-gray-400 text-lg italic">El renacer de <strong class="text-kstv-gold">kodispaintv</strong></p>
-            <div class="mt-4 flex space-x-2">
-                <span class="px-3 py-1 bg-kstv-red text-white text-xs font-bold rounded-full uppercase tracking-widest">Abril 2026</span>
-                <span class="px-3 py-1 bg-kstv-gold text-black text-xs font-bold rounded-full uppercase tracking-widest">Oficial</span>
-            </div>
+            <p class="mt-2 text-gray-400 text-lg italic flex items-center justify-center">
+                <i class="fa-brands fa-phoenix-framework text-kstv-red mr-2"></i>
+                <span>Proyecto y addon <strong class="text-kstv-gold">KodiSpainTv Renacido</strong></span>
+            </p>
         </div>
     </header>
 
@@ -77,7 +76,7 @@
                         </div>
                         <div>
                             <h3 class="text-2xl font-bold text-white group-hover:text-kstv-red transition">Repo Kodi</h3>
-                            <p class="text-gray-400 mt-1">Instala el repositorio para el addon <span class="text-kstv-gold font-semibold">kodispaintv renacido</span>.</p>
+                            <p class="text-gray-400 mt-1">Instala el repositorio para la ROM <span class="text-kstv-gold font-semibold">kodispaintv renacido</span>.</p>
                         </div>
                     </div>
                 </a>
@@ -90,8 +89,8 @@
                             <i class="fas fa-rocket text-3xl text-black"></i>
                         </div>
                         <div>
-                            <h3 class="text-2xl font-bold text-white group-hover:text-kstv-gold transition">WebApp Pro</h3>
-                            <p class="text-gray-400 mt-1">Herramientas online y utilidades exclusivas de la comunidad.</p>
+                            <h3 class="text-2xl font-bold text-white group-hover:text-kstv-gold transition">WebApps</h3>
+                            <p class="text-gray-400 mt-1">Herramientas online y utilidades exclusivas.</p>
                         </div>
                     </div>
                 </a>
@@ -121,7 +120,7 @@
         <div class="max-w-6xl mx-auto px-4">
             <p class="text-gray-300 font-bold tracking-widest uppercase mb-2">KSTV REBORN</p>
             <p class="text-gray-500 text-xs tracking-tighter">
-                &copy; 2026 | Desarrollado para la comunidad de Kodi | <span class="text-kstv-red">Made with</span> <i class="fas fa-heart text-kstv-red animate-pulse"></i> <span class="text-kstv-gold">in Spain</span>
+                &copy; 2026 | Desarrollado para mi comunidad | <span class="text-kstv-red">Made with</span> <i class="fas fa-heart text-kstv-red animate-pulse"></i> <span class="text-kstv-gold">in Spain</span>
             </p>
         </div>
     </footer>
@@ -157,7 +156,7 @@
                     const folders = data.filter(item => item.type === 'dir' && !ignoreList.includes(item.name));
 
                     if (folders.length === 0) {
-                        menuContainer.innerHTML = '<p class="text-gray-500 italic text-sm">No hay más secciones disponibles de momento.</p>';
+                        menuContainer.innerHTML = '<p class="text-gray-500 italic text-sm col-span-full">No hay más secciones disponibles de momento.</p>';
                         return;
                     }
 
