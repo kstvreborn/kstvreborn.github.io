@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KSTV Repo - kodispaintv renacido</title>
+    <title>WebApp KSTV Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script>
@@ -16,86 +16,91 @@
         }
     </script>
     <style>
-        body { background-color: #0d1117; color: #c9d1d9; }
-        .glass-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        body { background-color: #0b0e14; color: #c9d1d9; }
+        .glass-panel { background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(241, 191, 0, 0.2); backdrop-filter: blur(8px); }
+        .app-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col font-sans antialiased">
+<body class="min-h-screen flex flex-col font-sans">
 
-    <header class="bg-gray-900 border-b-2 border-kstv-red py-6">
-        <div class="max-w-4xl mx-auto px-4 flex items-center justify-between">
-            <a href="/" class="text-kstv-gold hover:text-white transition flex items-center space-x-2">
-                <i class="fas fa-arrow-left"></i>
-                <span class="font-bold uppercase tracking-tighter">Volver al Inicio</span>
-            </a>
-            <h1 class="text-xl font-black text-white uppercase">RE<span class="text-kstv-gold">PO</span> KSTV</h1>
+    <!-- Navbar de la App -->
+    <nav class="bg-black border-b border-kstv-gold/30 px-4 py-3 flex items-center justify-between sticky top-0 z-50">
+        <a href="/" class="text-kstv-red text-xl"><i class="fas fa-home"></i></a>
+        <div class="text-center">
+            <h1 class="text-xs font-black tracking-[0.3em] uppercase text-kstv-gold">WebApp Pro</h1>
+            <p class="text-[10px] text-gray-500 uppercase">Panel de Control</p>
         </div>
-    </header>
+        <div class="w-6 h-6 rounded-full bg-kstv-red shadow-[0_0_10px_#AA151B] animate-pulse"></div>
+    </nav>
 
-    <main class="flex-grow max-w-4xl mx-auto px-4 py-12 w-full">
-        <div class="glass-card rounded-3xl p-8 text-center border-t-4 border-kstv-gold">
-            <i class="fas fa-box-open text-6xl text-kstv-red mb-4"></i>
-            <h2 class="text-3xl font-bold text-white mb-2">Repositorio Oficial</h2>
-            <p class="text-gray-400 mb-8 italic">Fuente oficial para instalar el addon kodispaintv renacido</p>
-
-            <div class="bg-black/50 rounded-xl p-6 mb-8 text-left border border-gray-800">
-                <h3 class="text-kstv-gold font-bold mb-3 uppercase text-sm tracking-widest"><i class="fas fa-info-circle mr-2"></i> Cómo instalar en Kodi</h3>
-                <ol class="space-y-3 text-sm text-gray-300 list-decimal list-inside">
-                    <li>Abre Kodi y ve a <span class="text-white font-mono font-bold">Ajustes > Explorador de archivos</span>.</li>
-                    <li>Selecciona <span class="text-white font-mono font-bold">Añadir fuente</span>.</li>
-                    <li>Introduce esta URL exactamente: <br>
-                        <code class="block mt-2 p-2 bg-gray-900 text-kstv-gold rounded border border-kstv-red/30 break-all select-all">https://kstvreborn.github.io/repo</code>
-                    </li>
-                    <li>Dale el nombre <span class="text-white font-mono font-bold">.KSTV</span> y pulsa OK.</li>
-                    <li>Vuelve al menú principal y ve a <span class="text-white font-mono font-bold">Add-ons > Instalar desde archivo .zip</span>.</li>
-                </ol>
+    <main class="flex-grow p-4">
+        
+        <!-- Status Bar -->
+        <div class="glass-panel rounded-xl p-4 mb-6 flex justify-around text-center">
+            <div>
+                <p class="text-[10px] uppercase text-gray-500 mb-1">Servidor</p>
+                <p class="text-xs font-bold text-green-500 flex items-center justify-center">
+                    <span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-ping"></span> ONLINE
+                </p>
             </div>
-
-            <div id="zip-container" class="space-y-4">
-                <p class="text-xs text-gray-500 animate-pulse">Buscando archivos .zip actualizados...</p>
-                <!-- Aquí se listarán los archivos .zip automáticamente -->
+            <div class="border-x border-white/10 px-6">
+                <p class="text-[10px] uppercase text-gray-500 mb-1">Versión</p>
+                <p class="text-xs font-bold text-white">v2.0 Beta</p>
+            </div>
+            <div>
+                <p class="text-[10px] uppercase text-gray-500 mb-1">País</p>
+                <p class="text-xs font-bold text-white"><i class="fas fa-flag text-kstv-red"></i> ES</p>
             </div>
         </div>
+
+        <!-- Herramientas -->
+        <h2 class="text-sm font-bold text-white/50 uppercase tracking-widest mb-4 px-2">Herramientas Pro</h2>
+        <div class="app-grid">
+            
+            <!-- Tool 1 -->
+            <button class="glass-panel rounded-2xl p-6 flex flex-col items-center group active:scale-95 transition">
+                <div class="w-12 h-12 bg-kstv-red/20 rounded-full flex items-center justify-center mb-3 group-hover:bg-kstv-red/40 transition">
+                    <i class="fas fa-list-ul text-kstv-red text-xl"></i>
+                </div>
+                <span class="text-[11px] font-bold text-white uppercase tracking-tighter">Listas IPTV</span>
+            </button>
+
+            <!-- Tool 2 -->
+            <button class="glass-panel rounded-2xl p-6 flex flex-col items-center group active:scale-95 transition">
+                <div class="w-12 h-12 bg-kstv-gold/20 rounded-full flex items-center justify-center mb-3 group-hover:bg-kstv-gold/40 transition">
+                    <i class="fas fa-search text-kstv-gold text-xl"></i>
+                </div>
+                <span class="text-[11px] font-bold text-white uppercase tracking-tighter">Buscador</span>
+            </button>
+
+            <!-- Tool 3 -->
+            <button class="glass-panel rounded-2xl p-6 flex flex-col items-center group active:scale-95 transition text-gray-600">
+                <div class="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center mb-3 italic">
+                    <i class="fas fa-lock text-sm"></i>
+                </div>
+                <span class="text-[11px] font-bold uppercase tracking-tighter">VIP Zone</span>
+            </button>
+
+            <!-- Tool 4 -->
+            <button class="glass-panel rounded-2xl p-6 flex flex-col items-center group active:scale-95 transition">
+                <div class="w-12 h-12 bg-kstv-red/20 rounded-full flex items-center justify-center mb-3 group-hover:bg-kstv-red/40 transition">
+                    <i class="fas fa-tools text-kstv-red text-xl"></i>
+                </div>
+                <span class="text-[11px] font-bold text-white uppercase tracking-tighter">Ajustes</span>
+            </button>
+
+        </div>
+
+        <!-- Info Card -->
+        <div class="mt-8 p-4 border border-dashed border-kstv-gold/30 rounded-xl text-center">
+            <p class="text-[11px] text-gray-500">Módulo WebApp sincronizado con el repositorio oficial de GitHub. Pulsa en las herramientas para comenzar.</p>
+        </div>
+
     </main>
 
-    <footer class="bg-black py-6 text-center text-gray-600 text-xs border-t border-gray-900">
-        KSTV REBORN &copy; 2026 - Repositorio Oficial
+    <footer class="p-4 text-center">
+        <p class="text-[10px] text-gray-600 uppercase tracking-widest font-bold">KSTV <span class="text-kstv-red">RE</span><span class="text-kstv-gold">BORN</span> PROJECT</p>
     </footer>
 
-    <script>
-        // Script para listar automáticamente archivos ZIP en esta carpeta
-        const username = 'kstvreborn';
-        const repo = 'kstvreborn.github.io';
-        const path = 'repo';
-        
-        async function loadZips() {
-            const container = document.getElementById('zip-container');
-            try {
-                const response = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${path}`);
-                const files = await response.json();
-                const zips = files.filter(f => f.name.endsWith('.zip'));
-
-                if (zips.length === 0) {
-                    container.innerHTML = '<p class="text-kstv-red font-bold uppercase tracking-widest text-sm">Próximamente archivos disponibles (Abril 2026)</p>';
-                    return;
-                }
-
-                container.innerHTML = '<h3 class="text-white font-bold mb-4">Descarga Directa:</h3>';
-                zips.forEach(zip => {
-                    const btn = document.createElement('a');
-                    btn.href = zip.download_url;
-                    btn.className = 'flex items-center justify-between p-4 bg-gray-800 hover:bg-kstv-red rounded-lg transition-all group';
-                    btn.innerHTML = `
-                        <span class="font-mono text-sm text-gray-300 group-hover:text-white">${zip.name}</span>
-                        <i class="fas fa-file-archive text-kstv-gold group-hover:text-white"></i>
-                    `;
-                    container.appendChild(btn);
-                });
-            } catch (e) {
-                container.innerHTML = '<p class="text-red-500 text-xs">Error al cargar listado de archivos.</p>';
-            }
-        }
-        loadZips();
-    </script>
 </body>
 </html>
