@@ -21,29 +21,43 @@
         }
     </script>
     <style>
-        body { background-color: #0d1117; color: #c9d1d9; }
+        /* Optimizado para mando D-pad */
+        body { 
+            background-color: #0d1117; 
+            color: #c9d1d9; 
+            font-family: system-ui, sans-serif;
+        }
         .glass-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease;
         }
-        .glass-card-light {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+        /* Focus ultra-visible para D-pad */
+        .dpad-element:focus {
+            outline: 4px solid #F1BF00 !important;
+            outline-offset: 3px;
+            border-color: #F1BF00 !important;
+            transform: scale(1.02);
         }
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .dpad-element:active {
+            background: rgba(170, 21, 27, 0.4) !important;
+            border-color: #AA151B !important;
+        }
         .toast {
-            position: fixed; bottom: 20px; right: 20px;
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
             background-color: #AA151B; color: white;
-            padding: 12px 24px; border-radius: 8px;
-            opacity: 0; transition: opacity 0.3s ease-in-out;
+            padding: 16px 32px; border-radius: 12px;
+            opacity: 0; transition: opacity 0.3s ease;
             pointer-events: none; z-index: 50;
-            box-shadow: 0 4px 12px rgba(170, 21, 27, 0.4);
+            font-size: 18px; font-weight: bold;
+            box-shadow: 0 4px 20px rgba(170, 21, 27, 0.6);
+            text-align: center; width: 90%; max-width: 400px;
         }
         .toast.show { opacity: 1; }
-        .chart-container { position: relative; width: 100%; max-width: 350px; margin: 0 auto; height: 280px; }
-        @media (min-width: 768px) { .chart-container { height: 320px; } }
+        .chart-container { position: relative; width: 100%; max-width: 300px; margin: 0 auto; height: 250px; }
+        /* Evitar scroll horizontal */
+        .no-h-scroll { overflow-x: hidden; }
     </style>
 
     <!-- Google tag (gtag.js) -->
@@ -55,319 +69,258 @@
         gtag('config', 'G-HEDC1XMWWR');
     </script>
 </head>
-<body class="min-h-screen flex flex-col font-sans antialiased">
+<body class="min-h-screen flex flex-col font-sans antialiased no-h-scroll" onload="document.getElementById('filter-Todas').focus()">
 
-    <!-- Header -->
-    <header class="bg-gray-900 border-b-2 border-kstv-red py-6 relative overflow-hidden">
-        <div class="h-[12px] bg-[repeating-linear-gradient(45deg,#AA151B,#AA151B_10px,transparent_10px,transparent_20px)] border-y border-white/5 opacity-80 flex items-center justify-center py-4 mb-4 font-[Consolas] text-[11px] text-kstv-gold font-bold tracking-[0.3em] uppercase shadow-[0_4px_12px_rgba(241,191,0,0.1)] border border-kstv-gold/30 relative overflow-hidden">
-            [ KSTV DOWNLOADER CODES ] <i class="fas fa-download mx-2 animate-pulse text-white"></i> [ DIRECTorio ]
-        </div>
-        <div class="absolute top-0 left-0 w-full h-1 bg-kstv-red mt-[40px]"></div>
-        <div class="absolute top-1 left-0 w-full h-1 bg-kstv-gold mt-[40px]"></div>
-        <div class="absolute top-2 left-0 w-full h-1 bg-kstv-red mt-[40px]"></div>
+    <!-- Header compacto -->
+    <header class="bg-gray-900 border-b-2 border-kstv-red py-4 relative overflow-hidden">
+        <!-- Banda decorativa -->
+        <div class="absolute top-0 left-0 w-full h-1 bg-kstv-red"></div>
+        <div class="absolute top-1 left-0 w-full h-1 bg-kstv-gold"></div>
+        <div class="absolute top-2 left-0 w-full h-1 bg-kstv-red"></div>
 
-        <div class="max-w-6xl mx-auto px-4 flex flex-col items-center justify-center text-center relative z-10 mt-4">
-            <div class="mb-3 relative">
-                <i class="fas fa-download text-5xl text-kstv-gold"></i>
-            </div>
-            <h1 class="text-3xl md:text-5xl font-black tracking-tighter uppercase text-white">
+        <div class="max-w-4xl mx-auto px-4 flex flex-col items-center justify-center text-center relative z-10 mt-2">
+            <h1 class="text-2xl md:text-3xl font-black tracking-tighter uppercase text-white">
                 KSTV <span class="text-kstv-red">DOWN</span><span class="text-kstv-gold">LOADER</span>
             </h1>
-            <p class="mt-2 text-gray-400 text-base italic">
-                Directorio de códigos para <strong class="text-kstv-gold">Downloader</strong> en dispositivos Fire TV y Android TV
-            </p>
-            <div class="mt-4 flex space-x-2">
-                <a href="../" class="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white text-xs font-bold rounded-full uppercase tracking-widest transition-colors shadow-lg border border-white/10">
-                    <i class="fas fa-home mr-2"></i>Volver
+            <p class="text-gray-400 text-sm mt-1">Códigos para <strong class="text-kstv-gold">Downloader</strong> en TV</p>
+            
+            <!-- Navegación simple -->
+            <div class="mt-3 flex gap-3">
+                <a href="../" class="dpad-element px-4 py-2 bg-gray-800 text-white text-sm font-bold rounded-lg border-2 border-transparent focus:border-kstv-gold transition-all" tabindex="0">
+                    <i class="fas fa-home mr-1"></i> Inicio
                 </a>
-                <a href="../webapp" class="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white text-xs font-bold rounded-full uppercase tracking-widest transition-colors shadow-lg border border-white/10">
-                    <i class="fas fa-rocket mr-2"></i>WebApp
+                <a href="../webapp" class="dpad-element px-4 py-2 bg-gray-800 text-white text-sm font-bold rounded-lg border-2 border-transparent focus:border-kstv-gold transition-all" tabindex="0">
+                    <i class="fas fa-rocket mr-1"></i> WebApp
                 </a>
             </div>
         </div>
     </header>
 
-    <main class="flex-grow max-w-6xl mx-auto px-4 py-8 w-full">
+    <main class="flex-grow max-w-4xl mx-auto px-4 py-6 w-full">
 
-        <!-- Análisis del Ecosistema -->
-        <section class="mb-10">
-            <div class="glass-card rounded-2xl p-6 md:p-8">
-                <h2 class="text-xl font-bold text-white mb-4 border-l-4 border-kstv-gold pl-4 flex items-center">
-                    <i class="fas fa-chart-pie text-kstv-gold mr-3"></i> Análisis del Ecosistema
-                </h2>
-                <p class="text-gray-400 text-sm mb-6">
-                    Distribución de las categorías de aplicaciones más demandadas para TVs y boxes.
-                </p>
-                <div class="flex flex-col lg:flex-row items-center gap-8">
-                    <div class="w-full lg:w-1/2">
-                        <div class="chart-container">
-                            <canvas id="categoryChart"></canvas>
-                        </div>
-                    </div>
-                    <div class="w-full lg:w-1/2 grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        <div class="glass-card-light p-3 rounded-xl text-center">
-                            <div class="text-2xl mb-1">📺</div>
-                            <h3 class="font-semibold text-white text-sm">Streaming</h3>
-                            <p class="text-xs text-gray-500 mt-1">Video y multimedia</p>
-                        </div>
-                        <div class="glass-card-light p-3 rounded-xl text-center">
-                            <div class="text-2xl mb-1">🛠️</div>
-                            <h3 class="font-semibold text-white text-sm">Herramientas</h3>
-                            <p class="text-xs text-gray-500 mt-1">Gestores y utilidades</p>
-                        </div>
-                        <div class="glass-card-light p-3 rounded-xl text-center">
-                            <div class="text-2xl mb-1">▶️</div>
-                            <h3 class="font-semibold text-white text-sm">Reproductores</h3>
-                            <p class="text-xs text-gray-500 mt-1">VLC, MX, Kodi</p>
-                        </div>
-                        <div class="glass-card-light p-3 rounded-xl text-center">
-                            <div class="text-2xl mb-1">🌐</div>
-                            <h3 class="font-semibold text-white text-sm">Navegadores</h3>
-                            <p class="text-xs text-gray-500 mt-1">Web optimizado</p>
-                        </div>
-                        <div class="glass-card-light p-3 rounded-xl text-center">
-                            <div class="text-2xl mb-1">🎮</div>
-                            <h3 class="font-semibold text-white text-sm">Juegos</h3>
-                            <p class="text-xs text-gray-500 mt-1">Emuladores</p>
-                        </div>
-                    </div>
-                </div>
+        <!-- Filtros - SOLO BOTONES, sin teclado -->
+        <section class="mb-6">
+            <h2 class="text-lg font-bold text-white mb-3 border-l-4 border-kstv-gold pl-3">
+                <i class="fas fa-filter text-kstv-gold mr-2"></i> Filtrar por tipo
+            </h2>
+            <div class="flex flex-wrap gap-3" id="filterContainer">
+                <!-- Generado por JS -->
             </div>
         </section>
 
-        <!-- Directorio de Códigos -->
-        <section id="directory-section">
-            <h2 class="text-2xl font-bold text-white mb-6 border-l-4 border-kstv-red pl-4 flex items-center">
-                <i class="fas fa-list-ol text-kstv-red mr-3"></i> Directorio de Códigos
-            </h2>
-            
-            <!-- Buscador y Filtros -->
-            <div class="glass-card rounded-xl p-4 mb-6 sticky top-4 z-10">
-                <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
-                    <div class="relative w-full md:w-96">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
-                            <i class="fas fa-search"></i>
-                        </span>
-                        <input type="text" id="searchInput" placeholder="Buscar app, código o descripción..." 
-                            class="w-full pl-10 pr-4 py-3 rounded-xl bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-kstv-red focus:border-kstv-red text-white">
-                    </div>
-                    <div class="w-full md:w-auto overflow-x-auto hide-scrollbar">
-                        <div class="flex space-x-2" id="filterContainer"></div>
-                    </div>
+        <!-- Código destacado - copy rápido -->
+        <section class="mb-6">
+            <div class="glass-card rounded-xl p-5 text-center">
+                <h2 class="text-white font-bold text-lg mb-2">📋 Código seleccionado</h2>
+                <div id="selectedCode" class="text-3xl font-black text-kstv-gold tracking-[0.3em] py-3 bg-gray-900/50 rounded-lg border-2 border-dashed border-gray-700">
+                    --
                 </div>
-            </div>
-
-            <div id="resultsSummary" class="text-gray-500 text-sm font-medium mb-4 px-2"></div>
-
-            <div id="appsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            </div>
-            
-            <div id="noResults" class="hidden text-center py-12 glass-card rounded-2xl">
-                <i class="fas fa-search text-4xl text-gray-600 mb-4"></i>
-                <h3 class="text-xl font-bold text-white mb-2">Sin resultados</h3>
-                <p class="text-gray-500">Prueba otros términos o limpia la búsqueda</p>
-                <button id="resetSearchBtn" class="mt-4 px-4 py-2 bg-kstv-red text-white rounded-lg font-medium hover:bg-red-700 transition-colors">
-                    Limpiar
+                <button id="copySelectedBtn" class="dpad-element mt-4 px-8 py-4 bg-kstv-red hover:bg-red-700 text-white text-lg font-bold rounded-xl border-2 border-transparent transition-all w-full" disabled>
+                    <i class="fas fa-copy mr-2"></i> COPIAR ESTE CÓDIGO
                 </button>
+                <p class="text-gray-500 text-xs mt-2">Selecciona una app con las flechas del mando</p>
+            </div>
+        </section>
+
+        <!-- Grid de apps - navigation D-pad friendly -->
+        <section>
+            <h2 class="text-lg font-bold text-white mb-3 border-l-4 border-kstv-red pl-3">
+                <i class="fas fa-list-ol text-kstv-red mr-2"></i> Todas las apps
+            </h2>
+            <div id="appsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <!-- Generado por JS -->
             </div>
         </section>
 
     </main>
 
-    <footer class="bg-black border-t-4 border-kstv-gold py-6 text-center">
-        <div class="max-w-6xl mx-auto px-4">
-            <p class="text-gray-300 font-bold tracking-widest uppercase mb-2">KSTV REBORN</p>
-            <p class="text-gray-500 text-xs">
-                ⛔ Directorio informativo. No alojamos APKs. Los códigos dirigen a descargas de terceros.
-            </p>
-            <p class="text-gray-600 text-xs mt-2">
-                &copy; 2026 | Desarrollado para la comunidad | <span class="text-kstv-red">Made with</span> <i class="fas fa-heart text-kstv-red"></i> <span class="text-kstv-gold">in Spain</span>
-            </p>
-        </div>
+    <footer class="bg-black border-t-4 border-kstv-gold py-4 text-center">
+        <p class="text-gray-400 text-sm">
+            ⛔ Directorio informativo. No alojamos APKs.
+        </p>
+        <p class="text-gray-600 text-xs mt-1">
+            &copy; 2026 KSTV REBORN | Made with <i class="fas fa-heart text-kstv-red"></i> in Spain
+        </p>
     </footer>
 
     <div id="toast" class="toast">
         <i class="fas fa-check-circle mr-2"></i> ¡Código copiado!
     </div>
 
-    <textarea id="hiddenClipboard" style="position: absolute; left: -9999px;"></textarea>
-
     <script>
+        // Datos completos
         const appData = [
-            { id: 1, name: "SmartTubeNext", code: "79015", category: "Streaming", desc: "Cliente YouTube avanzado sin anuncios para Android TV.", icon: "📺" },
-            { id: 2, name: "Cinema HD V2", code: "12345", category: "Streaming", desc: "Popular para encontrar películas y series.", icon: "🎬" },
-            { id: 3, name: "Background Apps", code: "88234", category: "Herramientas", desc: "Cierra apps en segundo plano para liberar memoria.", icon: "🛠️" },
-            { id: 4, name: "Send Files to TV", code: "11223", category: "Herramientas", desc: "Envía archivos desde móvil al TV por WiFi.", icon: "📤" },
-            { id: 5, name: "X-Plore File", code: "99001", category: "Herramientas", desc: "Gestor de archivos con doble panel y red.", icon: "📁" },
-            { id: 6, name: "VLC Player", code: "44332", category: "Reproductores", desc: "Reproductor código abierto, soporta casi todo.", icon: "▶️" },
-            { id: 7, name: "MX Player", code: "55443", category: "Reproductores", desc: "Reproductor con aceleración hardware.", icon: "▶️" },
-            { id: 8, name: "TiviMate", code: "66554", category: "Reproductores", desc: "Uno de los mejores IPTV para TV.", icon: "📡" },
-            { id: 9, name: "TV Bro", code: "22110", category: "Navegadores", desc: "Navegador código abierto para TV.", icon: "🌐" },
-            { id: 10, name: "Brave Browser", code: "33221", category: "Navegadores", desc: "Navegador rápido con bloqueador anuncios.", icon: "🦁" },
-            { id: 11, name: "Aptoide TV", code: "44112", category: "Herramientas", desc: "Tienda alternativa optimizada para TVs.", icon: "📦" },
-            { id: 12, name: "RetroArch", code: "77665", category: "Juegos", desc: "Frontend para emuladores y juegos.", icon: "🎮" },
-            { id: 13, name: "Kodi", code: "88990", category: "Reproductores", desc: "Centro multimedia integral.", icon: "🎥" },
-            { id: 14, name: "Stremio", code: "55123", category: "Streaming", desc: "Agregador video con addons.", icon: "📺" },
-            { id: 15, name: "Downloader", code: "250931", category: "Herramientas", desc: "App oficial para descargar APKs.", icon: "⬇️" }
+            { id: 1, name: "SmartTubeNext", code: "79015", category: "Streaming", desc: "YouTube sin anuncios para Android TV", icon: "📺" },
+            { id: 2, name: "Cinema HD V2", code: "12345", category: "Streaming", desc: "Películas y series", icon: "🎬" },
+            { id: 3, name: "Background Apps", code: "88234", category: "Herramientas", desc: "Cierra apps en 2º plano", icon: "🛠️" },
+            { id: 4, name: "Send Files to TV", code: "11223", category: "Herramientas", desc: "Envía archivos por WiFi", icon: "📤" },
+            { id: 5, name: "X-Plore File", code: "99001", category: "Herramientas", desc: "Gestor archivos dual", icon: "📁" },
+            { id: 6, name: "VLC Player", code: "44332", category: "Reproductores", desc: "Reproductor universal", icon: "▶️" },
+            { id: 7, name: "MX Player", code: "55443", category: "Reproductores", desc: "Aceleración hardware", icon: "▶️" },
+            { id: 8, name: "TiviMate", code: "66554", category: "Reproductores", desc: "IPTV para TV", icon: "📡" },
+            { id: 9, name: "TV Bro", code: "22110", category: "Navegadores", desc: "Navegador para TV", icon: "🌐" },
+            { id: 10, name: "Brave Browser", code: "33221", category: "Navegadores", desc: "Con bloqueador anuncios", icon: "🦁" },
+            { id: 11, name: "Aptoide TV", code: "44112", category: "Herramientas", desc: "Tienda alternativa TV", icon: "📦" },
+            { id: 12, name: "RetroArch", code: "77665", category: "Juegos", desc: "Emuladores", icon: "🎮" },
+            { id: 13, name: "Kodi", code: "88990", category: "Reproductores", desc: "Centro multimedia", icon: "🎥" },
+            { id: 14, name: "Stremio", code: "55123", category: "Streaming", desc: "Agregador video", icon: "📺" },
+            { id: 15, name: "Downloader", code: "250931", category: "Herramientas", desc: "App oficial descargar", icon: "⬇️" }
         ];
 
-        let state = { searchTerm: '', activeCategory: 'Todas', filteredData: [...appData] };
-        const categories = ['Todas', ...new Set(appData.map(app => app.category))];
+        // Estado
+        let selectedAppId = null;
+        let currentCategory = 'Todas';
+        const categories = ['Todas', ...new Set(appData.map(a => a.category))];
 
-        const appsGrid = document.getElementById('appsGrid');
+        // Elementos
         const filterContainer = document.getElementById('filterContainer');
-        const searchInput = document.getElementById('searchInput');
-        const noResults = document.getElementById('noResults');
-        const resultsSummary = document.getElementById('resultsSummary');
-        const resetSearchBtn = document.getElementById('resetSearchBtn');
-        const hiddenClipboard = document.getElementById('hiddenClipboard');
+        const appsGrid = document.getElementById('appsGrid');
+        const selectedCodeEl = document.getElementById('selectedCode');
+        const copyBtn = document.getElementById('copySelectedBtn');
         const toast = document.getElementById('toast');
 
+        // Colores por categoría
+        const catColors = {
+            'Streaming': 'border-red-500 text-red-400',
+            'Herramientas': 'border-blue-500 text-blue-400',
+            'Reproductores': 'border-amber-500 text-amber-400',
+            'Navegadores': 'border-indigo-500 text-indigo-400',
+            'Juegos': 'border-green-500 text-green-400'
+        };
+
+        // Inicializar
         function init() {
             renderFilters();
-            filterData();
-            initChart();
-            setupEventListeners();
+            renderGrid();
+            setupKeyboard();
         }
 
-        function setupEventListeners() {
-            searchInput.addEventListener('input', (e) => {
-                state.searchTerm = e.target.value.toLowerCase();
-                filterData();
-            });
-            resetSearchBtn.addEventListener('click', () => {
-                searchInput.value = '';
-                state.searchTerm = '';
-                state.activeCategory = 'Todas';
-                renderFilters();
-                filterData();
-            });
-        }
-
+        // Render filtros - botones grandes
         function renderFilters() {
             filterContainer.innerHTML = '';
-            categories.forEach(category => {
+            categories.forEach(cat => {
                 const btn = document.createElement('button');
-                const isActive = state.activeCategory === category;
-                btn.className = `px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all ${
-                    isActive ? 'bg-kstv-red text-white shadow-lg' : 'bg-gray-800 text-gray-400 hover:bg-gray-700 border border-gray-700'
+                btn.id = `filter-${cat}`;
+                btn.className = `dpad-element px-4 py-3 rounded-lg font-bold text-base border-2 transition-all ${
+                    cat === currentCategory 
+                    ? 'bg-kstv-red text-white border-kstv-red' 
+                    : 'bg-gray-800 text-gray-400 border-gray-700 hover:border-gray-500'
                 }`;
-                btn.innerText = category;
-                btn.addEventListener('click', () => {
-                    state.activeCategory = category;
-                    renderFilters();
-                    filterData();
-                });
+                btn.innerText = cat;
+                btn.setAttribute('aria-pressed', cat === currentCategory);
+                btn.addEventListener('click', () => selectCategory(cat));
                 filterContainer.appendChild(btn);
             });
         }
 
-        function filterData() {
-            state.filteredData = appData.filter(app => {
-                const matchesSearch = app.name.toLowerCase().includes(state.searchTerm) || app.code.includes(state.searchTerm) || app.desc.toLowerCase().includes(state.searchTerm);
-                const matchesCategory = state.activeCategory === 'Todas' || app.category === state.activeCategory;
-                return matchesSearch && matchesCategory;
-            });
+        // Cambiar categoría
+        function selectCategory(cat) {
+            currentCategory = cat;
+            renderFilters();
             renderGrid();
+            // Focus en primer elemento visible
+            const first = document.querySelector('#appsGrid .dpad-element');
+            if (first) first.focus();
         }
 
+        // Render grid - cards táctiles
         function renderGrid() {
             appsGrid.innerHTML = '';
-            if (state.filteredData.length === 0) {
-                appsGrid.classList.add('hidden');
-                noResults.classList.remove('hidden');
-                resultsSummary.innerText = '';
-            } else {
-                appsGrid.classList.remove('hidden');
-                noResults.classList.add('hidden');
-                resultsSummary.innerText = `📱 Mostrando ${state.filteredData.length} código(s)`;
+            const filtered = currentCategory === 'Todas' 
+                ? appData 
+                : appData.filter(a => a.category === currentCategory);
+            
+            filtered.forEach(app => {
+                const card = document.createElement('button');
+                const isSelected = app.id === selectedAppId;
+                const colorClass = catColors[app.category] || 'border-gray-500 text-gray-400';
                 
-                state.filteredData.forEach(app => {
-                    const card = document.createElement('div');
-                    card.className = 'glass-card rounded-xl p-4 hover:border-kstv-red transition-all duration-300 flex flex-col h-full';
-                    
-                    const catColors = {
-                        'Streaming': 'bg-red-500/20 text-red-400 border-red-500/30',
-                        'Herramientas': 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-                        'Reproductores': 'bg-amber-500/20 text-amber-400 border-amber-500/30',
-                        'Navegadores': 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30',
-                        'Juegos': 'bg-green-500/20 text-green-400 border-green-500/30'
-                    };
-                    const badgeClass = catColors[app.category] || 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+                card.className = `dpad-element p-4 rounded-xl text-left border-2 transition-all ${
+                    isSelected 
+                    ? 'bg-kstv-red/30 border-kstv-gold' 
+                    : 'bg-gray-800/50 border-gray-700 hover:border-gray-500'
+                }`;
+                
+                // Solo mostrar código si está seleccionada
+                const codeDisplay = isSelected 
+                    ? `<span class="text-kstv-gold font-black tracking-widest">${app.code}</span>`
+                    : `<span class="text-gray-600 font-bold tracking-widest">•••••</span>`;
 
-                    card.innerHTML = `
-                        <div class="flex items-start gap-3 mb-3">
-                            <div class="w-10 h-10 flex items-center justify-center glass-card-light rounded-lg text-xl">
-                                ${app.icon}
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <h3 class="font-bold text-white truncate">${app.name}</h3>
-                                <span class="inline-block mt-1 px-2 py-0.5 text-xs font-semibold rounded-md border ${badgeClass}">
-                                    ${app.category}
-                                </span>
+                card.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="text-2xl w-10 text-center">${app.icon}</div>
+                        <div class="flex-1">
+                            <div class="font-bold text-white text-base">${app.name}</div>
+                            <div class="text-gray-500 text-xs">${app.desc}</div>
+                            <div class="mt-2 ${colorClass} text-xs font-bold uppercase tracking-wide">
+                                ${currentCategory === 'Todas' ? app.category : ''} ${codeDisplay}
                             </div>
                         </div>
-                        <p class="text-gray-400 text-xs mb-4 flex-grow">${app.desc}</p>
-                        <div class="mt-auto flex items-center justify-between bg-gray-800/50 p-2 pl-3 rounded-lg border border-gray-700">
-                            <span class="font-mono font-bold text-kstv-gold tracking-wider">${app.code}</span>
-                            <button onclick="copyCode('${app.code}', this)" class="px-3 py-1.5 bg-kstv-red hover:bg-red-700 text-white rounded-md text-xs font-bold transition-all flex items-center gap-1">
-                                <i class="fas fa-copy"></i> Copiar
-                            </button>
-                        </div>
-                    `;
-                    appsGrid.appendChild(card);
-                });
-            }
+                    </div>
+                `;
+                
+                card.addEventListener('click', () => selectApp(app.id));
+                appsGrid.appendChild(card);
+            });
         }
 
-        window.copyCode = function(code, btn) {
-            hiddenClipboard.value = code;
-            hiddenClipboard.select();
-            try {
-                document.execCommand('copy');
-                btn.innerHTML = '<i class="fas fa-check"></i> ¡Listo!';
-                btn.classList.remove('bg-kstv-red');
-                btn.classList.add('bg-green-600');
-                showToast();
-                setTimeout(() => {
-                    btn.innerHTML = '<i class="fas fa-copy"></i> Copiar';
-                    btn.classList.add('bg-kstv-red');
-                    btn.classList.remove('bg-green-600');
-                }, 2000);
-            } catch (err) { console.error(err); }
-            window.getSelection().removeAllRanges();
-        };
+        // Seleccionar app
+        function selectApp(id) {
+            const app = appData.find(a => a.id === id);
+            if (!app) return;
+            
+            selectedAppId = id;
+            selectedCodeEl.innerText = app.code;
+            copyBtn.disabled = false;
+            
+            renderGrid(); // Actualizar visual
+            
+            // Focus en el botón copiar
+            copyBtn.focus();
+            
+            // Feedback
+            showToast(`Seleccionado: ${app.name} (${app.code})`);
+        }
 
-        function showToast() {
+        // Copiar código seleccionado
+        copyBtn.addEventListener('click', () => {
+            if (!selectedAppId) return;
+            
+            const app = appData.find(a => a.id === selectedAppId);
+            if (!app) return;
+            
+            navigator.clipboard.writeText(app.code).then(() => {
+                showToast(`¡${app.code} copiado!`);
+            }).catch(() => {
+                // Fallback
+                const ta = document.createElement('textarea');
+                ta.value = app.code;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                showToast(`¡${app.code} copiado!`);
+            });
+        });
+
+        // Mostrar toast
+        function showToast(msg) {
+            toast.innerHTML = `<i class="fas fa-check-circle mr-2"></i> ${msg}`;
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 2500);
         }
 
-        function initChart() {
-            const ctx = document.getElementById('categoryChart').getContext('2d');
-            const counts = {};
-            appData.forEach(app => counts[app.category] = (counts[app.category] || 0) + 1);
-            
-            new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: Object.keys(counts),
-                    datasets: [{
-                        data: Object.values(counts),
-                        backgroundColor: ['rgba(170,21,27,0.8)', 'rgba(59,130,246,0.8)', 'rgba(245,158,11,0.8)', 'rgba(99,102,241,0.8)', 'rgba(16,185,129,0.8)'],
-                        borderColor: ['#AA151B', '#3B82F6', '#F59E0B', '#6366F1', '#10B981'],
-                        borderWidth: 2
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false, cutout: '60%',
-                    plugins: {
-                        legend: { position: 'right', labels: { color: '#c9d1d9', padding: 15, font: { size: 12 } } }
-                    }
-                }
-            });
+        // Navegación D-pad: flechas automáticamente funcionan con focus si los elementos son focusables (btn, a)
+        // Solo necesitamos asegurar que el primer elemento tenga focus inicial
+        function setupKeyboard() {
+            // Al cargar, enfocar primer filtro
+            setTimeout(() => {
+                const first = document.getElementById('filter-Todas');
+                if (first) first.focus();
+            }, 100);
         }
 
+        // Iniciar
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
