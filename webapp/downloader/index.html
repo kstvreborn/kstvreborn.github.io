@@ -21,46 +21,15 @@
         }
     </script>
     <style>
-        /* Optimizado para mando D-pad */
-        body { 
-            background-color: #0d1117; 
-            color: #c9d1d9; 
-            font-family: system-ui, sans-serif;
-        }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.2s ease;
-        }
-        /* Focus ultra-visible para D-pad */
-        .dpad-element:focus {
-            outline: 4px solid #F1BF00 !important;
-            outline-offset: 3px;
-            border-color: #F1BF00 !important;
-            transform: scale(1.02);
-        }
-        .dpad-element:active {
-            background: rgba(170, 21, 27, 0.4) !important;
-            border-color: #AA151B !important;
-        }
-        .toast {
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            background-color: #AA151B; color: white;
-            padding: 16px 32px; border-radius: 12px;
-            opacity: 0; transition: opacity 0.3s ease;
-            pointer-events: none; z-index: 50;
-            font-size: 18px; font-weight: bold;
-            box-shadow: 0 4px 20px rgba(170, 21, 27, 0.6);
-            text-align: center; width: 90%; max-width: 400px;
-        }
+        body { background-color: #0d1117; color: #c9d1d9; font-family: system-ui, sans-serif; }
+        .glass-card { background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.1); transition: all 0.2s ease; }
+        .dpad-element:focus { outline: 4px solid #F1BF00 !important; outline-offset: 3px; border-color: #F1BF00 !important; transform: scale(1.02); }
+        .dpad-element:active { background: rgba(170,21,27,0.4) !important; border-color: #AA151B !important; }
+        .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: #AA151B; color: white; padding: 16px 32px; border-radius: 12px; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; z-index: 50; font-size: 18px; font-weight: bold; box-shadow: 0 4px 20px rgba(170,21,27,0.6); text-align: center; width: 90%; max-width: 400px; }
         .toast.show { opacity: 1; }
         .chart-container { position: relative; width: 100%; max-width: 300px; margin: 0 auto; height: 250px; }
-        /* Evitar scroll horizontal */
         .no-h-scroll { overflow-x: hidden; }
     </style>
-
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-HEDC1XMWWR"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -69,117 +38,96 @@
         gtag('config', 'G-HEDC1XMWWR');
     </script>
 </head>
-<body class="min-h-screen flex flex-col font-sans antialiased no-h-scroll" onload="document.getElementById('filter-Todas').focus()">
+<body class="min-h-screen flex flex-col font-sans antialiased no-h-scroll" onload="initApp()">
 
-    <!-- Header compacto -->
     <header class="bg-gray-900 border-b-2 border-kstv-red py-4 relative overflow-hidden">
-        <!-- Banda decorativa -->
         <div class="absolute top-0 left-0 w-full h-1 bg-kstv-red"></div>
         <div class="absolute top-1 left-0 w-full h-1 bg-kstv-gold"></div>
         <div class="absolute top-2 left-0 w-full h-1 bg-kstv-red"></div>
-
         <div class="max-w-4xl mx-auto px-4 flex flex-col items-center justify-center text-center relative z-10 mt-2">
-            <h1 class="text-2xl md:text-3xl font-black tracking-tighter uppercase text-white">
-                KSTV <span class="text-kstv-red">DOWN</span><span class="text-kstv-gold">LOADER</span>
-            </h1>
+            <h1 class="text-2xl md:text-3xl font-black tracking-tighter uppercase text-white">KSTV <span class="text-kstv-red">DOWN</span><span class="text-kstv-gold">LOADER</span></h1>
             <p class="text-gray-400 text-sm mt-1">Códigos para <strong class="text-kstv-gold">Downloader</strong> en TV</p>
-            
-            <!-- Navegación simple -->
             <div class="mt-3 flex gap-3">
-                <a href="../" class="dpad-element px-4 py-2 bg-gray-800 text-white text-sm font-bold rounded-lg border-2 border-transparent focus:border-kstv-gold transition-all" tabindex="0">
-                    <i class="fas fa-home mr-1"></i> Inicio
-                </a>
-                <a href="../webapp" class="dpad-element px-4 py-2 bg-gray-800 text-white text-sm font-bold rounded-lg border-2 border-transparent focus:border-kstv-gold transition-all" tabindex="0">
-                    <i class="fas fa-rocket mr-1"></i> WebApp
-                </a>
+                <a href="../" class="dpad-element px-4 py-2 bg-gray-800 text-white text-sm font-bold rounded-lg border-2 border-transparent focus:border-kstv-gold transition-all" tabindex="0"><i class="fas fa-home mr-1"></i> Inicio</a>
+                <a href="../webapp" class="dpad-element px-4 py-2 bg-gray-800 text-white text-sm font-bold rounded-lg border-2 border-transparent focus:border-kstv-gold transition-all" tabindex="0"><i class="fas fa-rocket mr-1"></i> WebApp</a>
             </div>
         </div>
     </header>
 
     <main class="flex-grow max-w-4xl mx-auto px-4 py-6 w-full">
 
-        <!-- Filtros - SOLO BOTONES, sin teclado -->
         <section class="mb-6">
-            <h2 class="text-lg font-bold text-white mb-3 border-l-4 border-kstv-gold pl-3">
-                <i class="fas fa-filter text-kstv-gold mr-2"></i> Filtrar por tipo
-            </h2>
-            <div class="flex flex-wrap gap-3" id="filterContainer">
-                <!-- Generado por JS -->
-            </div>
+            <h2 class="text-lg font-bold text-white mb-3 border-l-4 border-kstv-gold pl-3"><i class="fas fa-filter text-kstv-gold mr-2"></i> Filtrar</h2>
+            <div class="flex flex-wrap gap-3" id="filterContainer"></div>
         </section>
 
-        <!-- Código destacado - copy rápido -->
         <section class="mb-6">
             <div class="glass-card rounded-xl p-5 text-center">
                 <h2 class="text-white font-bold text-lg mb-2">📋 Código seleccionado</h2>
-                <div id="selectedCode" class="text-3xl font-black text-kstv-gold tracking-[0.3em] py-3 bg-gray-900/50 rounded-lg border-2 border-dashed border-gray-700">
-                    --
+                <div id="selectedCode" class="text-3xl font-black text-kstv-gold tracking-[0.3em] py-3 bg-gray-900/50 rounded-lg border-2 border-dashed border-gray-700">--</div>
+                
+                <!-- Botones de acción -->
+                <div class="mt-4 grid grid-cols-2 gap-3">
+                    <button id="copyBtn" class="dpad-element px-4 py-4 bg-gray-700 hover:bg-gray-600 text-white text-lg font-bold rounded-xl border-2 border-transparent transition-all w-full" disabled>
+                        <i class="fas fa-copy mr-2"></i> COPIAR
+                    </button>
+                    <button id="irBtn" class="dpad-element px-4 py-4 bg-kstv-red hover:bg-red-700 text-white text-lg font-bold rounded-xl border-2 border-transparent transition-all w-full" disabled>
+                        <i class="fas fa-play mr-2"></i> IR 📺
+                    </button>
                 </div>
-                <button id="copySelectedBtn" class="dpad-element mt-4 px-8 py-4 bg-kstv-red hover:bg-red-700 text-white text-lg font-bold rounded-xl border-2 border-transparent transition-all w-full" disabled>
-                    <i class="fas fa-copy mr-2"></i> COPIAR ESTE CÓDIGO
-                </button>
-                <p class="text-gray-500 text-xs mt-2">Selecciona una app con las flechas del mando</p>
+                <p id="helperText" class="text-gray-500 text-xs mt-2">Selecciona una app con las flechas del mando</p>
             </div>
         </section>
 
-        <!-- Grid de apps - navigation D-pad friendly -->
         <section>
-            <h2 class="text-lg font-bold text-white mb-3 border-l-4 border-kstv-red pl-3">
-                <i class="fas fa-list-ol text-kstv-red mr-2"></i> Todas las apps
-            </h2>
-            <div id="appsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <!-- Generado por JS -->
-            </div>
+            <h2 class="text-lg font-bold text-white mb-3 border-l-4 border-kstv-red pl-3"><i class="fas fa-list-ol text-kstv-red mr-2"></i> Apps</h2>
+            <div id="appsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
         </section>
 
     </main>
 
     <footer class="bg-black border-t-4 border-kstv-gold py-4 text-center">
-        <p class="text-gray-400 text-sm">
-            ⛔ Directorio informativo. No alojamos APKs.
-        </p>
-        <p class="text-gray-600 text-xs mt-1">
-            &copy; 2026 KSTV REBORN | Made with <i class="fas fa-heart text-kstv-red"></i> in Spain
-        </p>
+        <p class="text-gray-400 text-sm">⛔ Directorio informativo. No alojamos APKs.</p>
+        <p class="text-gray-600 text-xs mt-1">&copy; 2026 KSTV REBORN</p>
     </footer>
 
-    <div id="toast" class="toast">
-        <i class="fas fa-check-circle mr-2"></i> ¡Código copiado!
-    </div>
+    <div id="toast" class="toast"><i class="fas fa-check-circle mr-2"></i> ¡Hecho!</div>
 
     <script>
-        // Datos completos
+        // Detectar si está en Downloader (Fire TV / Android TV)
+        const isDownloader = /AFT|FireTV|firetv|Android.*TV|AFTB|AFTT|AFTES/i.test(navigator.userAgent);
+        
+        // Datos de apps
         const appData = [
-            { id: 1, name: "SmartTubeNext", code: "79015", category: "Streaming", desc: "YouTube sin anuncios para Android TV", icon: "📺" },
+            { id: 1, name: "SmartTubeNext", code: "79015", category: "Streaming", desc: "YouTube sin anuncios", icon: "📺" },
             { id: 2, name: "Cinema HD V2", code: "12345", category: "Streaming", desc: "Películas y series", icon: "🎬" },
-            { id: 3, name: "Background Apps", code: "88234", category: "Herramientas", desc: "Cierra apps en 2º plano", icon: "🛠️" },
-            { id: 4, name: "Send Files to TV", code: "11223", category: "Herramientas", desc: "Envía archivos por WiFi", icon: "📤" },
-            { id: 5, name: "X-Plore File", code: "99001", category: "Herramientas", desc: "Gestor archivos dual", icon: "📁" },
+            { id: 3, name: "Background Apps", code: "88234", category: "Herramientas", desc: "Cierra apps 2º plano", icon: "🛠️" },
+            { id: 4, name: "Send Files to TV", code: "11223", category: "Herramientas", desc: "Envía archivos WiFi", icon: "📤" },
+            { id: 5, name: "X-Plore File", code: "99001", category: "Herramientas", desc: "Gestor archivos", icon: "📁" },
             { id: 6, name: "VLC Player", code: "44332", category: "Reproductores", desc: "Reproductor universal", icon: "▶️" },
-            { id: 7, name: "MX Player", code: "55443", category: "Reproductores", desc: "Aceleración hardware", icon: "▶️" },
+            { id: 7, name: "MX Player", code: "55443", category: "Reproductores", desc: "Aceleración HW", icon: "▶️" },
             { id: 8, name: "TiviMate", code: "66554", category: "Reproductores", desc: "IPTV para TV", icon: "📡" },
-            { id: 9, name: "TV Bro", code: "22110", category: "Navegadores", desc: "Navegador para TV", icon: "🌐" },
-            { id: 10, name: "Brave Browser", code: "33221", category: "Navegadores", desc: "Con bloqueador anuncios", icon: "🦁" },
-            { id: 11, name: "Aptoide TV", code: "44112", category: "Herramientas", desc: "Tienda alternativa TV", icon: "📦" },
+            { id: 9, name: "TV Bro", code: "22110", category: "Navegadores", desc: "Navegador TV", icon: "🌐" },
+            { id: 10, name: "Brave Browser", code: "33221", category: "Navegadores", desc: "Bloqueador anuncios", icon: "🦁" },
+            { id: 11, name: "Aptoide TV", code: "44112", category: "Herramientas", desc: "Tienda alternativa", icon: "📦" },
             { id: 12, name: "RetroArch", code: "77665", category: "Juegos", desc: "Emuladores", icon: "🎮" },
             { id: 13, name: "Kodi", code: "88990", category: "Reproductores", desc: "Centro multimedia", icon: "🎥" },
             { id: 14, name: "Stremio", code: "55123", category: "Streaming", desc: "Agregador video", icon: "📺" },
-            { id: 15, name: "Downloader", code: "250931", category: "Herramientas", desc: "App oficial descargar", icon: "⬇️" }
+            { id: 15, name: "Downloader", code: "250931", category: "Herramientas", desc: "App oficial", icon: "⬇️" }
         ];
 
-        // Estado
         let selectedAppId = null;
         let currentCategory = 'Todas';
         const categories = ['Todas', ...new Set(appData.map(a => a.category))];
 
-        // Elementos
         const filterContainer = document.getElementById('filterContainer');
         const appsGrid = document.getElementById('appsGrid');
         const selectedCodeEl = document.getElementById('selectedCode');
-        const copyBtn = document.getElementById('copySelectedBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const irBtn = document.getElementById('irBtn');
+        const helperText = document.getElementById('helperText');
         const toast = document.getElementById('toast');
 
-        // Colores por categoría
         const catColors = {
             'Streaming': 'border-red-500 text-red-400',
             'Herramientas': 'border-blue-500 text-blue-400',
@@ -188,24 +136,25 @@
             'Juegos': 'border-green-500 text-green-400'
         };
 
-        // Inicializar
-        function init() {
+        function initApp() {
+            // Ajuste automático según dispositivo
+            if (isDownloader) {
+                helperText.innerHTML = '<i class="fas fa-rocket text-kstv-gold"></i> ¡Estás en Downloader! Pulsa <strong>IR</strong> para abrir';
+            }
             renderFilters();
             renderGrid();
-            setupKeyboard();
+            setTimeout(() => {
+                const first = document.getElementById('filter-Todas');
+                if (first) first.focus();
+            }, 100);
         }
 
-        // Render filtros - botones grandes
         function renderFilters() {
             filterContainer.innerHTML = '';
             categories.forEach(cat => {
                 const btn = document.createElement('button');
                 btn.id = `filter-${cat}`;
-                btn.className = `dpad-element px-4 py-3 rounded-lg font-bold text-base border-2 transition-all ${
-                    cat === currentCategory 
-                    ? 'bg-kstv-red text-white border-kstv-red' 
-                    : 'bg-gray-800 text-gray-400 border-gray-700 hover:border-gray-500'
-                }`;
+                btn.className = `dpad-element px-4 py-3 rounded-lg font-bold text-base border-2 transition-all ${cat === currentCategory ? 'bg-kstv-red text-white border-kstv-red' : 'bg-gray-800 text-gray-400 border-gray-700 hover:border-gray-500'}`;
                 btn.innerText = cat;
                 btn.setAttribute('aria-pressed', cat === currentCategory);
                 btn.addEventListener('click', () => selectCategory(cat));
@@ -213,38 +162,26 @@
             });
         }
 
-        // Cambiar categoría
         function selectCategory(cat) {
             currentCategory = cat;
             renderFilters();
             renderGrid();
-            // Focus en primer elemento visible
             const first = document.querySelector('#appsGrid .dpad-element');
             if (first) first.focus();
         }
 
-        // Render grid - cards táctiles
         function renderGrid() {
             appsGrid.innerHTML = '';
-            const filtered = currentCategory === 'Todas' 
-                ? appData 
-                : appData.filter(a => a.category === currentCategory);
+            const filtered = currentCategory === 'Todas' ? appData : appData.filter(a => a.category === currentCategory);
             
             filtered.forEach(app => {
                 const card = document.createElement('button');
                 const isSelected = app.id === selectedAppId;
                 const colorClass = catColors[app.category] || 'border-gray-500 text-gray-400';
                 
-                card.className = `dpad-element p-4 rounded-xl text-left border-2 transition-all ${
-                    isSelected 
-                    ? 'bg-kstv-red/30 border-kstv-gold' 
-                    : 'bg-gray-800/50 border-gray-700 hover:border-gray-500'
-                }`;
+                card.className = `dpad-element p-4 rounded-xl text-left border-2 transition-all ${isSelected ? 'bg-kstv-red/30 border-kstv-gold' : 'bg-gray-800/50 border-gray-700 hover:border-gray-500'}`;
                 
-                // Solo mostrar código si está seleccionada
-                const codeDisplay = isSelected 
-                    ? `<span class="text-kstv-gold font-black tracking-widest">${app.code}</span>`
-                    : `<span class="text-gray-600 font-bold tracking-widest">•••••</span>`;
+                const codeDisplay = isSelected ? `<span class="text-kstv-gold font-black tracking-widest">${app.code}</span>` : `<span class="text-gray-600 font-bold tracking-widest">•••••</span>`;
 
                 card.innerHTML = `
                     <div class="flex items-center gap-3">
@@ -252,9 +189,7 @@
                         <div class="flex-1">
                             <div class="font-bold text-white text-base">${app.name}</div>
                             <div class="text-gray-500 text-xs">${app.desc}</div>
-                            <div class="mt-2 ${colorClass} text-xs font-bold uppercase tracking-wide">
-                                ${currentCategory === 'Todas' ? app.category : ''} ${codeDisplay}
-                            </div>
+                            <div class="mt-2 ${colorClass} text-xs font-bold uppercase tracking-wide">${currentCategory === 'Todas' ? app.category : ''} ${codeDisplay}</div>
                         </div>
                     </div>
                 `;
@@ -264,7 +199,6 @@
             });
         }
 
-        // Seleccionar app
         function selectApp(id) {
             const app = appData.find(a => a.id === id);
             if (!app) return;
@@ -272,27 +206,26 @@
             selectedAppId = id;
             selectedCodeEl.innerText = app.code;
             copyBtn.disabled = false;
+            irBtn.disabled = false;
             
-            renderGrid(); // Actualizar visual
+            renderGrid();
             
-            // Focus en el botón copiar
-            copyBtn.focus();
-            
-            // Feedback
-            showToast(`Seleccionado: ${app.name} (${app.code})`);
+            // Si está en Downloader,-ir directamente
+            if (isDownloader) {
+                irAApp(app.code);
+            } else {
+                irBtn.focus();
+                showToast(`Seleccionado: ${app.name}`);
+            }
         }
 
-        // Copiar código seleccionado
+        // Copiar código
         copyBtn.addEventListener('click', () => {
             if (!selectedAppId) return;
-            
             const app = appData.find(a => a.id === selectedAppId);
             if (!app) return;
             
-            navigator.clipboard.writeText(app.code).then(() => {
-                showToast(`¡${app.code} copiado!`);
-            }).catch(() => {
-                // Fallback
+            navigator.clipboard.writeText(app.code).then(() => showToast(`¡${app.code} copiado!`)).catch(() => {
                 const ta = document.createElement('textarea');
                 ta.value = app.code;
                 document.body.appendChild(ta);
@@ -303,25 +236,38 @@
             });
         });
 
-        // Mostrar toast
+        // Ir a la app (abrir en Downloader)
+        irBtn.addEventListener('click', () => {
+            if (!selectedAppId) return;
+            const app = appData.find(a => a.id === selectedAppId);
+            if (!app) return;
+            
+            irAApp(app.code);
+        });
+
+        // Abrir código en Downloader
+        function irAApp(code) {
+            // Intentar abrir como URL de Downloader
+            const url = `https://downloader.jiog.link/${code}`;
+            
+            // Método 1: Try window.location con redirect
+            try {
+                window.location.href = url;
+            } catch (e) {
+                // Fallback
+            }
+            
+            showToast(`Abriendo ${code}...`);
+        }
+
         function showToast(msg) {
             toast.innerHTML = `<i class="fas fa-check-circle mr-2"></i> ${msg}`;
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 2500);
         }
 
-        // Navegación D-pad: flechas automáticamente funcionan con focus si los elementos son focusables (btn, a)
-        // Solo necesitamos asegurar que el primer elemento tenga focus inicial
-        function setupKeyboard() {
-            // Al cargar, enfocar primer filtro
-            setTimeout(() => {
-                const first = document.getElementById('filter-Todas');
-                if (first) first.focus();
-            }, 100);
-        }
-
         // Iniciar
-        document.addEventListener('DOMContentLoaded', init);
+        document.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
 </html>
