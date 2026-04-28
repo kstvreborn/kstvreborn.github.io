@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KSTV Reborn - kodispaintv renacido</title>
-    <!-- Tailwind CSS para un diseño moderno y responsive -->
+    <title>KSTV Reborn - Web Principal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script>
@@ -12,8 +11,8 @@
             theme: {
                 extend: {
                     colors: {
-                        'kstv-red': '#AA151B',   // Rojo Bandera
-                        'kstv-gold': '#F1BF00',  // Amarillo/Gualda Bandera
+                        'kstv-red': '#AA151B',
+                        'kstv-gold': '#F1BF00',
                         dark: '#0d1117'
                     }
                 }
@@ -22,15 +21,22 @@
     </script>
     <style>
         body { background-color: #0d1117; color: #c9d1d9; }
+        
+        /* Focus ultra-visible para D-pad */
+        .dpad-btn:focus {
+            outline: 4px solid #F1BF00 !important;
+            outline-offset: 3px;
+            border-color: #F1BF00 !important;
+            transform: scale(1.02);
+        }
+        
         .glass-card {
             background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.1);
         }
-        .text-gradient {
-            background: linear-gradient(to right, #AA151B, #F1BF00, #AA151B);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        
+        .dpad-btn {
+            transition: all 0.15s ease;
         }
     </style>
 
@@ -40,165 +46,161 @@
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-
         gtag('config', 'G-HEDC1XMWWR');
     </script>
 </head>
-<body class="min-h-screen flex flex-col font-sans antialiased">
+<body class="min-h-screen flex flex-col font-sans antialiased" onload="document.getElementById('card-repo').focus()">
 
-    <!-- Header con los colores nacionales -->
-    <header class="bg-gray-900 border-b-2 border-kstv-red py-8 relative overflow-hidden">
-        <!-- Decoración sutil de fondo -->
+    <!-- Header compacto -->
+    <header class="bg-gray-900 border-b-2 border-kstv-red py-4 relative overflow-hidden">
         <div class="absolute top-0 left-0 w-full h-1 bg-kstv-red"></div>
         <div class="absolute top-1 left-0 w-full h-1 bg-kstv-gold"></div>
         <div class="absolute top-2 left-0 w-full h-1 bg-kstv-red"></div>
 
-        <div class="max-w-6xl mx-auto px-4 flex flex-col items-center justify-center text-center relative z-10">
-            <div class="mb-4 relative">
-                <i class="fas fa-tv text-6xl text-kstv-gold"></i>
-                <i class="fas fa-play text-xl text-kstv-red absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></i>
-            </div>
-            <h1 class="text-4xl md:text-6xl font-black tracking-tighter uppercase">
+        <div class="max-w-4xl mx-auto px-4 flex flex-col items-center justify-center text-center relative z-10 mt-2">
+            <h1 class="text-3xl md:text-5xl font-black tracking-tighter uppercase text-white">
                 <span class="text-kstv-red">KSTV</span> <span class="text-kstv-gold">RE</span><span class="text-kstv-red">BORN</span>
             </h1>
-            <p class="mt-2 text-gray-400 text-lg italic flex items-center justify-center">
-                <i class="fas fa-download text-kstv-gold mr-2"></i>
-                <span>Código Downloader: <strong class="text-kstv-gold text-2xl font-black tracking-widest px-2 py-1 bg-gray-800 rounded-lg border border-kstv-gold/50">6979514</strong></span>
+            <p class="mt-2 text-kstv-gold font-black text-xl tracking-widest bg-gray-800 px-4 py-2 rounded-lg border border-kstv-gold/50">
+                Código: 6979514
             </p>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="flex-grow max-w-6xl mx-auto px-4 py-10 w-full">
+    <!-- Menú principal - Grid D-pad friendly -->
+    <main class="flex-grow max-w-4xl mx-auto px-4 py-8 w-full">
         
-        <!-- Contenedor principal dividido en 2 columnas -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
-            
-            <!-- Accesos Directos Destacados -->
-            <section>
-                <h2 class="text-2xl font-bold text-white mb-8 border-l-4 border-kstv-red pl-4 flex items-center">
-                    <i class="fas fa-star text-kstv-gold mr-3"></i> Contenido Principal
-                </h2>
-                <div class="grid grid-cols-1 gap-8">
-                    <!-- Repo Card -->
-                    <a href="/repo" class="glass-card rounded-2xl p-8 hover:border-kstv-red transition-all duration-500 group relative overflow-hidden flex items-center min-h-[11rem]">
-                        <div class="absolute top-0 right-0 w-24 h-24 bg-kstv-red/10 rounded-bl-full -mr-10 -mt-10 group-hover:bg-kstv-red/20 transition-all"></div>
-                        <div class="flex items-center space-x-5 relative z-10 w-full">
-                            <div class="p-4 bg-kstv-red rounded-xl shadow-lg shadow-kstv-red/20 group-hover:scale-110 transition-transform">
-                                <i class="fas fa-download text-3xl text-white"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-2xl font-bold text-white group-hover:text-kstv-red transition">Repo Kodi</h3>
-                                <p class="text-gray-400 mt-1">Instala el repositorio para la ROM <span class="text-kstv-gold font-semibold">kodispaintv renacido</span>.</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </section>
+        <h2 class="text-xl font-bold text-white mb-6 border-l-4 border-kstv-gold pl-3">
+            <i class="fas fa-th-large text-kstv-gold mr-2"></i> Elige una opción
+        </h2>
 
-            <!-- Directorio Automatizado -->
-            <section>
-                <h2 class="text-2xl font-bold text-white mb-8 border-l-4 border-kstv-gold pl-4 flex items-center justify-between">
-                    <span class="flex items-center"><i class="fas fa-puzzle-piece text-kstv-gold mr-3"></i> Contenido Extra</span>
-                    <span id="loading-spinner" class="text-xs text-kstv-gold animate-pulse font-mono mt-1 lg:mt-0 block">
-                        [ BUSCANDO... ]
-                    </span>
-                </h2>
-
-                <!-- WebApp Card movida a Contenido Extra -->
-                <div class="grid grid-cols-1 gap-8 mb-8">
-                    <a href="/webapp" class="glass-card rounded-2xl p-8 hover:border-kstv-gold transition-all duration-500 group relative overflow-hidden flex items-center min-h-[11rem]">
-                        <div class="absolute top-0 right-0 w-24 h-24 bg-kstv-gold/10 rounded-bl-full -mr-10 -mt-10 group-hover:bg-kstv-gold/20 transition-all"></div>
-                        <div class="flex items-center space-x-5 relative z-10 w-full">
-                            <div class="p-4 bg-kstv-gold rounded-xl shadow-lg shadow-kstv-gold/20 group-hover:scale-110 transition-transform">
-                                <i class="fas fa-rocket text-3xl text-black"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-2xl font-bold text-white group-hover:text-kstv-gold transition">WebApps</h3>
-                                <p class="text-gray-400 mt-1">Herramientas online y utilidades exclusivas.</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                
-                <div id="dynamic-menu" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <!-- Generación automática -->
-                </div>
-                <div id="error-message" class="hidden mt-4 p-4 bg-red-900/20 border border-kstv-red/50 rounded-lg text-red-200 text-sm">
-                </div>
-            </section>
+        <!-- Grid de 2 columnas -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             
+            <!-- REPO -->
+            <a href="/repo" id="card-repo" class="dpad-btn glass-card rounded-xl p-6 hover:border-kstv-red flex items-center gap-4 group focus:border-kstv-gold" tabindex="0">
+                <div class="w-14 h-14 bg-kstv-red rounded-xl flex items-center justify-center text-2xl text-white shadow-lg">
+                    <i class="fas fa-download"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-xl font-bold text-white group-hover:text-kstv-red">REPO KODI</h3>
+                    <p class="text-gray-400 text-sm mt-1">Instalar repository</p>
+                </div>
+                <i class="fas fa-chevron-right text-gray-600 group-hover:text-kstv-gold"></i>
+            </a>
+
+            <!-- WEBAPP -->
+            <a href="/webapp" id="card-webapp" class="dpad-btn glass-card rounded-xl p-6 hover:border-kstv-gold flex items-center gap-4 group focus:border-kstv-gold" tabindex="0">
+                <div class="w-14 h-14 bg-kstv-gold rounded-xl flex items-center justify-center text-2xl text-black shadow-lg">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-xl font-bold text-white group-hover:text-kstv-gold">WEBAPPS</h3>
+                    <p class="text-gray-400 text-sm mt-1">Herramientas online</p>
+                </div>
+                <i class="fas fa-chevron-right text-gray-600 group-hover:text-kstv-gold"></i>
+            </a>
+
+            <!-- Descarga directa -->
+            <a href="/repo" id="card-download" class="dpad-btn glass-card rounded-xl p-6 hover:border-kstv-red flex items-center gap-4 group focus:border-kstv-gold" tabindex="0">
+                <div class="w-14 h-14 bg-gray-700 rounded-xl flex items-center justify-center text-2xl text-white shadow-lg">
+                    <i class="fas fa-file-download"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-xl font-bold text-white group-hover:text-kstv-red">DESCARGAS</h3>
+                    <p class="text-gray-400 text-sm mt-1">ZIPs del addon</p>
+                </div>
+                <i class="fas fa-chevron-right text-gray-600 group-hover:text-kstv-gold"></i>
+            </a>
+
+            <!-- LABORATORIO -->
+            <a href="/webapp/Laboratorio_de_Prompts" id="card-lab" class="dpad-btn glass-card rounded-xl p-6 hover:border-kstv-gold flex items-center gap-4 group focus:border-kstv-gold" tabindex="0">
+                <div class="w-14 h-14 bg-purple-600 rounded-xl flex items-center justify-center text-2xl text-white shadow-lg">
+                    <i class="fas fa-flask"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-xl font-bold text-white group-hover:text-kstv-gold">LAB IA</h3>
+                    <p class="text-gray-400 text-sm mt-1">Prompts y herramientas</p>
+                </div>
+                <i class="fas fa-chevron-right text-gray-600 group-hover:text-kstv-gold"></i>
+            </a>
+
         </div>
+
+        <!-- Más opciones dinámica -->
+        <h2 class="text-xl font-bold text-white mt-10 mb-4 border-l-4 border-kstv-red pl-3">
+            <i class="fas fa-folder-open text-kstv-red mr-2"></i> Más secciones
+        </h2>
+        <div id="dynamic-sections" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            <!-- Cargando... -->
+            <div class="col-span-full text-center py-8 text-gray-500">
+                <i class="fas fa-circle-notch fa-spin text-2xl"></i>
+                <p class="text-sm mt-2">Buscando...</p>
+            </div>
+        </div>
+
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-black border-t-4 border-kstv-gold py-8 text-center">
-        <div class="max-w-6xl mx-auto px-4">
-            <p class="text-gray-300 font-bold tracking-widest uppercase mb-2">KSTV REBORN</p>
-            <p class="text-gray-500 text-xs tracking-tighter">
-                &copy; 2026 | Desarrollado para mi comunidad | <span class="text-kstv-red">Made with</span> <i class="fas fa-heart text-kstv-red animate-pulse"></i> <span class="text-kstv-gold">in Spain</span>
-            </p>
-        </div>
+    <footer class="bg-black border-t-4 border-kstv-gold py-4 text-center">
+        <p class="text-gray-400 text-sm">KSTV REBORN</p>
+        <p class="text-gray-600 text-xs mt-1">
+            &copy; 2026 | <span class="text-kstv-red">Made with</span> <i class="fas fa-heart text-kstv-red"></i> <span class="text-kstv-gold">in Spain</span>
+        </p>
     </footer>
 
-    <!-- Script de Automatización GitHub API -->
+    <!-- Carga dinámica de carpetas -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const username = 'kstvreborn';
-            const repo = 'kstvreborn.github.io';
-            const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/`;
+        document.addEventListener('DOMContentLoaded', async () => {
+            const container = document.getElementById('dynamic-sections');
+            const ignoreList = ['repo', 'webapp', '.git', '.github'];
+            
+            // Carpetas especiales para mostrar como cards
+            const specialFolders = {
+                'repo': { name: 'REPO', icon: 'fa-download', color: 'bg-kstv-red', text: 'text-white' },
+                'webapp': { name: 'WEBAPP', icon: 'fa-rocket', color: 'bg-kstv-gold', text: 'text-black' },
+                'Laboratorio_de_Prompts': { name: 'LAB IA', icon: 'fa-flask', color: 'bg-purple-600', text: 'text-white' }
+            };
 
-            const menuContainer = document.getElementById('dynamic-menu');
-            const loadingSpinner = document.getElementById('loading-spinner');
-            const errorMessage = document.getElementById('error-message');
-
-            const ignoreList = ['.git', '.github', 'assets', 'css', 'js', 'repo', 'webapp'];
-
-            function getIconForFolder(folderName) {
-                const name = folderName.toLowerCase();
-                if (name.includes('tutorial')) return 'fa-book text-kstv-gold';
-                if (name.includes('app')) return 'fa-mobile text-kstv-red';
-                if (name.includes('video')) return 'fa-play-circle text-kstv-gold';
-                return 'fa-folder-open text-kstv-red';
-            }
-
-            async function fetchRepoStructure() {
-                try {
-                    const response = await fetch(apiUrl);
-                    if (!response.ok) throw new Error(`Error ${response.status}`);
-                    const data = await response.json();
-                    
-                    loadingSpinner.style.display = 'none';
-                    const folders = data.filter(item => item.type === 'dir' && !ignoreList.includes(item.name));
-
-                    if (folders.length === 0) {
-                        menuContainer.innerHTML = '';
-                        return;
-                    }
-
-                    folders.forEach(folder => {
-                        const iconClass = getIconForFolder(folder.name);
-                        const displayName = folder.name.replace(/-/g, ' ').toUpperCase();
-
-                        const card = document.createElement('a');
-                        card.href = `/${folder.name}`;
-                        card.className = 'glass-card border-l-2 border-kstv-red rounded-lg p-4 hover:bg-white/5 transition flex items-center space-x-4 group';
-                        card.innerHTML = `
-                            <div class="w-12 h-12 rounded bg-gray-800 flex items-center justify-center group-hover:rotate-12 transition-transform shadow-inner">
-                                <i class="fas ${iconClass} text-xl"></i>
-                            </div>
-                            <span class="font-bold text-sm tracking-wide text-gray-200 group-hover:text-kstv-gold transition">${displayName}</span>
-                        `;
-                        menuContainer.appendChild(card);
-                    });
-
-                } catch (error) {
-                    loadingSpinner.style.display = 'none';
-                    errorMessage.classList.remove('hidden');
-                    errorMessage.innerHTML = `<i class="fas fa-exclamation-circle mr-2"></i> Error al conectar con el servidor de GitHub.`;
+            try {
+                const resp = await fetch('https://api.github.com/repos/kstvreborn/kstvreborn.github.io/contents');
+                const data = await resp.json();
+                
+                const folders = data.filter(item => item.type === 'dir' && !ignoreList.includes(item.name));
+                
+                if (folders.length === 0) {
+                    container.innerHTML = '<p class="text-gray-500 text-sm">No hay más secciones</p>';
+                    return;
                 }
+
+                container.innerHTML = '';
+                let focusIndex = 4; // Los primeros 4 ya tienen IDs fijos
+
+                folders.forEach(folder => {
+                    const info = specialFolders[folder.name] || { 
+                        name: folder.name.replace(/-/g, ' ').toUpperCase().substring(0, 15), 
+                        icon: 'fa-folder', 
+                        color: 'bg-gray-700', 
+                        text: 'text-white' 
+                    };
+                    
+                    const card = document.createElement('a');
+                    card.href = `/${folder.name}`;
+                    card.className = `dpad-btn glass-card rounded-lg p-4 hover:border-kstv-gold flex flex-col items-center justify-center text-center group focus:border-kstv-gold`;
+                    card.tabIndex = 0;
+                    
+                    card.innerHTML = `
+                        <div class="w-10 h-10 ${info.color} rounded-lg flex items-center justify-center text-xl ${info.text} mb-2">
+                            <i class="fas ${info.icon}"></i>
+                        </div>
+                        <span class="text-xs font-bold text-gray-300 group-hover:text-kstv-gold">${info.name}</span>
+                    `;
+                    
+                    container.appendChild(card);
+                });
+
+            } catch (e) {
+                container.innerHTML = '<p class="text-red-400 text-sm">Error al cargar</p>';
             }
-            fetchRepoStructure();
         });
     </script>
 </body>
