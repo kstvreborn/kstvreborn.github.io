@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Changelog - KSTV Reborn</title>
+    <meta name="description" content="Historial de actualizaciones de KSTV Reborn.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'kstv-red': '#AA151B',
+                        'kstv-gold': '#F1BF00',
+                        'dark': '#0d1117',
+                        'dark-card': '#161b22',
+                        'dark-border': '#30363d'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --kstv-red: #AA151B;
+            --kstv-gold: #F1BF00;
+            --dark-bg: #0d1117;
+            --dark-card: #161b22;
+            --dark-border: #30363d;
+        }
+        body { background-color: var(--dark-bg); color: #c9d1d9; font-family: system-ui, -apple-system, sans-serif; }
+        .dpad-btn:focus { outline: 4px solid var(--kstv-gold) !important; outline-offset: 3px; border-color: var(--kstv-gold) !important; }
+        .changelog-item { border-left: 3px solid var(--dark-border); transition: border-color 0.2s; }
+        .changelog-item:hover { border-color: var(--kstv-gold); }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-in { animation: fadeInUp 0.4s ease forwards; }
+        .tag { font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+        .tag-new { background: #22c55e; color: white; }
+        .tag-fix { background: #3b82f6; color: white; }
+        .tag-improve { background: #a855f7; color: white; }
+        .tag-security { background: #ef4444; color: white; }
+    </style>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HEDC1XMWWR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HEDC1XMWWR');
+    </script>
+</head>
+<body class="min-h-screen flex flex-col font-sans antialiased" onload="document.getElementById('changelog').focus()">
+
+    <header class="bg-dark-card border-b-2 border-kstv-red py-4 relative overflow-hidden sticky top-0 z-50">
+        <div class="absolute top-0 left-0 w-full h-1 bg-kstv-red"></div>
+        <div class="absolute top-1 left-0 w-full h-1 bg-kstv-gold"></div>
+        <div class="absolute top-2 left-0 w-full h-1 bg-kstv-red"></div>
+        <div class="max-w-3xl mx-auto px-4 flex flex-col items-center justify-center text-center relative z-10 mt-2">
+            <a href="/" class="text-2xl font-black uppercase text-white"><span class="text-kstv-red">KSTV</span> <span class="text-kstv-gold">CHANGELOG</span></a>
+            <a href="/" class="mt-2 dpad-btn px-3 py-1 bg-gray-800 text-sm rounded-lg border-2 border-transparent focus:border-kstv-gold">
+                <i class="fas fa-home mr-1"></i> Volver
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-3xl mx-auto px-4 py-8 w-full">
+        
+        <div class="flex items-center justify-between mb-6 animate-in">
+            <h1 class="text-2xl font-bold text-white border-l-4 border-kstv-gold pl-3">
+                <i class="fas fa-history text-kstv-gold mr-2"></i> Historial de cambios
+            </h1>
+            <div class="flex gap-2">
+                <button onclick="filterChangelog('all')" class="filter-btn px-3 py-1 bg-kstv-gold text-black font-bold text-sm rounded-lg" data-filter="all">Todos</button>
+                <button onclick="filterChangelog('added')" class="filter-btn px-3 py-1 bg-gray-700 text-white text-sm rounded-lg hover:bg-gray-600" data-filter="added">Nuevos</button>
+                <button onclick="filterChangelog('fixed')" class="filter-btn px-3 py-1 bg-gray-700 text-white text-sm rounded-lg hover:bg-gray-600" data-filter="fixed">Fixes</button>
+            </div>
+        </div>
+
+        <div id="changelog" class="space-y-6 pl-4">
+            
+            <!-- v2.1.0 -->
+            <div class="changelog-item pl-6 pb-6 animate-in">
+                <div class="flex items-center gap-3 mb-3">
+                    <h2 class="text-xl font-black text-kstv-gold">v2.1.0</h2>
+                    <span class="tag tag-new">NUEVO</span>
+                    <span class="text-gray-500 text-sm ml-auto">29 Abril 2026</span>
+                </div>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li class="flex items-start gap-2"><i class="fas fa-plus text-green-400 mt-1"></i> Página principal reescrita con animaciones y efectos visuales</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-plus text-green-400 mt-1"></i> Barra de búsqueda con resultados en tiempo real</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-plus text-green-400 mt-1"></i> Panel de estadísticas en hero section</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-plus text-green-400 mt-1"></i> Sistema de newsletter integrado</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-plus text-green-400 mt-1"></i> Badges dinámicos (NEW, ONLINE, versión)</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-plus text-green-400 mt-1"></i> Página FAQ con acordeón interactivo</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-plus text-green-400 mt-1"></i> Página Changelog</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-star text-purple-400 mt-1"></i> Mejoras en navegación D-pad para Kodi</li>
+                </ul>
+            </div>
+
+            <!-- v2.0.0 -->
+            <div class="changelog-item pl-6 pb-6 animate-in" style="animation-delay: 0.1s">
+                <div class="flex items-center gap-3 mb-3">
+                    <h2 class="text-xl font-black text-kstv-gold">v2.0.0</h2>
+                    <span class="tag tag-improve">MEJORADO</span>
+                    <span class="text-gray-500 text-sm ml-auto">Abril 2026</span>
+                </div>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li class="flex items-start gap-2"><i class="fas fa-cog text-blue-400 mt-1"></i> Rediseño completo de la interfaz</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-cog text-blue-400 mt-1"></i> Carga dinámica de secciones desde GitHub API</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-cog text-blue-400 mt-1"></i> Optimización para navegación D-pad</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-mobile text-green-400 mt-1"></i> Compatible con Android TV / Fire TV</li>
+                </ul>
+            </div>
+
+            <!-- v1.5.0 -->
+            <div class="changelog-item pl-6 pb-6 animate-in" style="animation-delay: 0.2s">
+                <div class="flex items-center gap-3 mb-3">
+                    <h2 class="text-xl font-black text-kstv-gold">v1.5.0</h2>
+                    <span class="tag tag-fix">FIX</span>
+                    <span class="text-gray-500 text-sm ml-auto">Marzo 2026</span>
+                </div>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li class="flex items-start gap-2"><i class="fas fa-wrench text-blue-400 mt-1"></i> Fix botón IR en Downloader</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-wrench text-blue-400 mt-1"></i> Añadidos botones Copiar + IR</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-wrench text-blue-400 mt-1"></i> Auto-detección de app Downloader</li>
+                </ul>
+            </div>
+
+            <!-- v1.0.0 -->
+            <div class="changelog-item pl-6 pb-6 animate-in" style="animation-delay: 0.3s">
+                <div class="flex items-center gap-3 mb-3">
+                    <h2 class="text-xl font-black text-kstv-gold">v1.0.0</h2>
+                    <span class="tag tag-new">LANZAMIENTO</span>
+                    <span class="text-gray-500 text-sm ml-auto">2025</span>
+                </div>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li class="flex items-start gap-2"><i class="fas fa-rocket text-kstv-gold mt-1"></i> Lanzamiento inicial de KSTV Reborn</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-download text-green-400 mt-1"></i> Repo Kodi básico</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-code text-blue-400 mt-1"></i> Herramienta Downloader Codes</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- Subscribe to updates -->
+        <section class="mt-10 glass-card rounded-xl p-6 animate-in" style="animation-delay: 0.4s">
+            <h2 class="text-lg font-bold text-white mb-3">
+                <i class="fas fa-bell text-kstv-gold mr-2"></i> ¿Quieres saber cuándo hay novedades?
+            </h2>
+            <p class="text-gray-400 text-sm mb-4">Suscríbete al newsletter para recibir alertas de nuevas versiones.</p>
+            <a href="/" class="dpad-btn inline-block px-4 py-2 bg-kstv-red hover:bg-red-700 text-white font-bold rounded-lg transition-all">
+                <i class="fas fa-home mr-1"></i> Volver al inicio
+            </a>
+        </section>
+    </main>
+
+    <footer class="bg-black border-t-4 border-kstv-gold py-4 text-center mt-auto">
+        <p class="text-gray-600 text-xs">&copy; <span id="year"></span> KSTV REBORN</p>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        function filterChangelog(type) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-kstv-gold', 'text-black');
+                btn.classList.add('bg-gray-700', 'text-white');
+            });
+            event.target.classList.remove('bg-gray-700', 'text-white');
+            event.target.classList.add('bg-kstv-gold', 'text-black');
+            // Filter logic would go here
+        }
+    </script>
+</body>
+</html>

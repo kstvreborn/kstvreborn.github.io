@@ -4,8 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KSTV Reborn - Web Principal</title>
+    <meta name="description" content="Repositorio oficial de KSTV Reborn para Kodi. Códigos Downloader, herramientas web y más.">
+    <meta name="keywords" content="Kodi, KSTV, Downloader, IPTV, España, Streaming">
+    <meta name="author" content="KSTV Reborn">
+    <meta property="og:title" content="KSTV Reborn - Web Principal">
+    <meta property="og:description" content="Repositorio oficial para Kodi. Códigos Downloader y herramientas online.">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="https://kstvreborn.github.io/">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -13,34 +20,119 @@
                     colors: {
                         'kstv-red': '#AA151B',
                         'kstv-gold': '#F1BF00',
-                        dark: '#0d1117'
+                        'dark': '#0d1117',
+                        'dark-card': '#161b22',
+                        'dark-border': '#30363d'
                     }
                 }
             }
         }
     </script>
     <style>
-        body { background-color: #0d1117; color: #c9d1d9; }
+        :root {
+            --kstv-red: #AA151B;
+            --kstv-gold: #F1BF00;
+            --dark-bg: #0d1117;
+            --dark-card: #161b22;
+            --dark-border: #30363d;
+        }
         
-        /* Focus ultra-visible para D-pad */
+        body { 
+            background-color: var(--dark-bg); 
+            color: #c9d1d9; 
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+        
+        /* Animaciones */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 5px var(--kstv-gold); }
+            50% { box-shadow: 0 0 20px var(--kstv-gold), 0 0 30px var(--kstv-gold); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .animate-in {
+            animation: fadeInUp 0.5s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+        
+        /* D-pad ultra-visible */
         .dpad-btn:focus {
-            outline: 4px solid #F1BF00 !important;
+            outline: 4px solid var(--kstv-gold) !important;
             outline-offset: 3px;
-            border-color: #F1BF00 !important;
+            border-color: var(--kstv-gold) !important;
             transform: scale(1.02);
+            box-shadow: 0 0 15px rgba(241, 191, 0, 0.5);
         }
         
+        .dpad-btn:hover {
+            border-color: var(--kstv-gold) !important;
+            transform: translateY(-2px);
+        }
+        
+        /* Glass effect */
         .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: var(--dark-card);
+            border: 2px solid var(--dark-border);
+            transition: all 0.2s ease;
         }
         
-        .dpad-btn {
-            transition: all 0.15s ease;
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--kstv-gold);
         }
+        
+        /* Hero glow */
+        .hero-glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(170,21,27,0.3) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+        
+        /* Search input */
+        .search-input:focus {
+            outline: none;
+            border-color: var(--kstv-gold);
+            box-shadow: 0 0 10px rgba(241, 191, 0, 0.3);
+        }
+        
+        /* Stats counter */
+        .counter {
+            font-variant-numeric: tabular-nums;
+        }
+        
+        /* Badge animation */
+        .badge-new {
+            animation: pulse-glow 2s infinite;
+        }
+        
+        /* Scrollbar custom */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--dark-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--dark-border); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--kstv-gold); }
     </style>
 
-    <!-- Google tag (gtag.js) -->
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-HEDC1XMWWR"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -49,60 +141,115 @@
         gtag('config', 'G-HEDC1XMWWR');
     </script>
 </head>
-<body class="min-h-screen flex flex-col font-sans antialiased" onload="document.getElementById('card-repo').focus()">
+<body class="min-h-screen flex flex-col font-sans antialiased" onload="initApp()">
 
-    <!-- Header compacto -->
-    <header class="bg-gray-900 border-b-2 border-kstv-red py-4 relative overflow-hidden">
+    <!-- Header -->
+    <header class="bg-dark-card border-b-2 border-kstv-red py-4 relative overflow-hidden sticky top-0 z-50 backdrop-blur-md">
         <div class="absolute top-0 left-0 w-full h-1 bg-kstv-red"></div>
         <div class="absolute top-1 left-0 w-full h-1 bg-kstv-gold"></div>
         <div class="absolute top-2 left-0 w-full h-1 bg-kstv-red"></div>
 
-        <div class="max-w-4xl mx-auto px-4 flex flex-col items-center justify-center text-center relative z-10 mt-2">
-            <h1 class="text-3xl md:text-5xl font-black tracking-tighter uppercase text-white">
+        <div class="max-w-5xl mx-auto px-4 flex flex-col items-center justify-center text-center relative z-10 mt-2">
+            <!-- Logo -->
+            <h1 class="text-3xl md:text-5xl font-black tracking-tighter uppercase text-white animate-in">
                 <span class="text-kstv-red">KSTV</span> <span class="text-kstv-gold">RE</span><span class="text-kstv-red">BORN</span>
             </h1>
-            <p class="mt-2 text-kstv-gold font-black text-xl tracking-widest bg-gray-800 px-4 py-2 rounded-lg border border-kstv-gold/50">
-                Código: 6979514
-            </p>
+            
+            <!-- Código + Badge -->
+            <div class="flex items-center gap-3 mt-3 animate-in delay-100">
+                <p class="text-kstv-gold font-black text-xl tracking-widest bg-dark-card px-4 py-2 rounded-lg border-2 border-kstv-gold/50">
+                    Código: <span id="repoCode" class="counter">6979514</span>
+                </p>
+                <span class="badge-new bg-green-600 text-white text-xs font-bold px-2 py-1 rounded-full animate-in delay-200">
+                    <i class="fas fa-circle text-[8px] mr-1"></i> ONLINE
+                </span>
+            </div>
+            
+            <!-- Search bar -->
+            <div class="mt-4 w-full max-w-md animate-in delay-300">
+                <div class="relative">
+                    <input type="text" id="searchInput" placeholder="Buscar secciones, addons..." 
+                        class="search-input w-full bg-dark-card border-2 border-dark-border rounded-xl px-4 py-3 pl-12 text-white placeholder-gray-500 transition-all"
+                        onkeyup="handleSearch(this.value)">
+                    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+                    <button id="clearSearch" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white hidden" onclick="clearSearch()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div id="searchResults" class="mt-2 bg-dark-card border border-dark-border rounded-xl overflow-hidden hidden">
+                    <!-- Results will be injected here -->
+                </div>
+            </div>
         </div>
     </header>
 
-    <!-- Menú principal - Grid D-pad friendly -->
-    <main class="flex-grow max-w-4xl mx-auto px-4 py-8 w-full">
+    <!-- Hero / Stats banner -->
+    <section class="relative py-8 overflow-hidden">
+        <div class="hero-glow"></div>
+        <div class="max-w-5xl mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center animate-in delay-200">
+                <div class="glass-card rounded-xl p-4">
+                    <div class="text-3xl font-black text-kstv-gold counter" id="statSections">0</div>
+                    <div class="text-xs text-gray-400 mt-1">SECCIONES</div>
+                </div>
+                <div class="glass-card rounded-xl p-4">
+                    <div class="text-3xl font-black text-kstv-red counter">69<span class="text-lg">k</span></div>
+                    <div class="text-xs text-gray-400 mt-1">CÓDIGO</div>
+                </div>
+                <div class="glass-card rounded-xl p-4">
+                    <div class="text-3xl font-black text-green-500 counter">●</div>
+                    <div class="text-xs text-gray-400 mt-1">ESTADO</div>
+                </div>
+                <div class="glass-card rounded-xl p-4">
+                    <div class="text-3xl font-black text-purple-500"><i class="fas fa-flask"></i></div>
+                    <div class="text-xs text-gray-400 mt-1">LAB IA</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menú principal -->
+    <main class="flex-grow max-w-5xl mx-auto px-4 py-6 w-full">
         
-        <h2 class="text-xl font-bold text-white mb-6 border-l-4 border-kstv-gold pl-3">
+        <h2 class="text-xl font-bold text-white mb-6 border-l-4 border-kstv-gold pl-3 animate-in delay-200">
             <i class="fas fa-th-large text-kstv-gold mr-2"></i> Elige una opción
         </h2>
 
-        <!-- Grid de 2 columnas -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Grid de cards principales -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="mainCards">
             
             <!-- REPO -->
-            <a href="/repo" id="card-repo" class="dpad-btn glass-card rounded-xl p-6 hover:border-kstv-red flex items-center gap-4 group focus:border-kstv-gold" tabindex="0">
-                <div class="w-14 h-14 bg-kstv-red rounded-xl flex items-center justify-center text-2xl text-white shadow-lg">
+            <a href="/repo" id="card-repo" class="dpad-btn glass-card rounded-xl p-6 flex items-center gap-4 group animate-in delay-300" tabindex="0">
+                <div class="w-14 h-14 bg-kstv-red rounded-xl flex items-center justify-center text-2xl text-white shadow-lg shadow-red-900/30">
                     <i class="fas fa-download"></i>
                 </div>
                 <div class="flex-1">
                     <h3 class="text-xl font-bold text-white group-hover:text-kstv-red">REPO KODI</h3>
                     <p class="text-gray-400 text-sm mt-1">Instalar repository</p>
                 </div>
-                <i class="fas fa-chevron-right text-gray-600 group-hover:text-kstv-gold"></i>
+                <div class="flex flex-col items-end gap-1">
+                    <i class="fas fa-chevron-right text-gray-600 group-hover:text-kstv-gold text-xl"></i>
+                    <span class="text-[10px] text-gray-600">v2.0</span>
+                </div>
             </a>
 
             <!-- WEBAPP -->
-            <a href="/webapp" id="card-webapp" class="dpad-btn glass-card rounded-xl p-6 hover:border-kstv-gold flex items-center gap-4 group focus:border-kstv-gold" tabindex="0">
-                <div class="w-14 h-14 bg-kstv-gold rounded-xl flex items-center justify-center text-2xl text-black shadow-lg">
+            <a href="/webapp" id="card-webapp" class="dpad-btn glass-card rounded-xl p-6 flex items-center gap-4 group animate-in delay-400" tabindex="0">
+                <div class="w-14 h-14 bg-kstv-gold rounded-xl flex items-center justify-center text-2xl text-black shadow-lg shadow-yellow-900/30">
                     <i class="fas fa-rocket"></i>
                 </div>
                 <div class="flex-1">
                     <h3 class="text-xl font-bold text-white group-hover:text-kstv-gold">WEBAPPS</h3>
                     <p class="text-gray-400 text-sm mt-1">Herramientas online</p>
                 </div>
-                <i class="fas fa-chevron-right text-gray-600 group-hover:text-kstv-gold"></i>
+                <div class="flex flex-col items-end gap-1">
+                    <i class="fas fa-chevron-right text-gray-600 group-hover:text-kstv-gold text-xl"></i>
+                    <span class="text-[10px] text-gray-600">3 tools</span>
+                </div>
             </a>
 
             <!-- Descarga directa -->
-            <a href="/repo" id="card-download" class="dpad-btn glass-card rounded-xl p-6 hover:border-kstv-red flex items-center gap-4 group focus:border-kstv-gold" tabindex="0">
+            <a href="/repo" id="card-download" class="dpad-btn glass-card rounded-xl p-6 flex items-center gap-4 group animate-in delay-400" tabindex="0">
                 <div class="w-14 h-14 bg-gray-700 rounded-xl flex items-center justify-center text-2xl text-white shadow-lg">
                     <i class="fas fa-file-download"></i>
                 </div>
@@ -110,74 +257,141 @@
                     <h3 class="text-xl font-bold text-white group-hover:text-kstv-red">DESCARGAS</h3>
                     <p class="text-gray-400 text-sm mt-1">ZIPs del addon</p>
                 </div>
-                <i class="fas fa-chevron-right text-gray-600 group-hover:text-kstv-gold"></i>
+                <i class="fas fa-chevron-right text-gray-600 group-hover:text-kstv-gold text-xl"></i>
             </a>
 
-            <!-- LABORATORIO -->
-            <a href="/webapp/Laboratorio_de_Prompts" id="card-lab" class="dpad-btn glass-card rounded-xl p-6 hover:border-kstv-gold flex items-center gap-4 group focus:border-kstv-gold" tabindex="0">
-                <div class="w-14 h-14 bg-purple-600 rounded-xl flex items-center justify-center text-2xl text-white shadow-lg">
+            <!-- LABORATORIO IA -->
+            <a href="/webapp/Laboratorio_de_Prompts" id="card-lab" class="dpad-btn glass-card rounded-xl p-6 flex items-center gap-4 group animate-in delay-500" tabindex="0">
+                <div class="w-14 h-14 bg-purple-600 rounded-xl flex items-center justify-center text-2xl text-white shadow-lg shadow-purple-900/30">
                     <i class="fas fa-flask"></i>
                 </div>
                 <div class="flex-1">
-                    <h3 class="text-xl font-bold text-white group-hover:text-kstv-gold">LAB IA</h3>
+                    <h3 class="text-xl font-bold text-white group-hover:text-purple-400">LAB IA <span class="badge-new text-[10px] bg-purple-600 px-2 py-0.5 rounded-full ml-2">NEW</span></h3>
                     <p class="text-gray-400 text-sm mt-1">Prompts y herramientas</p>
                 </div>
-                <i class="fas fa-chevron-right text-gray-600 group-hover:text-kstv-gold"></i>
+                <i class="fas fa-chevron-right text-gray-600 group-hover:text-kstv-gold text-xl"></i>
             </a>
-
         </div>
 
-        <!-- Más opciones dinámica -->
-        <h2 class="text-xl font-bold text-white mt-10 mb-4 border-l-4 border-kstv-red pl-3">
+        <!-- Secciones dinámicas -->
+        <h2 class="text-xl font-bold text-white mt-10 mb-4 border-l-4 border-kstv-red pl-3 animate-in delay-500">
             <i class="fas fa-folder-open text-kstv-red mr-2"></i> Más secciones
         </h2>
-        <div id="dynamic-sections" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+        <div id="dynamic-sections" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             <!-- Cargando... -->
             <div class="col-span-full text-center py-8 text-gray-500">
                 <i class="fas fa-circle-notch fa-spin text-2xl"></i>
-                <p class="text-sm mt-2">Buscando...</p>
+                <p class="text-sm mt-2">Buscando secciones...</p>
             </div>
         </div>
 
+        <!-- Newsletter / Comunidad -->
+        <section class="mt-10 glass-card rounded-xl p-6 animate-in delay-500">
+            <h3 class="text-lg font-bold text-white mb-3">
+                <i class="fas fa-bell text-kstv-gold mr-2"></i> Mantente informado
+            </h3>
+            <p class="text-gray-400 text-sm mb-4">Recibe actualizaciones cuando haya nuevas versiones o herramientas.</p>
+            <form id="newsletterForm" class="flex gap-2" onsubmit="handleNewsletter(event)">
+                <input type="email" id="emailInput" placeholder="tu@email.com" required
+                    class="search-input flex-1 bg-dark-card border-2 border-dark-border rounded-lg px-4 py-2 text-white placeholder-gray-500">
+                <button type="submit" class="dpad-btn px-4 py-2 bg-kstv-red hover:bg-red-700 text-white font-bold rounded-lg transition-all">
+                    <i class="fas fa-paper-plane mr-1"></i> SUSCRIBIRSE
+                </button>
+            </form>
+            <p id="newsletterMsg" class="text-sm mt-2 hidden"></p>
+        </section>
+
+        <!-- Enlaces rápidos -->
+        <section class="mt-8 flex flex-wrap justify-center gap-4 text-sm text-gray-500 animate-in delay-500">
+            <a href="https://github.com/kstvreborn" target="_blank" class="hover:text-kstv-gold transition-colors">
+                <i class="fab fa-github mr-1"></i> GitHub
+            </a>
+            <a href="https://discord.gg/kstvreborn" target="_blank" class="hover:text-indigo-400 transition-colors">
+                <i class="fab fa-discord mr-1"></i> Discord
+            </a>
+            <a href="/changelog" class="hover:text-kstv-gold transition-colors">
+                <i class="fas fa-history mr-1"></i> Changelog
+            </a>
+            <a href="/faq" class="hover:text-kstv-gold transition-colors">
+                <i class="fas fa-question-circle mr-1"></i> FAQ
+            </a>
+        </section>
     </main>
 
-    <footer class="bg-black border-t-4 border-kstv-gold py-4 text-center">
-        <p class="text-gray-400 text-sm">KSTV REBORN</p>
-        <p class="text-gray-600 text-xs mt-1">
-            &copy; 2026 | <span class="text-kstv-red">Made with</span> <i class="fas fa-heart text-kstv-red"></i> <span class="text-kstv-gold">in Spain</span>
-        </p>
+    <!-- Footer mejorado -->
+    <footer class="bg-black border-t-4 border-kstv-gold py-6 text-center mt-auto">
+        <div class="max-w-5xl mx-auto px-4">
+            <p class="text-gray-400 text-sm">KSTV REBORN</p>
+            <p class="text-gray-600 text-xs mt-1">
+                &copy; <span id="footerYear"></span> | <span class="text-kstv-red">Made with</span> <i class="fas fa-heart text-kstv-red"></i> <span class="text-kstv-gold">in Spain</span>
+            </p>
+            <p class="text-gray-700 text-[10px] mt-2">v2.1.0 | <a href="https://github.com/kstvreborn/kstvreborn.github.io" target="_blank" class="hover:text-gray-500">GitHub</a></p>
+        </div>
     </footer>
 
-    <!-- Carga dinámica de carpetas -->
+    <!-- Toast notification -->
+    <div id="toast" class="toast">
+        <i class="fas fa-check-circle mr-2"></i> <span id="toastMsg">¡Hecho!</span>
+    </div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', async () => {
+        // Config
+        const CONFIG = {
+            repoOwner: 'kstvreborn',
+            repoName: 'kstvreborn.github.io',
+            ignoreFolders: ['repo', 'webapp', '.git', '.github', 'node_modules'],
+            autoFocus: 'card-repo'
+        };
+
+        // All sections for search
+        let allSections = [];
+
+        // Initialize
+        function initApp() {
+            document.getElementById('footerYear').textContent = new Date().getFullYear();
+            document.getElementById(CONFIG.autoFocus).focus();
+            loadSections();
+            loadStats();
+        }
+
+        // Load sections from GitHub API
+        async function loadSections() {
             const container = document.getElementById('dynamic-sections');
-            const ignoreList = ['repo', 'webapp', '.git', '.github'];
             
-            // Carpetas especiales para mostrar como cards
+            // Special folder configs
             const specialFolders = {
                 'repo': { name: 'REPO', icon: 'fa-download', color: 'bg-kstv-red', text: 'text-white' },
                 'webapp': { name: 'WEBAPP', icon: 'fa-rocket', color: 'bg-kstv-gold', text: 'text-black' },
-                'Laboratorio_de_Prompts': { name: 'LAB IA', icon: 'fa-flask', color: 'bg-purple-600', text: 'text-white' }
+                'Laboratorio_de_Prompts': { name: 'LAB IA', icon: 'fa-flask', color: 'bg-purple-600', text: 'text-white' },
+                'guias': { name: 'GUÍAS', icon: 'fa-book', color: 'bg-blue-600', text: 'text-white' },
+                'comunidad': { name: 'COMUNIDAD', icon: 'fa-users', color: 'bg-indigo-600', text: 'text-white' }
             };
 
             try {
-                const resp = await fetch('https://api.github.com/repos/kstvreborn/kstvreborn.github.io/contents');
-                const data = await resp.json();
+                const resp = await fetch(`https://api.github.com/repos/${CONFIG.repoOwner}/${CONFIG.repoName}/contents`);
                 
-                const folders = data.filter(item => item.type === 'dir' && !ignoreList.includes(item.name));
+                if (!resp.ok) throw new Error('GitHub API error');
+                
+                const data = await resp.json();
+                const folders = data.filter(item => item.type === 'dir' && !CONFIG.ignoreFolders.includes(item.name));
                 
                 if (folders.length === 0) {
-                    container.innerHTML = '<p class="text-gray-500 text-sm">No hay más secciones</p>';
+                    container.innerHTML = '<p class="text-gray-500 text-sm col-span-full">No hay más secciones disponibles</p>';
                     return;
                 }
 
+                // Update stats
+                document.getElementById('statSections').textContent = folders.length + 4;
+                
+                // Store for search
+                allSections = folders;
+                
+                // Clear loader
                 container.innerHTML = '';
-                let focusIndex = 4; // Los primeros 4 ya tienen IDs fijos
 
-                folders.forEach(folder => {
+                folders.forEach((folder, index) => {
                     const info = specialFolders[folder.name] || { 
-                        name: folder.name.replace(/-/g, ' ').toUpperCase().substring(0, 15), 
+                        name: folder.name.replace(/-/g, ' ').replace(/_/g, ' ').toUpperCase().substring(0, 15), 
                         icon: 'fa-folder', 
                         color: 'bg-gray-700', 
                         text: 'text-white' 
@@ -185,22 +399,95 @@
                     
                     const card = document.createElement('a');
                     card.href = `/${folder.name}`;
-                    card.className = `dpad-btn glass-card rounded-lg p-4 hover:border-kstv-gold flex flex-col items-center justify-center text-center group focus:border-kstv-gold`;
+                    card.className = `dpad-btn glass-card rounded-lg p-4 flex flex-col items-center justify-center text-center group hover:border-kstv-gold animate-in`;
+                    card.style.animationDelay = `${0.6 + index * 0.05}s`;
                     card.tabIndex = 0;
                     
                     card.innerHTML = `
-                        <div class="w-10 h-10 ${info.color} rounded-lg flex items-center justify-center text-xl ${info.text} mb-2">
+                        <div class="w-12 h-12 ${info.color} rounded-lg flex items-center justify-center text-xl ${info.text} mb-2 shadow-lg">
                             <i class="fas ${info.icon}"></i>
                         </div>
-                        <span class="text-xs font-bold text-gray-300 group-hover:text-kstv-gold">${info.name}</span>
+                        <span class="text-xs font-bold text-gray-300 group-hover:text-kstv-gold text-center">${info.name}</span>
                     `;
                     
                     container.appendChild(card);
                 });
 
             } catch (e) {
-                container.innerHTML = '<p class="text-red-400 text-sm">Error al cargar</p>';
+                container.innerHTML = '<p class="text-red-400 text-sm col-span-full">Error al cargar secciones</p>';
+                console.error('Load sections error:', e);
             }
+        }
+
+        // Load basic stats
+        async function loadStats() {
+            // Could fetch from GitHub API or external service
+            // For now, using placeholder values
+        }
+
+        // Search functionality
+        function handleSearch(query) {
+            const clearBtn = document.getElementById('clearSearch');
+            const results = document.getElementById('searchResults');
+            
+            if (query.length < 2) {
+                results.classList.add('hidden');
+                clearBtn.classList.add('hidden');
+                return;
+            }
+            
+            clearBtn.classList.remove('hidden');
+            
+            // Search in sections
+            const matches = allSections.filter(s => 
+                s.name.toLowerCase().includes(query.toLowerCase())
+            );
+            
+            if (matches.length === 0) {
+                results.innerHTML = '<div class="p-3 text-gray-500 text-sm">Sin resultados</div>';
+            } else {
+                results.innerHTML = matches.map(s => `
+                    <a href="/${s.name}" class="block p-3 hover:bg-dark-border transition-colors text-white">
+                        <i class="fas fa-folder text-kstv-gold mr-2"></i> ${s.name.replace(/-/g, ' ')}
+                    </a>
+                `).join('');
+            }
+            
+            results.classList.remove('hidden');
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('searchResults').classList.add('hidden');
+            document.getElementById('clearSearch').classList.add('hidden');
+        }
+
+        // Newsletter
+        function handleNewsletter(e) {
+            e.preventDefault();
+            const email = document.getElementById('emailInput').value;
+            const msg = document.getElementById('newsletterMsg');
+            
+            // Here you would integrate with Mailchimp, ConvertKit, etc.
+            msg.textContent = `¡Suscrito! Recibirás actualizaciones en ${email}`;
+            msg.className = 'text-sm mt-2 text-green-400';
+            msg.classList.remove('hidden');
+            
+            showToast('¡Suscrito correctamente!');
+            document.getElementById('emailInput').value = '';
+        }
+
+        // Toast notification
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Keyboard navigation helper
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') clearSearch();
         });
     </script>
 </body>
