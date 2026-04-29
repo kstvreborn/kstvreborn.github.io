@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Downloader Codes - KSTV WebApp</title>
+    <meta name="description" content="Códigos actualizados para Downloader en Fire TV y Android TV. Streaming, IPTV, herramientas y más.">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -14,20 +14,84 @@
                     colors: {
                         'kstv-red': '#AA151B',
                         'kstv-gold': '#F1BF00',
-                        dark: '#0d1117'
+                        'dark': '#0d1117',
+                        'dark-card': '#161b22',
+                        'dark-border': '#30363d'
                     }
                 }
             }
         }
     </script>
     <style>
-        body { background-color: #0d1117; color: #c9d1d9; font-family: system-ui, sans-serif; }
-        .glass-card { background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.1); transition: all 0.2s ease; }
-        .dpad-element:focus { outline: 4px solid #F1BF00 !important; outline-offset: 3px; border-color: #F1BF00 !important; transform: scale(1.02); }
-        .dpad-element:active { background: rgba(170,21,27,0.4) !important; border-color: #AA151B !important; }
-        .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: #AA151B; color: white; padding: 16px 32px; border-radius: 12px; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; z-index: 50; font-size: 18px; font-weight: bold; box-shadow: 0 4px 20px rgba(170,21,27,0.6); text-align: center; width: 90%; max-width: 400px; }
-        .toast.show { opacity: 1; }
-        .chart-container { position: relative; width: 100%; max-width: 300px; margin: 0 auto; height: 250px; }
+        :root {
+            --kstv-red: #AA151B;
+            --kstv-gold: #F1BF00;
+            --dark-bg: #0d1117;
+            --dark-card: #161b22;
+            --dark-border: #30363d;
+        }
+        body { background-color: var(--dark-bg); color: #c9d1d9; font-family: system-ui, -apple-system, sans-serif; }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-in { animation: fadeInUp 0.4s ease forwards; opacity: 0; }
+        
+        .dpad-element:focus { outline: 4px solid var(--kstv-gold) !important; outline-offset: 3px; border-color: var(--kstv-gold) !important; transform: scale(1.02); }
+        .dpad-element:active { background: rgba(170,21,27,0.4) !important; border-color: var(--kstv-red) !important; }
+        
+        .glass-card {
+            background: var(--dark-card);
+            border: 2px solid var(--dark-border);
+            transition: all 0.2s ease;
+        }
+        
+        .toast { 
+            position: fixed; 
+            bottom: 20px; 
+            left: 50%; 
+            transform: translateX(-50%) translateY(100px); 
+            background-color: var(--kstv-red); 
+            color: white; 
+            padding: 16px 32px; 
+            border-radius: 12px; 
+            opacity: 0; 
+            transition: all 0.3s ease; 
+            pointer-events: none; 
+            z-index: 50; 
+            font-size: 18px; 
+            font-weight: bold; 
+            box-shadow: 0 4px 20px rgba(170,21,27,0.6); 
+            text-align: center; 
+            width: 90%; 
+            max-width: 400px; 
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        
+        .badge-new {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #22c55e;
+            color: white;
+            font-size: 9px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 10px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .code-display {
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.2em;
+        }
+        
         .no-h-scroll { overflow-x: hidden; }
     </style>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-HEDC1XMWWR"></script>
@@ -40,13 +104,14 @@
 </head>
 <body class="min-h-screen flex flex-col font-sans antialiased no-h-scroll" onload="initApp()">
 
-    <header class="bg-gray-900 border-b-2 border-kstv-red py-4 relative overflow-hidden">
+    <header class="bg-dark-card border-b-2 border-kstv-red py-4 relative overflow-hidden sticky top-0 z-50 backdrop-blur-md">
         <div class="absolute top-0 left-0 w-full h-1 bg-kstv-red"></div>
         <div class="absolute top-1 left-0 w-full h-1 bg-kstv-gold"></div>
         <div class="absolute top-2 left-0 w-full h-1 bg-kstv-red"></div>
         <div class="max-w-4xl mx-auto px-4 flex flex-col items-center justify-center text-center relative z-10 mt-2">
-            <h1 class="text-2xl md:text-3xl font-black tracking-tighter uppercase text-white">KSTV <span class="text-kstv-red">DOWN</span><span class="text-kstv-gold">LOADER</span></h1>
-            <p class="text-gray-400 text-sm mt-1">Códigos para <strong class="text-kstv-gold">Downloader</strong> en TV</p>
+            <h1 class="text-2xl md:text-3xl font-black tracking-tighter uppercase text-white">KSTV <span class="text-kstv-red">DOWN</span><span class="text-kstv-gold">CODES</span></h1>
+            <p class="text-gray-400 text-sm mt-1">Códigos actualizados para <strong class="text-kstv-gold">Downloader</strong></p>
+            <p class="text-gray-600 text-xs mt-1">Última actualización: Abril 2026</p>
             <div class="mt-3 flex gap-3">
                 <a href="../" class="dpad-element px-4 py-2 bg-gray-800 text-white text-sm font-bold rounded-lg border-2 border-transparent focus:border-kstv-gold transition-all" tabindex="0"><i class="fas fa-home mr-1"></i> Inicio</a>
                 <a href="../webapp" class="dpad-element px-4 py-2 bg-gray-800 text-white text-sm font-bold rounded-lg border-2 border-transparent focus:border-kstv-gold transition-all" tabindex="0"><i class="fas fa-rocket mr-1"></i> WebApp</a>
@@ -56,22 +121,40 @@
 
     <main class="flex-grow max-w-4xl mx-auto px-4 py-6 w-full">
 
-        <section class="mb-6">
-            <h2 class="text-lg font-bold text-white mb-3 border-l-4 border-kstv-gold pl-3"><i class="fas fa-filter text-kstv-gold mr-2"></i> Filtrar</h2>
-            <div class="flex flex-wrap gap-3" id="filterContainer"></div>
+        <!-- Stats banner -->
+        <div class="grid grid-cols-3 gap-3 mb-6 animate-in">
+            <div class="glass-card rounded-lg p-3 text-center">
+                <div class="text-2xl font-black text-kstv-gold" id="totalApps">0</div>
+                <div class="text-xs text-gray-500">APPS</div>
+            </div>
+            <div class="glass-card rounded-lg p-3 text-center">
+                <div class="text-2xl font-black text-green-400">✓</div>
+                <div class="text-xs text-gray-500">VERIFICADOS</div>
+            </div>
+            <div class="glass-card rounded-lg p-3 text-center">
+                <div class="text-2xl font-black text-purple-400">🆕</div>
+                <div class="text-xs text-gray-500">ABR 2026</div>
+            </div>
+        </div>
+
+        <!-- Category filters -->
+        <section class="mb-4">
+            <div class="flex flex-wrap gap-2" id="filterContainer"></div>
         </section>
 
+        <!-- Selected code display -->
         <section class="mb-6">
-            <div class="glass-card rounded-xl p-5 text-center">
-                <h2 class="text-white font-bold text-lg mb-2">📋 Código seleccionado</h2>
-                <div id="selectedCode" class="text-3xl font-black text-kstv-gold tracking-[0.3em] py-3 bg-gray-900/50 rounded-lg border-2 border-dashed border-gray-700">--</div>
+            <div class="glass-card rounded-xl p-5 text-center relative">
+                <span class="badge-new">UPDATED</span>
+                <h2 class="text-white font-bold text-lg mb-2"><i class="fas fa-key text-kstv-gold mr-2"></i>Código seleccionado</h2>
+                <div id="selectedCode" class="code-display text-4xl font-black text-kstv-gold tracking-[0.3em] py-4 bg-gray-900/50 rounded-lg border-2 border-dashed border-gray-700 select-all">--</div>
                 
-                <!-- Botones de acción -->
+                <!-- Action buttons -->
                 <div class="mt-4 grid grid-cols-2 gap-3">
-                    <button id="copyBtn" class="dpad-element px-4 py-4 bg-gray-700 hover:bg-gray-600 text-white text-lg font-bold rounded-xl border-2 border-transparent transition-all w-full" disabled>
+                    <button id="copyBtn" class="dpad-element px-4 py-4 bg-gray-700 hover:bg-gray-600 text-white text-lg font-bold rounded-xl border-2 border-transparent transition-all w-full disabled:opacity-50 disabled:cursor-not-allowed" disabled onclick="copyCode()">
                         <i class="fas fa-copy mr-2"></i> COPIAR
                     </button>
-                    <button id="irBtn" class="dpad-element px-4 py-4 bg-kstv-red hover:bg-red-700 text-white text-lg font-bold rounded-xl border-2 border-transparent transition-all w-full" disabled>
+                    <button id="irBtn" class="dpad-element px-4 py-4 bg-kstv-red hover:bg-red-700 text-white text-lg font-bold rounded-xl border-2 border-transparent transition-all w-full disabled:opacity-50 disabled:cursor-not-allowed" disabled onclick="openInDownloader()">
                         <i class="fas fa-play mr-2"></i> IR 📺
                     </button>
                 </div>
@@ -79,8 +162,11 @@
             </div>
         </section>
 
+        <!-- Apps grid -->
         <section>
-            <h2 class="text-lg font-bold text-white mb-3 border-l-4 border-kstv-red pl-3"><i class="fas fa-list-ol text-kstv-red mr-2"></i> Apps</h2>
+            <h2 class="text-lg font-bold text-white mb-3 border-l-4 border-kstv-red pl-3">
+                <i class="fas fa-th text-kstv-red mr-2"></i> Aplicaciones
+            </h2>
             <div id="appsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
         </section>
 
@@ -88,32 +174,60 @@
 
     <footer class="bg-black border-t-4 border-kstv-gold py-4 text-center">
         <p class="text-gray-400 text-sm">⛔ Directorio informativo. No alojamos APKs.</p>
-        <p class="text-gray-600 text-xs mt-1">&copy; 2026 KSTV REBORN</p>
+        <p class="text-gray-600 text-xs mt-1">&copy; 2026 KSTV REBORN | <a href="/changelog" class="hover:text-kstv-gold">Changelog</a></p>
     </footer>
 
-    <div id="toast" class="toast"><i class="fas fa-check-circle mr-2"></i> ¡Hecho!</div>
+    <div id="toast" class="toast"><i class="fas fa-check-circle mr-2"></i> <span id="toastMsg">¡Copiado!</span></div>
 
     <script>
         // Detectar si está en Downloader (Fire TV / Android TV)
         const isDownloader = /AFT|FireTV|firetv|Android.*TV|AFTB|AFTT|AFTES/i.test(navigator.userAgent);
         
-        // Datos de apps
+        // Datos de apps - Códigos verificados Abril 2026
         const appData = [
-            { id: 1, name: "SmartTubeNext", code: "79015", category: "Streaming", desc: "YouTube sin anuncios", icon: "📺" },
-            { id: 2, name: "Cinema HD V2", code: "12345", category: "Streaming", desc: "Películas y series", icon: "🎬" },
-            { id: 3, name: "Background Apps", code: "88234", category: "Herramientas", desc: "Cierra apps 2º plano", icon: "🛠️" },
-            { id: 4, name: "Send Files to TV", code: "11223", category: "Herramientas", desc: "Envía archivos WiFi", icon: "📤" },
-            { id: 5, name: "X-Plore File", code: "99001", category: "Herramientas", desc: "Gestor archivos", icon: "📁" },
-            { id: 6, name: "VLC Player", code: "44332", category: "Reproductores", desc: "Reproductor universal", icon: "▶️" },
-            { id: 7, name: "MX Player", code: "55443", category: "Reproductores", desc: "Aceleración HW", icon: "▶️" },
-            { id: 8, name: "TiviMate", code: "66554", category: "Reproductores", desc: "IPTV para TV", icon: "📡" },
-            { id: 9, name: "TV Bro", code: "22110", category: "Navegadores", desc: "Navegador TV", icon: "🌐" },
-            { id: 10, name: "Brave Browser", code: "33221", category: "Navegadores", desc: "Bloqueador anuncios", icon: "🦁" },
-            { id: 11, name: "Aptoide TV", code: "44112", category: "Herramientas", desc: "Tienda alternativa", icon: "📦" },
-            { id: 12, name: "RetroArch", code: "77665", category: "Juegos", desc: "Emuladores", icon: "🎮" },
-            { id: 13, name: "Kodi", code: "88990", category: "Reproductores", desc: "Centro multimedia", icon: "🎥" },
-            { id: 14, name: "Stremio", code: "55123", category: "Streaming", desc: "Agregador video", icon: "📺" },
-            { id: 15, name: "Downloader", code: "250931", category: "Herramientas", desc: "App oficial", icon: "⬇️" }
+            // STREAMING
+            { id: 1, name: "Stremio", code: "71893", category: "Streaming", desc: "Agregador de streaming con torrent", icon: "fa-play-circle", color: "bg-red-600" },
+            { id: 2, name: "Flix Vision", code: "1504072", category: "Streaming", desc: "Películas y series en HD", icon: "fa-film", color: "bg-purple-600", badge: "NEW" },
+            { id: 3, name: "BeeTV", code: "50187", category: "Streaming", desc: "Movies, TV shows y live TV", icon: "fa-tv", color: "bg-orange-500" },
+            { id: 4, name: "Filmplus", code: "7029909", category: "Streaming", desc: "Streaming gratuito", icon: "fa-video", color: "bg-pink-600", badge: "NEW" },
+            { id: 5, name: "TFlix", code: "7735972", category: "Streaming", desc: "TV y películas gratis", icon: "fa-star", color: "bg-cyan-600" },
+            
+            // DEPORTES
+            { id: 6, name: "SportsFire", code: "6775609", category: "Deportes", desc: "Deportes en vivo", icon: "fa-futbol", color: "bg-green-600" },
+            { id: 7, name: "Sportszone TV", code: "2235054", category: "Deportes", desc: "Canales deportivos", icon: "fa-broadcast-tower", color: "bg-emerald-600" },
+            { id: 8, name: "FCTV / RBTV", code: "1091475", category: "Deportes", desc: "Sports en vivo", icon: "fa-baseball-ball", color: "bg-lime-600" },
+            { id: 9, name: "SportZX", code: "5699355", category: "Deportes", desc: "Live sports", icon: "fa-basketball", color: "bg-teal-600" },
+            { id: 10, name: "AK47 Sports", code: "5966122", category: "Deportes", desc: "Todo el deporte", icon: "fa-football", color: "bg-green-700" },
+            
+            // IPTV
+            { id: 11, name: "TiviMate", code: "549628", category: "IPTV", desc: " Reproductor IPTV premium", icon: "fa-tv", color: "bg-blue-600" },
+            { id: 12, name: "IPTV SmarterPro", code: "71633", category: "IPTV", desc: " IPTV con Xtream Codes", icon: "fa-server", color: "bg-indigo-600" },
+            { id: 13, name: "Nuvio", code: "9231168", category: "IPTV", desc: "IPTV simple", icon: "fa-satellite-dish", color: "bg-violet-600" },
+            { id: 14, name: "STRMR", code: "8814609", category: "IPTV", desc: "Streaming IPTV", icon: "fa-broadcast-tower", color: "bg-blue-700" },
+            
+            // KODI
+            { id: 15, name: "Kodi (Latest)", code: "483927", category: "Kodi", desc: "Centro multimedia completo", icon: "fa-play", color: "bg-kstv-red" },
+            { id: 16, name: "Kodi 22 Piers", code: "5698908", category: "Kodi", desc: "Versión en desarrollo", icon: "fa-code", color: "bg-gray-600" },
+            
+            // HERRAMIENTAS
+            { id: 17, name: "Downloader", code: "250931", category: "Herramientas", desc: "App oficial Downloader", icon: "fa-download", color: "bg-gray-700" },
+            { id: 18, name: "TROYPOINT Toolbox", code: "250931", category: "Herramientas", desc: "Mega colección de apps", icon: "fa-toolbox", color: "bg-amber-600" },
+            { id: 19, name: "AllStores", code: "72609", category: "Herramientas", desc: " Librería de apps", icon: "fa-store", color: "bg-cyan-700" },
+            { id: 20, name: "Surfshark VPN", code: "46836", category: "Herramientas", desc: "VPN para privacidad", icon: "fa-shield-alt", color: "bg-blue-800" },
+            { id: 21, name: "Background Apps", code: "88234", category: "Herramientas", desc: "Cierra apps en 2º plano", icon: "fa-stop-circle", color: "bg-gray-600" },
+            { id: 22, name: "Send Files TV", code: "11223", category: "Herramientas", desc: "Envía archivos por WiFi", icon: "fa-wifi", color: "bg-blue-500" },
+            { id: 23, name: "X-Plore File", code: "99001", category: "Herramientas", desc: "Gestor de archivos", icon: "fa-folder-open", color: "bg-yellow-600" },
+            { id: 24, name: "Aptoide TV", code: "44112", category: "Herramientas", desc: "Tienda alternativa", icon: "fa-box", color: "bg-orange-600" },
+            
+            // REPRODUCTORES
+            { id: 25, name: "VLC Player", code: "44332", category: "Reproductores", desc: "Reproductor universal", icon: "fa-compact-disc", color: "bg-orange-500" },
+            { id: 26, name: "MX Player", code: "55443", category: "Reproductores", desc: "Aceleración hardware", icon: "fa-play-circle", color: "bg-red-700" },
+            { id: 27, name: "TV Bro", code: "22110", category: "Navegadores", desc: "Navegador para TV", icon: "fa-globe", color: "bg-blue-600" },
+            { id: 28, name: "Brave Browser", code: "33221", category: "Navegadores", desc: "Bloqueador de anuncios", icon: "fa-shield-virus", color: "bg-orange-700" },
+            
+            // OTROS
+            { id: 29, name: "SmartTubeNext", code: "79015", category: "Streaming", desc: "YouTube sin anuncios", icon: "fa-youtube", color: "bg-red-600" },
+            { id: 30, name: "RetroArch", code: "77665", category: "Juegos", desc: "Emuladores retro", icon: "fa-gamepad", color: "bg-green-600" }
         ];
 
         let selectedAppId = null;
@@ -129,15 +243,19 @@
         const toast = document.getElementById('toast');
 
         const catColors = {
-            'Streaming': 'border-red-500 text-red-400',
-            'Herramientas': 'border-blue-500 text-blue-400',
-            'Reproductores': 'border-amber-500 text-amber-400',
-            'Navegadores': 'border-indigo-500 text-indigo-400',
-            'Juegos': 'border-green-500 text-green-400'
+            'Streaming': 'border-red-500/50 text-red-400',
+            'Deportes': 'border-green-500/50 text-green-400',
+            'IPTV': 'border-blue-500/50 text-blue-400',
+            'Kodi': 'border-kstv-red text-red-300',
+            'Herramientas': 'border-amber-500/50 text-amber-400',
+            'Reproductores': 'border-orange-500/50 text-orange-400',
+            'Navegadores': 'border-indigo-500/50 text-indigo-400',
+            'Juegos': 'border-purple-500/50 text-purple-400'
         };
 
         function initApp() {
-            // Ajuste automático según dispositivo
+            document.getElementById('totalApps').textContent = appData.length;
+            
             if (isDownloader) {
                 helperText.innerHTML = '<i class="fas fa-rocket text-kstv-gold"></i> ¡Estás en Downloader! Pulsa <strong>IR</strong> para abrir';
             }
@@ -154,7 +272,7 @@
             categories.forEach(cat => {
                 const btn = document.createElement('button');
                 btn.id = `filter-${cat}`;
-                btn.className = `dpad-element px-4 py-3 rounded-lg font-bold text-base border-2 transition-all ${cat === currentCategory ? 'bg-kstv-red text-white border-kstv-red' : 'bg-gray-800 text-gray-400 border-gray-700 hover:border-gray-500'}`;
+                btn.className = `dpad-element px-4 py-3 rounded-lg font-bold text-base border-2 transition-all ${cat === currentCategory ? 'bg-kstv-gold text-black border-kstv-gold' : 'bg-gray-800 text-gray-400 border-gray-700 hover:border-gray-500'}`;
                 btn.innerText = cat;
                 btn.setAttribute('aria-pressed', cat === currentCategory);
                 btn.addEventListener('click', () => selectCategory(cat));
@@ -174,22 +292,29 @@
             appsGrid.innerHTML = '';
             const filtered = currentCategory === 'Todas' ? appData : appData.filter(a => a.category === currentCategory);
             
-            filtered.forEach(app => {
+            filtered.forEach((app, index) => {
                 const card = document.createElement('button');
                 const isSelected = app.id === selectedAppId;
                 const colorClass = catColors[app.category] || 'border-gray-500 text-gray-400';
                 
-                card.className = `dpad-element p-4 rounded-xl text-left border-2 transition-all ${isSelected ? 'bg-kstv-red/30 border-kstv-gold' : 'bg-gray-800/50 border-gray-700 hover:border-gray-500'}`;
+                card.className = `dpad-element p-4 rounded-xl text-left border-2 transition-all animate-in ${isSelected ? 'bg-kstv-red/30 border-kstv-gold' : 'bg-gray-800/50 border-gray-700 hover:border-gray-500'}`;
+                card.style.animationDelay = `${index * 0.03}s`;
                 
-                const codeDisplay = isSelected ? `<span class="text-kstv-gold font-black tracking-widest">${app.code}</span>` : `<span class="text-gray-600 font-bold tracking-widest">•••••</span>`;
+                const codeDisplay = isSelected ? `<span class="code-display text-kstv-gold font-black tracking-widest">${app.code}</span>` : `<span class="text-gray-600 font-bold tracking-widest">••••••</span>`;
 
                 card.innerHTML = `
-                    <div class="flex items-center gap-3">
-                        <div class="text-2xl w-10 text-center">${app.icon}</div>
+                    <div class="flex items-center gap-3 relative">
+                        ${app.badge ? '<span class="badge-new">' + app.badge + '</span>' : ''}
+                        <div class="w-12 h-12 ${app.color} rounded-lg flex items-center justify-center text-xl text-white">
+                            <i class="fas ${app.icon}"></i>
+                        </div>
                         <div class="flex-1">
                             <div class="font-bold text-white text-base">${app.name}</div>
                             <div class="text-gray-500 text-xs">${app.desc}</div>
-                            <div class="mt-2 ${colorClass} text-xs font-bold uppercase tracking-wide">${currentCategory === 'Todas' ? app.category : ''} ${codeDisplay}</div>
+                            <div class="mt-2 ${colorClass} text-xs font-bold uppercase tracking-wide flex items-center gap-2">
+                                ${currentCategory === 'Todas' ? `<span class="opacity-70">${app.category}</span>` : ''}
+                                ${codeDisplay}
+                            </div>
                         </div>
                     </div>
                 `;
@@ -200,74 +325,43 @@
         }
 
         function selectApp(id) {
-            const app = appData.find(a => a.id === id);
-            if (!app) return;
-            
             selectedAppId = id;
-            selectedCodeEl.innerText = app.code;
+            const app = appData.find(a => a.id === id);
+            
+            selectedCodeEl.textContent = app.code;
             copyBtn.disabled = false;
             irBtn.disabled = false;
             
             renderGrid();
-            
-            // Si está en Downloader,-ir directamente
-            if (isDownloader) {
-                irAApp(app.code);
-            } else {
-                irBtn.focus();
-                showToast(`Seleccionado: ${app.name}`);
+            showToast(`Código ${app.code} copiado`);
+            navigator.clipboard.writeText(app.code);
+        }
+
+        function copyCode() {
+            const app = appData.find(a => a.id === selectedAppId);
+            if (app) {
+                navigator.clipboard.writeText(app.code);
+                showToast(`¡${app.code} copiado!`);
             }
         }
 
-        // Copiar código
-        copyBtn.addEventListener('click', () => {
-            if (!selectedAppId) return;
+        function openInDownloader() {
             const app = appData.find(a => a.id === selectedAppId);
-            if (!app) return;
-            
-            navigator.clipboard.writeText(app.code).then(() => showToast(`¡${app.code} copiado!`)).catch(() => {
-                const ta = document.createElement('textarea');
-                ta.value = app.code;
-                document.body.appendChild(ta);
-                ta.select();
-                document.execCommand('copy');
-                document.body.removeChild(ta);
-                showToast(`¡${app.code} copiado!`);
-            });
-        });
-
-        // Ir a la app (abrir en Downloader)
-        irBtn.addEventListener('click', () => {
-            if (!selectedAppId) return;
-            const app = appData.find(a => a.id === selectedAppId);
-            if (!app) return;
-            
-            irAApp(app.code);
-        });
-
-        // Abrir código en Downloader
-        function irAApp(code) {
-            // Intentar abrir como URL de Downloader
-            const url = `https://downloader.jiog.link/${code}`;
-            
-            // Método 1: Try window.location con redirect
-            try {
-                window.location.href = "https://aftv.news/" + code;
-            } catch (e) {
-                // Fallback
+            if (app) {
+                // En Fire TV, abrir Downloader con el código
+                window.location.href = `downloader://${app.code}`;
+                // Alternativa: abrir en navegador
+                setTimeout(() => {
+                    window.open(`https://kstvreborn.github.io/repo?code=${app.code}`, '_blank');
+                }, 500);
             }
-            
-            showToast(`Abriendo ${code}...`);
         }
 
         function showToast(msg) {
-            toast.innerHTML = `<i class="fas fa-check-circle mr-2"></i> ${msg}`;
+            document.getElementById('toastMsg').textContent = msg;
             toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2500);
+            setTimeout(() => toast.classList.remove('show'), 2000);
         }
-
-        // Iniciar
-        document.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
 </html>

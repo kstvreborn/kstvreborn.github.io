@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab IA - KSTV WebApp</title>
+    <meta name="description" content="Laboratorio de IA: prompts, herramientas y recursos de inteligencia artificial para creadores.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'kstv-red': '#AA151B',
+                        'kstv-gold': '#F1BF00',
+                        'dark': '#0d1117',
+                        'dark-card': '#161b22',
+                        'dark-border': '#30363d'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --kstv-red: #AA151B;
+            --kstv-gold: #F1BF00;
+            --dark-bg: #0d1117;
+            --dark-card: #161b22;
+            --dark-border: #30363d;
+        }
+        body { background-color: var(--dark-bg); color: #c9d1d9; font-family: system-ui, -apple-system, sans-serif; }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .animate-in { animation: fadeInUp 0.4s ease forwards; opacity: 0; }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        
+        .dpad-btn:focus {
+            outline: 4px solid var(--kstv-gold) !important;
+            outline-offset: 3px;
+            border-color: var(--kstv-gold) !important;
+        }
+        
+        .glass-card {
+            background: var(--dark-card);
+            border: 2px solid var(--dark-border);
+            transition: all 0.2s ease;
+        }
+        
+        .glass-card:hover {
+            border-color: var(--kstv-gold);
+            transform: translateY(-2px);
+        }
+        
+        .prompt-card {
+            background: linear-gradient(135deg, rgba(241,191,0,0.1) 0%, transparent 100%);
+            border-left: 4px solid var(--kstv-gold);
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--dark-border);
+            border: none;
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .prompt-card:hover .copy-btn {
+            opacity: 1;
+        }
+        
+        .copy-btn:hover {
+            background: var(--kstv-gold);
+            color: black;
+        }
+        
+        .category-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .cat-writing { background: #7c3aed; color: white; }
+        .cat-code { background: #3b82f6; color: white; }
+        .cat-marketing { background: #ec4899; color: white; }
+        .cat-image { background: #f59e0b; color: black; }
+        .cat-productivity { background: #10b981; color: white; }
+    </style>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HEDC1XMWWR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HEDC1XMWWR');
+    </script>
+</head>
+<body class="min-h-screen flex flex-col font-sans antialiased" onload="initApp()">
+
+    <header class="bg-dark-card border-b-2 border-kstv-red py-4 relative overflow-hidden sticky top-0 z-50 backdrop-blur-md">
+        <div class="absolute top-0 left-0 w-full h-1 bg-kstv-red"></div>
+        <div class="absolute top-1 left-0 w-full h-1 bg-kstv-gold"></div>
+        <div class="absolute top-2 left-0 w-full h-1 bg-kstv-red"></div>
+        <div class="max-w-4xl mx-auto px-4 flex flex-col items-center justify-center text-center relative z-10 mt-2">
+            <div class="flex items-center gap-3">
+                <div class="text-3xl animate-float">🧪</div>
+                <h1 class="text-2xl md:text-3xl font-black uppercase text-white">
+                    <span class="text-purple-400">LAB</span> <span class="text-kstv-gold">IA</span>
+                </h1>
+            </div>
+            <p class="text-gray-400 text-sm mt-1">Prompts, herramientas y recursos de IA</p>
+            <div class="mt-3 flex gap-3">
+                <a href="../" class="dpad-btn px-4 py-2 bg-gray-800 text-white text-sm font-bold rounded-lg border-2 border-transparent focus:border-kstv-gold transition-all"><i class="fas fa-home mr-1"></i> Inicio</a>
+                <a href="../webapp" class="dpad-btn px-4 py-2 bg-gray-800 text-white text-sm font-bold rounded-lg border-2 border-transparent focus:border-kstv-gold transition-all"><i class="fas fa-rocket mr-1"></i> WebApp</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-4xl mx-auto px-4 py-6 w-full">
+        
+        <!-- Search -->
+        <div class="mb-6 animate-in">
+            <div class="relative">
+                <input type="text" id="searchInput" placeholder="Buscar prompts, herramientas..." 
+                    class="w-full bg-dark-card border-2 border-dark-border rounded-xl px-4 py-3 pl-12 text-white placeholder-gray-500 focus:border-kstv-gold focus:outline-none transition-all"
+                    onkeyup="filterContent(this.value)">
+                <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+            </div>
+        </div>
+
+        <!-- Category tabs -->
+        <div class="flex flex-wrap gap-2 mb-6 animate-in delay-100">
+            <button onclick="setCategory('all')" class="filter-btn active px-4 py-2 bg-kstv-gold text-black font-bold text-sm rounded-lg transition-all">Todos</button>
+            <button onclick="setCategory('prompts')" class="filter-btn px-4 py-2 bg-gray-800 text-white font-bold text-sm rounded-lg transition-all hover:bg-gray-700">Prompts</button>
+            <button onclick="setCategory('tools')" class="filter-btn px-4 py-2 bg-gray-800 text-white font-bold text-sm rounded-lg transition-all hover:bg-gray-700">Herramientas</button>
+            <button onclick="setCategory('resources')" class="filter-btn px-4 py-2 bg-gray-800 text-white font-bold text-sm rounded-lg transition-all hover:bg-gray-700">Recursos</button>
+        </div>
+
+        <!-- Featured section -->
+        <section class="mb-8 animate-in delay-200">
+            <h2 class="text-xl font-bold text-white mb-4 border-l-4 border-purple-500 pl-3">
+                <i class="fas fa-fire text-purple-500 mr-2"></i> Destacados
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="glass-card rounded-xl p-5 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-gradient-to-l from-purple-600/20 to-transparent w-20 h-20 rounded-bl-full"></div>
+                    <span class="category-badge cat-writing">Escritura</span>
+                    <h3 class="text-lg font-bold text-white mt-2">Asistente de Escritura Creativa</h3>
+                    <p class="text-gray-400 text-sm mt-1">Genera historias, guiones y contenido creativo con IA.</p>
+                    <button onclick="usePrompt('writing-creative')" class="mt-3 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm rounded-lg transition-all">
+                        <i class="fas fa-magic mr-1"></i> Usar prompt
+                    </button>
+                </div>
+                <div class="glass-card rounded-xl p-5 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-gradient-to-l from-blue-600/20 to-transparent w-20 h-20 rounded-bl-full"></div>
+                    <span class="category-badge cat-code">Código</span>
+                    <h3 class="text-lg font-bold text-white mt-2">Explicador de Código</h3>
+                    <p class="text-gray-400 text-sm mt-1">Entiende cualquier código en segundos.</p>
+                    <button onclick="usePrompt('code-explainer')" class="mt-3 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-lg transition-all">
+                        <i class="fas fa-magic mr-1"></i> Usar prompt
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Prompts library -->
+        <section class="mb-8">
+            <h2 class="text-xl font-bold text-white mb-4 border-l-4 border-kstv-gold pl-3">
+                <i class="fas fa-scroll text-kstv-gold mr-2"></i> Biblioteca de Prompts
+            </h2>
+            
+            <div id="promptsList" class="space-y-4">
+                <!-- Prompt: Marketing -->
+                <div class="prompt-card glass-card rounded-xl p-5 relative" data-category="prompts" data-keywords="marketing redes sociales">
+                    <button class="copy-btn" onclick="copyPrompt(this)" data-prompt="Eres un experto en marketing digital. Crea una estrategia de contenido para [RED SOCIAL] que incluya: 1) 10 ideas de posts para la próxima semana, 2) Mejores horarios para publicar, 3) Hashtags relevantes para [TEMA]. Formato: tabla con día, tipo de contenido y caption.">
+                        <i class="fas fa-copy text-sm"></i>
+                    </button>
+                    <span class="category-badge cat-marketing">Marketing</span>
+                    <h3 class="text-lg font-bold text-white mt-2">Planificador de Contenido Social</h3>
+                    <p class="text-gray-400 text-sm mt-1 mb-3">Genera un calendario semanal completo para redes sociales.</p>
+                    <div class="bg-dark-bg rounded-lg p-3 text-gray-300 text-xs font-mono overflow-x-auto">
+                        Eres un experto en marketing digital. Crea una estrategia de contenido para [RED SOCIAL] que incluya: 1) 10 ideas de posts...
+                    </div>
+                </div>
+
+                <!-- Prompt: Código -->
+                <div class="prompt-card glass-card rounded-xl p-5 relative" data-category="prompts" data-keywords="código python javascript">
+                    <button class="copy-btn" onclick="copyPrompt(this)" data-prompt="Analiza el siguiente código y explícamelo como si fuera un profesor: 1) Qué hace línea por línea, 2) Posibles errores o mejoras, 3) Cómo optimizarlo. [PEGAR CÓDIGO AQUÍ]">
+                        <i class="fas fa-copy text-sm"></i>
+                    </button>
+                    <span class="category-badge cat-code">Código</span>
+                    <h3 class="text-lg font-bold text-white mt-2">Explicador de Código</h3>
+                    <p class="text-gray-400 text-sm mt-1 mb-3">Entiende código complejo línea por línea.</p>
+                    <div class="bg-dark-bg rounded-lg p-3 text-gray-300 text-xs font-mono overflow-x-auto">
+                        Analiza el siguiente código y explícamelo como si fuera un profesor...
+                    </div>
+                </div>
+
+                <!-- Prompt: Imagen -->
+                <div class="prompt-card glass-card rounded-xl p-5 relative" data-category="prompts" data-keywords="imagen midjourney dalle">
+                    <button class="copy-btn" onclick="copyPrompt(this)" data-prompt="Crea un prompt optimizado para generación de imágenes estilo [ESTILO: realista, anime, 3D, etc]. Incluya: sujeto, entorno, iluminación, estilo artístico, cámara/ángulo, calidad y detalles. Ejemplo detallado listo para usar.">
+                        <i class="fas fa-copy text-sm"></i>
+                    </button>
+                    <span class="category-badge cat-image">Imagen</span>
+                    <h3 class="text-lg font-bold text-white mt-2">Generador de Prompts para Imágenes</h3>
+                    <p class="text-gray-400 text-sm mt-1 mb-3">Crea prompts perfectos para DALL-E, Midjourney, Stable Diffusion.</p>
+                    <div class="bg-dark-bg rounded-lg p-3 text-gray-300 text-xs font-mono overflow-x-auto">
+                        Crea un prompt optimizado para generación de imágenes estilo...
+                    </div>
+                </div>
+
+                <!-- Prompt: Productividad -->
+                <div class="prompt-card glass-card rounded-xl p-5 relative" data-category="prompts" data-keywords="productividad organización">
+                    <button class="copy-btn" onclick="copyPrompt(this)" data-prompt="Ayúdame a organizar mi día de trabajo. Tengo [NÚMERO] horas disponibles. Mis prioridades son: [LISTA]. Optimiza mi horario incluyendo descansos de 5 min cada hora. Formato: tabla con hora, actividad y objetivo.">
+                        <i class="fas fa-copy text-sm"></i>
+                    </button>
+                    <span class="category-badge cat-productivity">Productividad</span>
+                    <h3 class="text-lg font-bold text-white mt-2">Planificador de Día Productivo</h3>
+                    <p class="text-gray-400 text-sm mt-1 mb-3">Organiza tu jornada con bloques de tiempo óptimos.</p>
+                    <div class="bg-dark-bg rounded-lg p-3 text-gray-300 text-xs font-mono overflow-x-auto">
+                        Ayúdame a organizar mi día de trabajo...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tools section -->
+        <section class="mb-8">
+            <h2 class="text-xl font-bold text-white mb-4 border-l-4 border-blue-500 pl-3">
+                <i class="fas fa-tools text-blue-500 mr-2"></i> Herramientas IA
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="toolsGrid">
+                
+                <a href="https://chat.openai.com" target="_blank" class="glass-card rounded-xl p-4 flex flex-col items-center text-center group hover:border-green-500">
+                    <div class="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center text-2xl text-white mb-2 group-hover:scale-110 transition-transform">🤖</div>
+                    <div class="font-bold text-white text-sm">ChatGPT</div>
+                    <div class="text-gray-500 text-xs">OpenAI</div>
+                </a>
+
+                <a href="https://claude.ai" target="_blank" class="glass-card rounded-xl p-4 flex flex-col items-center text-center group hover:border-amber-500">
+                    <div class="w-12 h-12 bg-amber-600 rounded-lg flex items-center justify-center text-2xl text-white mb-2 group-hover:scale-110 transition-transform">🦊</div>
+                    <div class="font-bold text-white text-sm">Claude</div>
+                    <div class="text-gray-500 text-xs">Anthropic</div>
+                </a>
+
+                <a href="https://gemini.google.com" target="_blank" class="glass-card rounded-xl p-4 flex flex-col items-center text-center group hover:border-blue-500">
+                    <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center text-2xl text-white mb-2 group-hover:scale-110 transition-transform">✨</div>
+                    <div class="font-bold text-white text-sm">Gemini</div>
+                    <div class="text-gray-500 text-xs">Google</div>
+                </a>
+
+                <a href="https://www.perplexity.ai" target="_blank" class="glass-card rounded-xl p-4 flex flex-col items-center text-center group hover:border-orange-500">
+                    <div class="w-12 h-12 bg-orange-600 rounded-lg flex items-center justify-center text-2xl text-white mb-2 group-hover:scale-110 transition-transform">🔍</div>
+                    <div class="font-bold text-white text-sm">Perplexity</div>
+                    <div class="text-gray-500 text-xs">Búsqueda IA</div>
+                </a>
+
+                <a href="https://www.midjourney.com" target="_blank" class="glass-card rounded-xl p-4 flex flex-col items-center text-center group hover:border-purple-500">
+                    <div class="w-12 h-12 bg-purple-700 rounded-lg flex items-center justify-center text-2xl text-white mb-2 group-hover:scale-110 transition-transform">🎨</div>
+                    <div class="font-bold text-white text-sm">Midjourney</div>
+                    <div class="text-gray-500 text-xs">Imágenes</div>
+                </a>
+
+                <a href="https://github.com/features/copilot" target="_blank" class="glass-card rounded-xl p-4 flex flex-col items-center text-center group hover:border-gray-500">
+                    <div class="w-12 h-12 bg-gray-800 rounded-lg flex items-center justify-center text-2xl text-white mb-2 group-hover:scale-110 transition-transform">💻</div>
+                    <div class="font-bold text-white text-sm">GitHub Copilot</div>
+                    <div class="text-gray-500 text-xs">Código</div>
+                </a>
+
+                <a href="https://notion.so" target="_blank" class="glass-card rounded-xl p-4 flex flex-col items-center text-center group hover:border-gray-600">
+                    <div class="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center text-2xl text-white mb-2 group-hover:scale-110 transition-transform">📝</div>
+                    <div class="font-bold text-white text-sm">Notion AI</div>
+                    <div class="text-gray-500 text-xs">Notas</div>
+                </a>
+
+                <a href="https://bard.google.com" target="_blank" class="glass-card rounded-xl p-4 flex flex-col items-center text-center group hover:border-red-500">
+                    <div class="w-12 h-12 bg-gradient-to-br from-red-600 to-blue-600 rounded-lg flex items-center justify-center text-2xl text-white mb-2 group-hover:scale-110 transition-transform">🎵</div>
+                    <div class="font-bold text-white text-sm">Veo 2</div>
+                    <div class="text-gray-500 text-xs">Video IA</div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Resources section -->
+        <section>
+            <h2 class="text-xl font-bold text-white mb-4 border-l-4 border-pink-500 pl-3">
+                <i class="fas fa-book text-pink-500 mr-2"></i> Recursos
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                
+                <a href="https://platform.openai.com/docs" target="_blank" class="glass-card rounded-xl p-4 flex items-center gap-4 hover:border-pink-500">
+                    <div class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center text-white"><i class="fas fa-book"></i></div>
+                    <div>
+                        <div class="font-bold text-white">Documentación OpenAI</div>
+                        <div class="text-gray-500 text-xs">APIs y prompts</div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/topics/chatgpt-prompts" target="_blank" class="glass-card rounded-xl p-4 flex items-center gap-4 hover:border-pink-500">
+                    <div class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-white"><i class="fab fa-github"></i></div>
+                    <div>
+                        <div class="font-bold text-white">Prompts en GitHub</div>
+                        <div class="text-gray-500 text-xs">Colección comunitaria</div>
+                    </div>
+                </a>
+
+                <a href="https://www.prompts.center" target="_blank" class="glass-card rounded-xl p-4 flex items-center gap-4 hover:border-pink-500">
+                    <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center text-white"><i class="fas fa-search"></i></div>
+                    <div>
+                        <div class="font-bold text-white">Directorio de Prompts</div>
+                        <div class="text-gray-500 text-xs">Miles de prompts</div>
+                    </div>
+                </a>
+
+                <a href="https://learnprompting.org" target="_blank" class="glass-card rounded-xl p-4 flex items-center gap-4 hover:border-pink-500">
+                    <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white"><i class="fas fa-graduation-cap"></i></div>
+                    <div>
+                        <div class="font-bold text-white">Learn Prompting</div>
+                        <div class="text-gray-500 text-xs">Curso gratis</div>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-black border-t-4 border-kstv-gold py-4 text-center mt-auto">
+        <p class="text-gray-600 text-xs">&copy; 2026 KSTV REBORN | <a href="/changelog" class="hover:text-kstv-gold">Changelog</a></p>
+    </footer>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg opacity-0 transition-all pointer-events-none z-50">
+        <i class="fas fa-check-circle mr-2"></i><span id="toastMsg">¡Copiado!</span>
+    </div>
+
+    <script>
+        let currentCategory = 'all';
+        
+        function initApp() {
+            document.getElementById('searchInput').focus();
+        }
+        
+        function setCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-kstv-gold', 'text-black');
+                btn.classList.add('bg-gray-800', 'text-white');
+            });
+            event.target.classList.remove('bg-gray-800', 'text-white');
+            event.target.classList.add('bg-kstv-gold', 'text-black');
+            
+            filterContent(document.getElementById('searchInput').value);
+        }
+        
+        function filterContent(query) {
+            const items = document.querySelectorAll('[data-category]');
+            const queryLower = query.toLowerCase();
+            
+            items.forEach(item => {
+                const category = item.dataset.category;
+                const keywords = (item.dataset.keywords || '').toLowerCase();
+                const title = item.querySelector('h3').textContent.toLowerCase();
+                
+                const matchesCategory = currentCategory === 'all' || category === currentCategory;
+                const matchesQuery = query.length < 2 || 
+                    title.includes(queryLower) || 
+                    keywords.includes(queryLower);
+                
+                item.style.display = matchesCategory && matchesQuery ? 'block' : 'none';
+            });
+        }
+        
+        function copyPrompt(btn) {
+            const prompt = btn.dataset.prompt;
+            navigator.clipboard.writeText(prompt);
+            showToast('Prompt copiado al portapapeles');
+        }
+        
+        function usePrompt(id) {
+            const prompts = {
+                'writing-creative': 'Eres un escritor profesional especializado en [GÉNERO: ciencia ficción, fantasía, terror, romance]. Escribe un cuento de [NÚMERO] palabras sobre [TEMA]. Incluye: personaje principal con defecto fatal, giro argumental en el acto 2, y final ambiguo. Estilo: [ESTILO: Hemingway, Tolkien, Lovecraft].',
+                'code-explainer': 'Analiza el siguiente código y explícamelo paso a paso como si fuera un profesor paciente: 1) Qué hace cada sección, 2) Por qué se usa esta sintaxis, 3) Posibles errores o bugs, 4) Cómo optimizarlo. [PEGAR CÓDIGO AQUÍ]'
+            };
+            
+            if (prompts[id]) {
+                navigator.clipboard.writeText(prompts[id]);
+                showToast('Prompt copiado. ¡Pégalo en ChatGPT!');
+            }
+        }
+        
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg;
+            toast.style.opacity = '1';
+            setTimeout(() => toast.style.opacity = '0', 2500);
+        }
+    </script>
+</body>
+</html>
