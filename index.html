@@ -12,6 +12,8 @@
     <meta property="og:type" content="website">
     <link rel="canonical" href="https://kstvreborn.github.io/">
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -390,19 +392,48 @@
 
         
 
-        // Newsletter
+        // Newsletter with EmailJS
+        const EMAILJS_CONFIG = {
+            publicKey: 'TU_PUBLIC_KEY_AQUI',
+            serviceId: 'TU_SERVICE_ID_AQUI',
+            templateId: 'TU_TEMPLATE_ID_AQUI'
+        };
+        
         function handleNewsletter(e) {
             e.preventDefault();
             const email = document.getElementById('emailInput').value;
             const msg = document.getElementById('newsletterMsg');
             
-            // Here you would integrate with Mailchimp, ConvertKit, etc.
-            msg.textContent = `¡Suscrito! Recibirás actualizaciones en ${email}`;
-            msg.className = 'text-sm mt-2 text-green-400';
-            msg.classList.remove('hidden');
+            if (!email || !email.includes('@')) {
+                msg.textContent = 'Introduce un email válido';
+                msg.className = 'text-sm mt-2 text-red-400';
+                msg.classList.remove('hidden');
+                return;
+            }
             
-            showToast('¡Suscrito correctamente!');
-            document.getElementById('emailInput').value = '';
+            msg.classList.add('hidden');
+            
+            // Send with EmailJS
+            (async () => {
+                try {
+                    await emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, {
+                        from_name: 'KSTV Web',
+                        email: email,
+                        subscribe_date: new Date().toLocaleDateString('es-ES')
+                    }, EMAILJS_CONFIG.publicKey);
+                    
+                    msg.textContent = '¡Suscrito! Recibirás actualizaciones en ' + email;
+                    msg.className = 'text-sm mt-2 text-green-400';
+                    msg.classList.remove('hidden');
+                    showToast('¡Suscrito correctamente!');
+                    document.getElementById('emailInput').value = '';
+                } catch (err) {
+                    console.error('EmailJS error:', err);
+                    msg.textContent = 'Error al suscribir. Intenta de nuevo.';
+                    msg.className = 'text-sm mt-2 text-red-400';
+                    msg.classList.remove('hidden');
+                }
+            })();
         }
 
         // Toast notification
