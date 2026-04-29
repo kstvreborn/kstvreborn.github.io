@@ -392,7 +392,7 @@
 
         
 
-        // Newsletter - Google Forms
+        // Newsletter - Simple form (sin servicios externos)
         function handleNewsletter(e) {
             e.preventDefault();
             const email = document.getElementById('emailInput').value;
@@ -405,17 +405,21 @@
                 return;
             }
             
-            // Open Google Form for subscription
-            const formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSd9C_KdZEOJxv5bIKm3iSjF8xG9QPRqYnBFRcNhkZX5c6C-A/viewform';
-            const prefillUrl = `${formUrl}?entry.123456789=${encodeURIComponent(email)}`;
+            // Save to localStorage (temporal)
+            const subscribers = JSON.parse(localStorage.getItem('kstv_subscribers') || '[]');
+            if (!subscribers.includes(email)) {
+                subscribers.push(email);
+                localStorage.setItem('kstv_subscribers', JSON.stringify(subscribers));
+            }
             
-            window.open(formUrl, '_blank');
-            
-            msg.textContent = '¡Por favor completa el formulario!';
-            msg.className = 'text-sm mt-2 text-kstv-gold';
+            msg.textContent = '¡Suscrito! Gracias por apoiar KSTV Reborn.';
+            msg.className = 'text-sm mt-2 text-green-400';
             msg.classList.remove('hidden');
-            showToast('¡Redirigiendo al formulario!');
+            showToast('¡Suscrito correctamente!');
             document.getElementById('emailInput').value = '';
+            
+            // Also open email client as backup
+            window.location.href = `mailto:konectas@gmail.com?subject=Nuevo%20suscriptor%20KSTV&body=Email:%20${encodeURIComponent(email)}`;
         }
 
         // Toast notification
