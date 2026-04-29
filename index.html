@@ -165,21 +165,7 @@
                 </span>
             </div>
             
-            <!-- Search bar -->
-            <div class="mt-4 w-full max-w-md animate-in delay-300">
-                <div class="relative">
-                    <input type="text" id="searchInput" placeholder="Buscar secciones, addons..." 
-                        class="search-input w-full bg-dark-card border-2 border-dark-border rounded-xl px-4 py-3 pl-12 text-white placeholder-gray-500 transition-all"
-                        onkeyup="handleSearch(this.value)">
-                    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
-                    <button id="clearSearch" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white hidden" onclick="clearSearch()">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <div id="searchResults" class="mt-2 bg-dark-card border border-dark-border rounded-xl overflow-hidden hidden">
-                    <!-- Results will be injected here -->
-                </div>
-            </div>
+
         </div>
     </header>
 
@@ -395,42 +381,7 @@
             }
         }
 
-        // Search functionality
-        function handleSearch(query) {
-            const clearBtn = document.getElementById('clearSearch');
-            const results = document.getElementById('searchResults');
-            
-            if (query.length < 2) {
-                results.classList.add('hidden');
-                clearBtn.classList.add('hidden');
-                return;
-            }
-            
-            clearBtn.classList.remove('hidden');
-            
-            // Search in sections
-            const matches = allSections.filter(s => 
-                s.name.toLowerCase().includes(query.toLowerCase())
-            );
-            
-            if (matches.length === 0) {
-                results.innerHTML = '<div class="p-3 text-gray-500 text-sm">Sin resultados</div>';
-            } else {
-                results.innerHTML = matches.map(s => `
-                    <a href="/${s.name}" class="block p-3 hover:bg-dark-border transition-colors text-white">
-                        <i class="fas fa-folder text-kstv-gold mr-2"></i> ${s.name.replace(/-/g, ' ')}
-                    </a>
-                `).join('');
-            }
-            
-            results.classList.remove('hidden');
-        }
-
-        function clearSearch() {
-            document.getElementById('searchInput').value = '';
-            document.getElementById('searchResults').classList.add('hidden');
-            document.getElementById('clearSearch').classList.add('hidden');
-        }
+        
 
         // Newsletter
         function handleNewsletter(e) {
@@ -455,10 +406,7 @@
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
-        // Keyboard navigation helper
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') clearSearch();
-        });
+        
     </script>
 </body>
 </html>
