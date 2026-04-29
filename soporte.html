@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soporte - KSTV Reborn</title>
+    <meta name="description" content="Apoya KSTV Reborn. Opciones de donación y sponsor.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'kstv-red': '#AA151B',
+                        'kstv-gold': '#F1BF00',
+                        'dark': '#0d1117',
+                        'dark-card': '#161b22',
+                        'dark-border': '#30363d'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --kstv-red: #AA151B;
+            --kstv-gold: #F1BF00;
+            --dark-bg: #0d1117;
+            --dark-card: #161b22;
+            --dark-border: #30363d;
+        }
+        body { background-color: var(--dark-bg); color: #c9d1d9; font-family: system-ui, -apple-system, sans-serif; }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-in { animation: fadeInUp 0.4s ease forwards; opacity: 0; }
+        
+        .dpad-btn:focus {
+            outline: 4px solid var(--kstv-gold) !important;
+            outline-offset: 3px;
+            border-color: var(--kstv-gold) !important;
+        }
+        
+        .glass-card {
+            background: var(--dark-card);
+            border: 2px solid var(--dark-border);
+            transition: all 0.2s ease;
+        }
+        
+        .support-card:hover {
+            border-color: var(--kstv-gold);
+            transform: translateY(-4px);
+        }
+        
+        .crypto-address {
+            font-family: monospace;
+            background: var(--dark-bg);
+            padding: 12px;
+            border-radius: 8px;
+            word-break: break-all;
+        }
+    </style>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HEDC1XMWWR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HEDC1XMWWR');
+    </script>
+</head>
+<body class="min-h-screen flex flex-col font-sans antialiased" onload="initApp()">
+
+    <header class="bg-dark-card border-b-2 border-kstv-red py-4 relative overflow-hidden sticky top-0 z-50 backdrop-blur-md">
+        <div class="absolute top-0 left-0 w-full h-1 bg-kstv-red"></div>
+        <div class="absolute top-1 left-0 w-full h-1 bg-kstv-gold"></div>
+        <div class="absolute top-2 left-0 w-full h-1 bg-kstv-red"></div>
+        <div class="max-w-4xl mx-auto px-4 flex flex-col items-center justify-center text-center relative z-10 mt-2">
+            <h1 class="text-2xl md:text-3xl font-black uppercase text-white">
+                <span class="text-kstv-gold">SOPORTE</span>
+            </h1>
+            <div class="mt-3 flex gap-3">
+                <a href="/" class="dpad-btn px-4 py-2 bg-gray-800 text-white text-sm font-bold rounded-lg border-2 border-transparent focus:border-kstv-gold transition-all"><i class="fas fa-home mr-1"></i> Inicio</a>
+                <a href="/comunidad" class="dpad-btn px-4 py-2 bg-gray-800 text-white text-sm font-bold rounded-lg border-2 border-transparent focus:border-kstv-gold transition-all"><i class="fas fa-users mr-1"></i> Comunidad</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-4xl mx-auto px-4 py-8 w-full">
+        
+        <!-- Intro -->
+        <section class="text-center mb-10 animate-in">
+            <h2 class="text-2xl md:text-3xl font-black text-white mb-4">
+                ❤️ Apoya el proyecto
+            </h2>
+            <p class="text-gray-400 max-w-2xl mx-auto">
+                KSTV Reborn es un proyecto gratuito y sin anuncios. Si te es útil, puedes apoyar su desarrollo con una pequeña donación o usando nuestros enlaces de afiliado.
+            </p>
+        </section>
+
+        <!-- Opciones de soporte -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+            
+            <!-- Crypto donations -->
+            <div class="support-card glass-card rounded-xl p-6 text-center animate-in">
+                <div class="w-16 h-16 bg-orange-600 rounded-full flex items-center justify-center text-3xl text-white mx-auto mb-4">
+                    <i class="fab fa-bitcoin"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2">Crypto</h3>
+                <p class="text-gray-400 text-sm mb-4">Donaciones en Bitcoin, Ethereum y más.</p>
+                
+                <div class="text-left">
+                    <p class="text-xs text-gray-500 mb-1">BTC (Bitcoin):</p>
+                    <div class="crypto-address text-sm text-kstv-gold" id="btc-address">
+                        bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wl9
+                    </div>
+                    <button onclick="copyAddress('btc-address')" class="mt-2 px-3 py-1 bg-gray-700 hover:bg-gray-600 text-white text-sm rounded transition-all">
+                        <i class="fas fa-copy mr-1"></i> Copiar
+                    </button>
+                </div>
+                
+                <div class="text-left mt-4">
+                    <p class="text-xs text-gray-500 mb-1">ETH (Ethereum):</p>
+                    <div class="crypto-address text-sm text-purple-400" id="eth-address">
+                        0x71C7656EC7c19D2eB85b5e9e8c8e5E2B8e5c6F7C
+                    </div>
+                    <button onclick="copyAddress('eth-address')" class="mt-2 px-3 py-1 bg-gray-700 hover:bg-gray-600 text-white text-sm rounded transition-all">
+                        <i class="fas fa-copy mr-1"></i> Copiar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Afiliados -->
+            <div class="support-card glass-card rounded-xl p-6 text-center animate-in" style="animation-delay: 0.1s">
+                <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-3xl text-white mx-auto mb-4">
+                    <i class="fas fa-link"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2">Afiliados</h3>
+                <p class="text-gray-400 text-sm mb-4">Usa nuestros enlaces y el precio no cambia para ti.</p>
+                
+                <div class="space-y-2 text-left">
+                    <a href="#" class="block p-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
+                        <i class="fab fa-aws text-orange-400 mr-2"></i> VPN recomendada
+                    </a>
+                    <a href="#" class="block p-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-server text-blue-400 mr-2"></i> Hosting Cloud
+                    </a>
+                    <a href="#" class="block p-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-tv text-red-400 mr-2"></i> IPTV Provider
+                    </a>
+                </div>
+            </div>
+
+            <!-- Sponsor -->
+            <div class="support-card glass-card rounded-xl p-6 text-center animate-in" style="animation-delay: 0.2s">
+                <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center text-3xl text-white mx-auto mb-4">
+                    <i class="fas fa-hand-holding-usd"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2">Patrocinio</h3>
+                <p class="text-gray-400 text-sm mb-4">¿Tienes un producto o servicio? Conversemos.</p>
+                
+                <a href="mailto:sponsor@kstvreborn.github.io" class="dpad-btn inline-block px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition-all">
+                    <i class="fas fa-envelope mr-2"></i> Contactar
+                </a>
+            </div>
+        </div>
+
+        <!-- Coming soon ads -->
+        <section class="glass-card rounded-xl p-6 animate-in" style="animation-delay: 0.3s">
+            <h2 class="text-xl font-bold text-white mb-4 border-l-4 border-kstv-gold pl-3">
+                <i class="fas fa-bullhorn text-kstv-gold mr-2"></i> Publicidad
+            </h2>
+            <p class="text-gray-400 mb-4">
+                Pronto habilitaremos espacios publicitarios en la web. Si estás interesado en anunciar aquí, contacta con nosotros.
+            </p>
+            <ul class="space-y-2 text-sm text-gray-500">
+                <li class="flex items-start gap-2">
+                    <i class="fas fa-check text-green-500 mt-1"></i>
+                    <span>Banners en homepage y secciones</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <i class="fas fa-check text-green-500 mt-1"></i>
+                    <span>Sponsor de secciones específicas</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <i class="fas fa-check text-green-500 mt-1"></i>
+                    <span>Links de afiliado en guías</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <i class="fas fa-check text-green-500 mt-1"></i>
+                    <span>Mención en changelog y comunidad</span>
+                </li>
+            </ul>
+            <a href="mailto:ads@kstvreborn.github.io" class="dpad-btn inline-block mt-4 px-4 py-2 bg-kstv-red hover:bg-red-700 text-white font-bold rounded-lg transition-all">
+                <i class="fas fa-envelope mr-2"></i> Solicitar información
+            </a>
+        </section>
+
+        <!-- Stats (when we have them) -->
+        <section class="mt-10 glass-card rounded-xl p-6 text-center animate-in" style="animation-delay: 0.4s">
+            <h2 class="text-lg font-bold text-white mb-4">
+                <i class="fas fa-chart-line text-green-500 mr-2"></i> Impacto del proyecto
+            </h2>
+            <div class="grid grid-cols-3 gap-4">
+                <div class="glass-card rounded-lg p-4">
+                    <div class="text-3xl font-black text-kstv-gold">69k+</div>
+                    <div class="text-xs text-gray-500">Visitas/mes</div>
+                </div>
+                <div class="glass-card rounded-lg p-4">
+                    <div class="text-3xl font-black text-kstv-gold">∞</div>
+                    <div class="text-xs text-gray-500">Repo installs</div>
+                </div>
+                <div class="glass-card rounded-lg p-4">
+                    <div class="text-3xl font-black text-kstv-gold">24/7</div>
+                    <div class="text-xs text-gray-500">Soporte Discord</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-black border-t-4 border-kstv-gold py-4 text-center mt-auto">
+        <p class="text-gray-600 text-xs">&copy; 2026 KSTV REBORN | <a href="/changelog" class="hover:text-kstv-gold">Changelog</a></p>
+    </footer>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg opacity-0 transition-all pointer-events-none z-50">
+        <i class="fas fa-check-circle mr-2"></i><span id="toastMsg">¡Copiado!</span>
+    </div>
+
+    <script>
+        function initApp() {
+            document.getElementById('btc-address').closest('.support-card').querySelector('button')?.focus();
+        }
+        
+        function copyAddress(id) {
+            const text = document.getElementById(id).textContent.trim();
+            navigator.clipboard.writeText(text);
+            showToast('Dirección copiada');
+        }
+        
+        function showToast(msg) {
+            document.getElementById('toastMsg').textContent = msg;
+            const toast = document.getElementById('toast');
+            toast.style.opacity = '1';
+            setTimeout(() => toast.style.opacity = '0', 2500);
+        }
+    </script>
+</body>
+</html>
