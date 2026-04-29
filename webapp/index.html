@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KSTV WebApp - Herramientas</title>
+    <meta name="description" content="Herramientas oficiales de KSTV Reborn para Kodi y streaming.">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -13,17 +14,96 @@
                     colors: {
                         'kstv-red': '#AA151B',
                         'kstv-gold': '#F1BF00',
-                        dark: '#0d1117'
+                        'dark': '#0d1117',
+                        'dark-card': '#161b22',
+                        'dark-border': '#30363d'
                     }
                 }
             }
         }
     </script>
     <style>
-        body { background-color: #0d1117; color: #c9d1d9; }
-        .dpad-btn:focus { outline: 4px solid #F1BF00 !important; outline-offset: 3px; border-color: #F1BF00 !important; transform: scale(1.02); }
-        .glass-card { background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.1); }
-        .step { transition: all 0.15s ease; }
+        :root {
+            --kstv-red: #AA151B;
+            --kstv-gold: #F1BF00;
+            --dark-bg: #0d1117;
+            --dark-card: #161b22;
+            --dark-border: #30363d;
+        }
+        body { background-color: var(--dark-bg); color: #c9d1d9; font-family: system-ui, -apple-system, sans-serif; }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-in { animation: fadeInUp 0.4s ease forwards; opacity: 0; }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        
+        .dpad-btn:focus {
+            outline: 4px solid var(--kstv-gold) !important;
+            outline-offset: 3px;
+            border-color: var(--kstv-gold) !important;
+            transform: scale(1.02);
+        }
+        
+        .dpad-btn:hover {
+            border-color: var(--kstv-gold);
+            transform: translateY(-2px);
+        }
+        
+        .glass-card {
+            background: var(--dark-card);
+            border: 2px solid var(--dark-border);
+            transition: all 0.2s ease;
+        }
+        
+        .tool-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            w-full h-full;
+            background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.05) 100%);
+            pointer-events: none;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--kstv-gold);
+            box-shadow: 0 0 10px rgba(241, 191, 0, 0.3);
+        }
+        
+        .filter-btn.active {
+            background: var(--kstv-gold);
+            color: black;
+        }
+        
+        .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #22c55e;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+        
+        .count-badge {
+            background: rgba(255,255,255,0.1);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
     </style>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-HEDC1XMWWR"></script>
     <script>
@@ -33,93 +113,214 @@
         gtag('config', 'G-HEDC1XMWWR');
     </script>
 </head>
-<body class="min-h-screen flex flex-col font-sans antialiased" onload="document.getElementById('tool-0').focus()">
+<body class="min-h-screen flex flex-col font-sans antialiased" onload="initApp()">
 
     <!-- Header -->
-    <header class="bg-gray-900 border-b-2 border-kstv-red py-4 relative overflow-hidden">
+    <header class="bg-dark-card border-b-2 border-kstv-red py-4 relative overflow-hidden sticky top-0 z-50 backdrop-blur-md">
         <div class="absolute top-0 left-0 w-full h-1 bg-kstv-red"></div>
         <div class="absolute top-1 left-0 w-full h-1 bg-kstv-gold"></div>
         <div class="absolute top-2 left-0 w-full h-1 bg-kstv-red"></div>
-        <div class="max-w-4xl mx-auto px-4 flex flex-col items-center mt-2">
-            <h1 class="text-3xl font-black uppercase text-white"><span class="text-kstv-red">KSTV</span> <span class="text-kstv-gold">WEBAPP</span></h1>
-            <p class="text-gray-400 text-sm mt-1">Herramientas oficiales</p>
+        <div class="max-w-4xl mx-auto px-4 relative z-10">
+            <div class="flex items-center justify-between">
+                <div>
+                    <a href="../" class="text-2xl md:text-3xl font-black uppercase text-white">
+                        <span class="text-kstv-red">KSTV</span> <span class="text-kstv-gold">WEBAPP</span>
+                    </a>
+                    <p class="text-gray-400 text-sm mt-1">Herramientas oficiales</p>
+                </div>
+                <a href="../" class="dpad-btn px-3 py-2 bg-gray-800 text-sm rounded-lg border-2 border-transparent focus:border-kstv-gold">
+                    <i class="fas fa-home mr-1"></i> Inicio
+                </a>
+            </div>
+            
+            <!-- Search -->
+            <div class="mt-4 relative">
+                <input type="text" id="searchInput" placeholder="Buscar herramienta..." 
+                    class="search-input w-full bg-dark-card border-2 border-dark-border rounded-xl px-4 py-2 pl-10 text-white placeholder-gray-500"
+                    onkeyup="filterTools(this.value)">
+                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
+            </div>
         </div>
     </header>
 
-    <main class="flex-grow max-w-4xl mx-auto px-4 py-8 w-full">
+    <main class="flex-grow max-w-4xl mx-auto px-4 py-6 w-full">
+        
+        <!-- Category filters -->
+        <div class="flex flex-wrap gap-2 mb-6 animate-in">
+            <button onclick="setFilter('all')" class="filter-btn active px-3 py-1 bg-gray-700 text-white text-sm rounded-lg transition-all">Todos</button>
+            <button onclick="setFilter('codes')" class="filter-btn px-3 py-1 bg-gray-700 text-white text-sm rounded-lg transition-all hover:bg-gray-600">Códigos</button>
+            <button onclick="setFilter('tools')" class="filter-btn px-3 py-1 bg-gray-700 text-white text-sm rounded-lg transition-all hover:bg-gray-600">Tools</button>
+            <button onclick="setFilter('ai')" class="filter-btn px-3 py-1 bg-gray-700 text-white text-sm rounded-lg transition-all hover:bg-gray-600">IA</button>
+            <span id="countBadge" class="count-badge text-gray-400 ml-auto"><span id="toolCount">0</span> herramientas</span>
+        </div>
 
-        <!-- Grid de herramientas -->
-        <div id="toolsGrid" class="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <div class="col-span-full text-center py-8 text-gray-500">
-                <i class="fas fa-circle-notch fa-spin text-2xl"></i>
-                <p class="mt-2">Cargando herramientas...</p>
+        <!-- Tools grid -->
+        <div id="toolsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div class="col-span-full text-center py-12 text-gray-500">
+                <i class="fas fa-circle-notch fa-spin text-3xl"></i>
+                <p class="mt-3">Cargando herramientas...</p>
             </div>
         </div>
-
-        <!-- Volver -->
-        <div class="mt-10 text-center">
-            <a href="../" class="dpad-btn inline-block px-6 py-3 bg-gray-800 text-white rounded-lg font-bold hover:border-kstv-gold border-2 border-transparent" tabindex="0">
-                <i class="fas fa-home mr-2"></i> Volver al Inicio
-            </a>
-        </div>
-
     </main>
 
-    <footer class="bg-black border-t-4 border-kstv-gold py-4 text-center">
-        <p class="text-gray-400 text-sm">KSTV REBORN &copy; 2026</p>
+    <footer class="bg-black border-t-4 border-kstv-gold py-4 text-center mt-auto">
+        <p class="text-gray-600 text-xs">&copy; <span id="year"></span> KSTV REBORN</p>
     </footer>
 
     <script>
-        const folders = [
-            { name: 'downloader', display: 'DOWNLOADER', icon: 'fa-download', color: 'bg-kstv-red', desc: 'Códigos Downloader' },
-            { name: 'Laboratorio_de_Prompts', display: 'LAB IA', icon: 'fa-flask', color: 'bg-purple-600', desc: 'Laboratorio IA' }
-        ];
-
-        const container = document.getElementById('toolsGrid');
+        // Config
+        const CONFIG = {
+            owner: 'kstvreborn',
+            repo: 'kstvreborn.github.io',
+            basePath: '/webapp'
+        };
         
-        function renderTools() {
-            container.innerHTML = '';
-            folders.forEach((folder, index) => {
-                const card = document.createElement('a');
-                card.id = 'tool-' + index;
-                card.href = folder.name + '/';
-                card.className = `dpad-btn glass-card rounded-xl p-6 hover:border-kstv-gold flex flex-col items-center justify-center text-center group`;
-                card.tabIndex = 0;
-                card.innerHTML = `
-                    <div class="w-14 h-14 ${folder.color} rounded-xl flex items-center justify-center text-2xl text-white mb-3">
-                        <i class="fas ${folder.icon}"></i>
-                    </div>
-                    <div class="font-bold text-white text-lg group-hover:text-kstv-gold">${folder.display}</div>
-                    <div class="text-gray-500 text-xs mt-1">${folder.desc}</div>
-                `;
-                container.appendChild(card);
-            });
-            
-            // Cargar más carpetas dinámicas
-            fetch('https://api.github.com/repos/kstvreborn/kstvreborn.github.io/contents/webapp')
-                .then(r => r.json())
-                .then(files => {
-                    const extra = files.filter(f => f.type === 'dir' && !folders.find(x => x.name === f.name));
-                    if (extra.length === 0) return;
-                    
-                    extra.forEach((folder, i) => {
-                        const card = document.createElement('a');
-                        card.id = 'tool-' + (folders.length + i);
-                        card.href = folder.name + '/';
-                        card.className = 'dpad-btn glass-card rounded-xl p-6 hover:border-kstv-gold flex flex-col items-center justify-center text-center group';
-                        card.tabIndex = 0;
-                        card.innerHTML = `
-                            <div class="w-14 h-14 bg-gray-700 rounded-xl flex items-center justify-center text-2xl text-white mb-3">
-                                <i class="fas fa-folder"></i>
-                            </div>
-                            <div class="font-bold text-white text-lg group-hover:text-kstv-gold">${folder.name.replace(/-/g,' ').toUpperCase()}</div>
-                        `;
-                        container.appendChild(card);
-                    });
-                });
+        // Tools definition
+        const STATIC_TOOLS = [
+            { 
+                name: 'downloader', 
+                display: 'DOWNLOADER', 
+                icon: 'fa-download', 
+                color: 'bg-kstv-red',
+                category: 'codes',
+                badge: 'POPULAR',
+                desc: 'Códigos para Downloader en Fire TV'
+            },
+            { 
+                name: 'Laboratorio_de_Prompts', 
+                display: 'LAB IA', 
+                icon: 'fa-brain', 
+                color: 'bg-purple-600',
+                category: 'ai',
+                badge: 'NEW',
+                desc: 'Prompts y herramientas de IA'
+            }
+        ];
+        
+        let allTools = [...STATIC_TOOLS];
+        let currentFilter = 'all';
+        
+        function initApp() {
+            document.getElementById('year').textContent = new Date().getFullYear();
+            loadDynamicTools();
+            document.getElementById('searchInput').focus();
         }
         
-        document.addEventListener('DOMContentLoaded', renderTools);
+        async function loadDynamicTools() {
+            try {
+                const resp = await fetch(`https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents${CONFIG.basePath}`);
+                if (!resp.ok) throw new Error('API error');
+                
+                const files = await resp.json();
+                const folders = files.filter(f => f.type === 'dir');
+                
+                // Add dynamic folders
+                folders.forEach(folder => {
+                    if (!STATIC_TOOLS.find(t => t.name === folder.name)) {
+                        allTools.push({
+                            name: folder.name,
+                            display: folder.name.replace(/-|_/g, ' ').toUpperCase(),
+                            icon: 'fa-folder',
+                            color: 'bg-gray-700',
+                            category: 'tools',
+                            desc: folder.name
+                        });
+                    }
+                });
+                
+                renderTools();
+            } catch (e) {
+                console.error('Load error:', e);
+                renderTools();
+            }
+        }
+        
+        function renderTools() {
+            const container = document.getElementById('toolsGrid');
+            container.innerHTML = '';
+            
+            let filtered = allTools;
+            if (currentFilter !== 'all') {
+                filtered = allTools.filter(t => t.category === currentFilter);
+            }
+            
+            document.getElementById('toolCount').textContent = filtered.length;
+            
+            if (filtered.length === 0) {
+                container.innerHTML = '<p class="col-span-full text-center py-12 text-gray-500">No hay herramientas en esta categoría</p>';
+                return;
+            }
+            
+            filtered.forEach((tool, i) => {
+                const card = document.createElement('a');
+                card.href = tool.name + '/';
+                card.className = `tool-card dpad-btn glass-card rounded-xl p-5 flex flex-col items-center justify-center text-center group animate-in`;
+                card.style.animationDelay = `${i * 0.05}s`;
+                card.tabIndex = 0;
+                
+                card.innerHTML = `
+                    ${tool.badge ? `<span class="badge">${tool.badge}</span>` : ''}
+                    <div class="w-12 h-12 ${tool.color} rounded-lg flex items-center justify-center text-2xl text-white mb-3 shadow-lg">
+                        <i class="fas ${tool.icon}"></i>
+                    </div>
+                    <div class="font-bold text-white text-sm group-hover:text-kstv-gold text-center">${tool.display}</div>
+                    <div class="text-gray-500 text-xs mt-1 text-center">${tool.desc}</div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+        
+        function setFilter(category) {
+            currentFilter = category;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-kstv-gold', 'text-black');
+                btn.classList.add('bg-gray-700', 'text-white');
+            });
+            event.target.classList.remove('bg-gray-700', 'text-white');
+            event.target.classList.add('active', 'bg-kstv-gold', 'text-black');
+            renderTools();
+        }
+        
+        function filterTools(query) {
+            const container = document.getElementById('toolsGrid');
+            
+            if (query.length < 2) {
+                renderTools();
+                return;
+            }
+            
+            const matches = allTools.filter(t => 
+                t.name.toLowerCase().includes(query.toLowerCase()) ||
+                t.display.toLowerCase().includes(query.toLowerCase())
+            );
+            
+            if (matches.length === 0) {
+                container.innerHTML = '<p class="col-span-full text-center py-12 text-gray-500">Sin resultados para "' + query + '"</p>';
+                return;
+            }
+            
+            document.getElementById('toolCount').textContent = matches.length;
+            container.innerHTML = '';
+            
+            matches.forEach((tool, i) => {
+                const card = document.createElement('a');
+                card.href = tool.name + '/';
+                card.className = `tool-card dpad-btn glass-card rounded-xl p-5 flex flex-col items-center justify-center text-center group animate-in`;
+                card.style.animationDelay = `${i * 0.05}s`;
+                card.tabIndex = 0;
+                
+                card.innerHTML = `
+                    ${tool.badge ? `<span class="badge">${tool.badge}</span>` : ''}
+                    <div class="w-12 h-12 ${tool.color} rounded-lg flex items-center justify-center text-2xl text-white mb-3 shadow-lg">
+                        <i class="fas ${tool.icon}"></i>
+                    </div>
+                    <div class="font-bold text-white text-sm group-hover:text-kstv-gold text-center">${tool.display}</div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
     </script>
 </body>
 </html>
