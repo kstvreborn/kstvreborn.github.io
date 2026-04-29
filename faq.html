@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - KSTV Reborn</title>
+    <meta name="description" content="Preguntas frecuentes sobre KSTV Reborn para Kodi.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'kstv-red': '#AA151B',
+                        'kstv-gold': '#F1BF00',
+                        'dark': '#0d1117',
+                        'dark-card': '#161b22',
+                        'dark-border': '#30363d'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --kstv-red: #AA151B;
+            --kstv-gold: #F1BF00;
+            --dark-bg: #0d1117;
+            --dark-card: #161b22;
+            --dark-border: #30363d;
+        }
+        body { background-color: var(--dark-bg); color: #c9d1d9; font-family: system-ui, -apple-system, sans-serif; }
+        .dpad-btn:focus { outline: 4px solid var(--kstv-gold) !important; outline-offset: 3px; border-color: var(--kstv-gold) !important; }
+        .faq-item { border: 2px solid var(--dark-border); transition: all 0.2s ease; }
+        .faq-item:hover { border-color: var(--kstv-gold); }
+        .faq-item.active { border-color: var(--kstv-gold); background: var(--dark-card); }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .faq-item.active .faq-answer { max-height: 500px; }
+        .chevron { transition: transform 0.3s ease; }
+        .faq-item.active .chevron { transform: rotate(180deg); }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-in { animation: fadeInUp 0.4s ease forwards; }
+    </style>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HEDC1XMWWR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HEDC1XMWWR');
+    </script>
+</head>
+<body class="min-h-screen flex flex-col font-sans antialiased" onload="document.getElementById('faq1').focus()">
+
+    <header class="bg-dark-card border-b-2 border-kstv-red py-4 relative overflow-hidden sticky top-0 z-50">
+        <div class="absolute top-0 left-0 w-full h-1 bg-kstv-red"></div>
+        <div class="absolute top-1 left-0 w-full h-1 bg-kstv-gold"></div>
+        <div class="absolute top-2 left-0 w-full h-1 bg-kstv-red"></div>
+        <div class="max-w-3xl mx-auto px-4 flex flex-col items-center justify-center text-center relative z-10 mt-2">
+            <a href="/" class="text-2xl font-black uppercase text-white"><span class="text-kstv-red">KSTV</span> <span class="text-kstv-gold">FAQ</span></a>
+            <a href="/" class="mt-2 dpad-btn px-3 py-1 bg-gray-800 text-sm rounded-lg border-2 border-transparent focus:border-kstv-gold">
+                <i class="fas fa-home mr-1"></i> Volver
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-3xl mx-auto px-4 py-8 w-full">
+        
+        <h1 class="text-2xl font-bold text-white mb-6 border-l-4 border-kstv-gold pl-3 animate-in">
+            <i class="fas fa-question-circle text-kstv-gold mr-2"></i> Preguntas Frecuentes
+        </h1>
+
+        <div class="space-y-3" id="faqList">
+            
+            <div class="faq-item glass-card rounded-xl p-4 animate-in" data-answer="El código <strong class='text-kstv-gold'>6979514</strong> es el identificador del repositorio KSTV Reborn. Necesitas añadirlo en tu gestor de repositorios en Kodi para poder instalar addons.">
+                <button id="faq1" class="w-full text-left flex items-center justify-between text-white font-bold" onclick="toggleFaq(this.parentElement)">
+                    <span>¿Qué es el código del repositorio?</span>
+                    <i class="fas fa-chevron-down chevron text-kstv-gold"></i>
+                </button>
+                <div class="faq-answer mt-3 text-gray-400 text-sm">
+                    El código <strong class='text-kstv-gold'>6979514</strong> es el identificador del repositorio KSTV Reborn. Necesitas añadirlo en tu gestor de repositorios en Kodi para poder instalar addons.
+                </div>
+            </div>
+
+            <div class="faq-item glass-card rounded-xl p-4 animate-in" style="animation-delay: 0.1s" data-answer="1. Abre Kodi<br>2. Ve a Ajustes → Gestor de archivos<br>3. Añade fuente: <code class='bg-gray-800 px-2 py-1 rounded'>https://kstvreborn.github.io/repo</code><br>4. Ve a Complementos → Instalar desde zip<br>5. Selecciona la fuente y el .zip">
+                <button id="faq2" class="w-full text-left flex items-center justify-between text-white font-bold" onclick="toggleFaq(this.parentElement)">
+                    <span>¿Cómo instalo el repositorio en Kodi?</span>
+                    <i class="fas fa-chevron-down chevron text-kstv-gold"></i>
+                </button>
+                <div class="faq-answer mt-3 text-gray-400 text-sm">
+                    1. Abre Kodi<br>
+                    2. Ve a Ajustes → Gestor de archivos<br>
+                    3. Añade fuente: <code class='bg-gray-800 px-2 py-1 rounded'>https://kstvreborn.github.io/repo</code><br>
+                    4. Ve a Complementos → Instalar desde zip<br>
+                    5. Selecciona la fuente y el .zip
+                </div>
+            </div>
+
+            <div class="faq-item glass-card rounded-xl p-4 animate-in" style="animation-delay: 0.2s" data-answer="Si el addon no aparece, verifica que el repositorio se instaló correctamente. También puedes intentar limpiar la caché de Kodi desde Ajustes → Almacenamiento → Limpiar caché.">
+                <button id="faq3" class="w-full text-left flex items-center justify-between text-white font-bold" onclick="toggleFaq(this.parentElement)">
+                    <span>¿Por qué no me aparecen los addons?</span>
+                    <i class="fas fa-chevron-down chevron text-kstv-gold"></i>
+                </button>
+                <div class="faq-answer mt-3 text-gray-400 text-sm">
+                    Si el addon no aparece, verifica que el repositorio se instaló correctamente. También puedes intentar limpiar la caché de Kodi desde Ajustes → Almacenamiento → Limpiar caché.
+                </div>
+            </div>
+
+            <div class="faq-item glass-card rounded-xl p-4 animate-in" style="animation-delay: 0.3s" data-answer="Los códigos Downloader son necesarios para instalar APKs directamente en tu Fire TV o Android TV. Puedes encontrar todos los códigos actualizados en la sección WebApp de esta web.">
+                <button id="faq4" class="w-full text-left flex items-center justify-between text-white font-bold" onclick="toggleFaq(this.parentElement)">
+                    <span>¿Qué son los códigos Downloader?</span>
+                    <i class="fas fa-chevron-down chevron text-kstv-gold"></i>
+                </button>
+                <div class="faq-answer mt-3 text-gray-400 text-sm">
+                    Los códigos Downloader son necesarios para instalar APKs directamente en tu Fire TV o Android TV. Puedes encontrar todos los códigos actualizados en la sección WebApp de esta web.
+                </div>
+            </div>
+
+            <div class="faq-item glass-card rounded-xl p-4 animate-in" style="animation-delay: 0.4s" data-answer="Sí, KSTV Reborn es un proyecto informativo. No almacenamos APKs ni somos responsables del uso que hagas de la información. Consulta las leyes de tu país sobre propiedad intelectual.">
+                <button id="faq5" class="w-full text-left flex items-center justify-between text-white font-bold" onclick="toggleFaq(this.parentElement)">
+                    <span>¿Es legal usar KSTV Reborn?</span>
+                    <i class="fas fa-chevron-down chevron text-kstv-gold"></i>
+                </button>
+                <div class="faq-answer mt-3 text-gray-400 text-sm">
+                    KSTV Reborn es un proyecto informativo. No almacenamos APKs ni somos responsables del uso que hagas de la información. Consulta las leyes de tu país sobre propiedad intelectual.
+                </div>
+            </div>
+
+            <div class="faq-item glass-card rounded-xl p-4 animate-in" style="animation-delay: 0.5s" data-answer="Únete a nuestro Discord para soporte, noticias y comunidad. Enlace en la página principal.">
+                <button id="faq6" class="w-full text-left flex items-center justify-between text-white font-bold" onclick="toggleFaq(this.parentElement)">
+                    <span>¿Dónde puedo pedir ayuda?</span>
+                    <i class="fas fa-chevron-down chevron text-kstv-gold"></i>
+                </button>
+                <div class="faq-answer mt-3 text-gray-400 text-sm">
+                    Únete a nuestro Discord para soporte, noticias y comunidad. Enlace en la página principal.
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Contact section -->
+        <section class="mt-10 glass-card rounded-xl p-6 animate-in" style="animation-delay: 0.6s">
+            <h2 class="text-lg font-bold text-white mb-3">
+                <i class="fas fa-envelope text-kstv-gold mr-2"></i> ¿No encuentras tu respuesta?
+            </h2>
+            <p class="text-gray-400 text-sm mb-4">Consulta nuestro Discord o abre un issue en GitHub.</p>
+            <div class="flex flex-wrap gap-3">
+                <a href="https://discord.gg/kstvreborn" target="_blank" class="dpad-btn px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg transition-all">
+                    <i class="fab fa-discord mr-1"></i> Discord
+                </a>
+                <a href="https://github.com/kstvreborn/kstvreborn.github.io/issues" target="_blank" class="dpad-btn px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white font-bold rounded-lg transition-all">
+                    <i class="fab fa-github mr-1"></i> GitHub Issues
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-black border-t-4 border-kstv-gold py-4 text-center mt-auto">
+        <p class="text-gray-600 text-xs">&copy; <span id="year"></span> KSTV REBORN</p>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        function toggleFaq(item) {
+            const wasActive = item.classList.contains('active');
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+            if (!wasActive) item.classList.add('active');
+        }
+    </script>
+</body>
+</html>
