@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comunidad - KSTV Reborn</title>
+    <meta name="description" content="Únete a la comunidad KSTV Reborn. Discord, soporte y más.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'kstv-red': '#AA151B',
+                        'kstv-gold': '#F1BF00',
+                        'dark': '#0d1117',
+                        'dark-card': '#161b22',
+                        'dark-border': '#30363d'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --kstv-red: #AA151B;
+            --kstv-gold: #F1BF00;
+            --dark-bg: #0d1117;
+            --dark-card: #161b22;
+            --dark-border: #30363d;
+        }
+        body { background-color: var(--dark-bg); color: #c9d1d9; font-family: system-ui, -apple-system, sans-serif; }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-in { animation: fadeInUp 0.4s ease forwards; opacity: 0; }
+        
+        .dpad-btn:focus {
+            outline: 4px solid var(--kstv-gold) !important;
+            outline-offset: 3px;
+            border-color: var(--kstv-gold) !important;
+            transform: scale(1.02);
+        }
+        
+        .glass-card {
+            background: var(--dark-card);
+            border: 2px solid var(--dark-border);
+            transition: all 0.2s ease;
+        }
+        
+        .glass-card:hover {
+            border-color: var(--kstv-gold);
+            transform: translateY(-2px);
+        }
+        
+        .social-card { position: relative; overflow: hidden; }
+        
+        .social-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+        }
+        
+        .discord-card::before { background: #5865F2; }
+        .github-card::before { background: #c9d1d9; }
+        .telegram-card::before { background: #229ED9; }
+        .twitter-card::before { background: #1DA1F2; }
+    </style>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HEDC1XMWWR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HEDC1XMWWR');
+    </script>
+</head>
+<body class="min-h-screen flex flex-col font-sans antialiased" onload="document.getElementById('hero').focus()">
+
+    <!-- Header -->
+    <header class="bg-dark-card border-b-2 border-kstv-red py-4 relative overflow-hidden sticky top-0 z-50 backdrop-blur-md">
+        <div class="absolute top-0 left-0 w-full h-1 bg-kstv-red"></div>
+        <div class="absolute top-1 left-0 w-full h-1 bg-kstv-gold"></div>
+        <div class="absolute top-2 left-0 w-full h-1 bg-kstv-red"></div>
+        <div class="max-w-4xl mx-auto px-4 flex flex-col items-center justify-center text-center relative z-10 mt-2">
+            <a href="/" class="text-2xl md:text-3xl font-black uppercase text-white">
+                <span class="text-kstv-red">KSTV</span> <span class="text-kstv-gold">COMUNIDAD</span>
+            </a>
+            <a href="/" class="mt-2 dpad-btn px-3 py-1 bg-gray-800 text-sm rounded-lg border-2 border-transparent focus:border-kstv-gold">
+                <i class="fas fa-home mr-1"></i> Volver
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-4xl mx-auto px-4 py-8 w-full">
+        
+        <!-- Hero -->
+        <section class="text-center mb-10 animate-in">
+            <h1 class="text-3xl md:text-4xl font-black text-white mb-4">
+                Únete a la <span class="text-kstv-gold">comunidad</span>
+            </h1>
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                Forma parte de KSTV Reborn. Recibe actualizaciones, pide ayuda y conoce a otros usuarios.
+            </p>
+        </section>
+
+        <!-- Social links grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+            
+            <!-- Discord -->
+            <a href="https://discord.gg/kstvreborn" target="_blank" id="hero" class="social-card discord-card dpad-btn glass-card rounded-xl p-6 flex items-center gap-4 group animate-in delay-100">
+                <div class="w-14 h-14 bg-[#5865F2] rounded-xl flex items-center justify-center text-3xl text-white shadow-lg">
+                    <i class="fab fa-discord"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-xl font-bold text-white group-hover:text-[#5865F2]">Discord</h3>
+                    <p class="text-gray-400 text-sm">Chat en directo con la comunidad</p>
+                </div>
+                <i class="fas fa-external-link-alt text-gray-600 group-hover:text-kstv-gold"></i>
+            </a>
+
+            <!-- GitHub -->
+            <a href="https://github.com/kstvreborn" target="_blank" class="social-card github-card dpad-btn glass-card rounded-xl p-6 flex items-center gap-4 group animate-in delay-200">
+                <div class="w-14 h-14 bg-gray-700 rounded-xl flex items-center justify-center text-3xl text-white shadow-lg">
+                    <i class="fab fa-github"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-xl font-bold text-white group-hover:text-gray-300">GitHub</h3>
+                    <p class="text-gray-400 text-sm">Código fuente y contribuciones</p>
+                </div>
+                <i class="fas fa-external-link-alt text-gray-600 group-hover:text-kstv-gold"></i>
+            </a>
+
+            <!-- Telegram -->
+            <a href="https://t.me/kstvreborn" target="_blank" class="social-card telegram-card dpad-btn glass-card rounded-xl p-6 flex items-center gap-4 group animate-in delay-300">
+                <div class="w-14 h-14 bg-[#229ED9] rounded-xl flex items-center justify-center text-3xl text-white shadow-lg">
+                    <i class="fab fa-telegram"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-xl font-bold text-white group-hover:text-[#229ED9]">Telegram</h3>
+                    <p class="text-gray-400 text-sm">Canal de noticias y grupos</p>
+                </div>
+                <i class="fas fa-external-link-alt text-gray-600 group-hover:text-kstv-gold"></i>
+            </a>
+
+            <!-- Twitter/X -->
+            <a href="https://twitter.com/kstvreborn" target="_blank" class="social-card twitter-card dpad-btn glass-card rounded-xl p-6 flex items-center gap-4 group animate-in delay-400">
+                <div class="w-14 h-14 bg-black rounded-xl flex items-center justify-center text-3xl text-white shadow-lg border border-gray-700">
+                    <i class="fab fa-x-twitter"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-xl font-bold text-white group-hover:text-[#1DA1F2]">X / Twitter</h3>
+                    <p class="text-gray-400 text-sm">Síguenos para actualizaciones</p>
+                </div>
+                <i class="fas fa-external-link-alt text-gray-600 group-hover:text-kstv-gold"></i>
+            </a>
+        </div>
+
+        <!-- Stats section -->
+        <section class="glass-card rounded-xl p-6 mb-10 animate-in delay-500">
+            <h2 class="text-xl font-bold text-white mb-4 border-l-4 border-kstv-gold pl-3">
+                <i class="fas fa-chart-bar text-kstv-gold mr-2"></i> Estadísticas
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div>
+                    <div class="text-3xl font-black text-kstv-gold">69k+</div>
+                    <div class="text-gray-500 text-sm">Repo Code</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-black text-purple-500">∞</div>
+                    <div class="text-gray-500 text-sm">Comunidad</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-black text-green-500">24/7</div>
+                    <div class="text-gray-500 text-sm">Soporte Discord</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-black text-blue-500">v2.1</div>
+                    <div class="text-gray-500 text-sm">Versión</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rules -->
+        <section class="glass-card rounded-xl p-6 mb-10 animate-in delay-500">
+            <h2 class="text-xl font-bold text-white mb-4 border-l-4 border-kstv-red pl-3">
+                <i class="fas fa-gavel text-kstv-red mr-2"></i> Normas de la comunidad
+            </h2>
+            <ul class="space-y-3 text-sm text-gray-400">
+                <li class="flex items-start gap-2">
+                    <i class="fas fa-check text-green-500 mt-1"></i>
+                    <span>Respeta a todos los miembros de la comunidad</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <i class="fas fa-check text-green-500 mt-1"></i>
+                    <span>No compartas contenido ilegal o protegido por copyright</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <i class="fas fa-check text-green-500 mt-1"></i>
+                    <span>Ayuda a otros usuarios cuando puedas</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <i class="fas fa-check text-green-500 mt-1"></i>
+                    <span>Reporta bugs en GitHub Issues en lugar de en chat</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <i class="fas fa-check text-green-500 mt-1"></i>
+                    <span>No hagas spam ni publicidad no solicitada</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- CTA -->
+        <section class="text-center animate-in delay-500">
+            <a href="https://discord.gg/kstvreborn" target="_blank" class="dpad-btn inline-block px-8 py-4 bg-[#5865F2] hover:bg-[#4752C4] text-white text-xl font-bold rounded-xl transition-all shadow-lg">
+                <i class="fab fa-discord mr-2"></i> Únete a Discord
+            </a>
+        </section>
+    </main>
+
+    <footer class="bg-black border-t-4 border-kstv-gold py-4 text-center mt-auto">
+        <p class="text-gray-600 text-xs">&copy; <span id="year"></span> KSTV REBORN</p>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

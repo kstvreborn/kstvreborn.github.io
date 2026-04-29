@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kstvreborn.github.io/sitemap.xml
+
+# Allow search engines to crawl but don't want them to index private sections
+Disallow: /admin/
+Disallow: /api/
