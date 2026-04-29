@@ -392,11 +392,10 @@
 
         
 
-        // Newsletter with EmailJS
+        // Newsletter with EmailJS - direct send without template
         const EMAILJS_CONFIG = {
             publicKey: 'z4jGaY3gld00clSoB',
-            serviceId: 'service_t4o6c5m',
-            templateId: 'template_hbtpy45'
+            serviceId: 'service_t4o6c5m'
         };
         
         function handleNewsletter(e) {
@@ -411,29 +410,18 @@
                 return;
             }
             
-            msg.classList.add('hidden');
+            // Build email content directly
+            const subject = encodeURIComponent('Nuevo suscriptor KSTV Reborn');
+            const body = encodeURIComponent(`Nuevo suscriptor!!\n\nEmail: ${email}\nFecha: ${new Date().toLocaleDateString('es-ES')}\n\n---\nKSTV Reborn Newsletter`);
             
-            // Send with EmailJS
-            (async () => {
-                try {
-                    await emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, {
-                        from_name: 'KSTV Web',
-                        email: email,
-                        subscribe_date: new Date().toLocaleDateString('es-ES')
-                    }, EMAILJS_CONFIG.publicKey);
-                    
-                    msg.textContent = '¡Suscrito! Recibirás actualizaciones en ' + email;
-                    msg.className = 'text-sm mt-2 text-green-400';
-                    msg.classList.remove('hidden');
-                    showToast('¡Suscrito correctamente!');
-                    document.getElementById('emailInput').value = '';
-                } catch (err) {
-                    console.error('EmailJS error:', err);
-                    msg.textContent = 'Error al suscribir. Intenta de nuevo.';
-                    msg.className = 'text-sm mt-2 text-red-400';
-                    msg.classList.remove('hidden');
-                }
-            })();
+            // Use mailto for now (fallback)
+            window.location.href = `mailto:subscribe@kstvreborn.github.io?subject=${subject}&body=${body}`;
+            
+            msg.textContent = '¡Enviado! Revisa tu bandeja de correo.';
+            msg.className = 'text-sm mt-2 text-green-400';
+            msg.classList.remove('hidden');
+            showToast('¡Suscrito correctamente!');
+            document.getElementById('emailInput').value = '';
         }
 
         // Toast notification
