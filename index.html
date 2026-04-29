@@ -392,12 +392,7 @@
 
         
 
-        // Newsletter with EmailJS - direct send without template
-        const EMAILJS_CONFIG = {
-            publicKey: 'z4jGaY3gld00clSoB',
-            serviceId: 'service_t4o6c5m'
-        };
-        
+        // Newsletter - Google Forms
         function handleNewsletter(e) {
             e.preventDefault();
             const email = document.getElementById('emailInput').value;
@@ -410,17 +405,16 @@
                 return;
             }
             
-            // Build email content directly
-            const subject = encodeURIComponent('Nuevo suscriptor KSTV Reborn');
-            const body = encodeURIComponent(`Nuevo suscriptor!!\n\nEmail: ${email}\nFecha: ${new Date().toLocaleDateString('es-ES')}\n\n---\nKSTV Reborn Newsletter`);
+            // Open Google Form for subscription
+            const formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSd9C_KdZEOJxv5bIKm3iSjF8xG9QPRqYnBFRcNhkZX5c6C-A/viewform';
+            const prefillUrl = `${formUrl}?entry.123456789=${encodeURIComponent(email)}`;
             
-            // Use mailto for now (fallback)
-            window.location.href = `mailto:subscribe@kstvreborn.github.io?subject=${subject}&body=${body}`;
+            window.open(formUrl, '_blank');
             
-            msg.textContent = '¡Enviado! Revisa tu bandeja de correo.';
-            msg.className = 'text-sm mt-2 text-green-400';
+            msg.textContent = '¡Por favor completa el formulario!';
+            msg.className = 'text-sm mt-2 text-kstv-gold';
             msg.classList.remove('hidden');
-            showToast('¡Suscrito correctamente!');
+            showToast('¡Redirigiendo al formulario!');
             document.getElementById('emailInput').value = '';
         }
 
