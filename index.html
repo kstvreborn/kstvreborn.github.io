@@ -183,30 +183,7 @@
         </div>
     </header>
 
-    <!-- Hero / Stats banner -->
-    <section class="relative py-8 overflow-hidden">
-        <div class="hero-glow"></div>
-        <div class="max-w-5xl mx-auto px-4">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center animate-in delay-200">
-                <div class="glass-card rounded-xl p-4">
-                    <div class="text-3xl font-black text-kstv-gold counter" id="statSections">0</div>
-                    <div class="text-xs text-gray-400 mt-1">SECCIONES</div>
-                </div>
-                <div class="glass-card rounded-xl p-4">
-                    <div class="text-3xl font-black text-kstv-red counter">69<span class="text-lg">k</span></div>
-                    <div class="text-xs text-gray-400 mt-1">CÓDIGO</div>
-                </div>
-                <div class="glass-card rounded-xl p-4">
-                    <div class="text-3xl font-black text-green-500 counter">●</div>
-                    <div class="text-xs text-gray-400 mt-1">ESTADO</div>
-                </div>
-                <div class="glass-card rounded-xl p-4">
-                    <div class="text-3xl font-black text-purple-500"><i class="fas fa-flask"></i></div>
-                    <div class="text-xs text-gray-400 mt-1">LAB IA</div>
-                </div>
-            </div>
-        </div>
-    </section>
+
 
     <!-- Menú principal -->
     <main class="flex-grow max-w-5xl mx-auto px-4 py-6 w-full">
@@ -351,13 +328,12 @@
             document.getElementById('footerYear').textContent = new Date().getFullYear();
             document.getElementById(CONFIG.autoFocus).focus();
             loadSections();
-            loadStats();
         }
 
         // Load sections from GitHub API
         async function loadSections() {
             const container = document.getElementById('dynamic-sections');
-            
+
             // Special folder configs
             const specialFolders = {
                 'repo': { name: 'REPO', icon: 'fa-download', color: 'bg-kstv-red', text: 'text-white' },
@@ -417,12 +393,6 @@
                 container.innerHTML = '<p class="text-red-400 text-sm col-span-full">Error al cargar secciones</p>';
                 console.error('Load sections error:', e);
             }
-        }
-
-        // Load basic stats
-        async function loadStats() {
-            // Could fetch from GitHub API or external service
-            // For now, using placeholder values
         }
 
         // Search functionality
